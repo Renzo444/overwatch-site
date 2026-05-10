@@ -421,8 +421,9 @@ body {
 }
 
 .agents-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.25rem;
 }
 
@@ -438,6 +439,11 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
     opacity: 0;
     transform: translateY(20px);
+    /* flex child sizing: 4 per row on desktop */
+    flex: 0 0 calc(25% - 1rem);
+    min-width: 220px;
+    max-width: 280px;
+    box-sizing: border-box;
 }
 
 .agent-card.visible {
@@ -481,6 +487,15 @@ body {
     font-weight: 600;
 }
 
+.agent-status-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--accent-green);
+    opacity: 0.85;
+}
+
 .status-dot {
     width: 6px;
     height: 6px;
@@ -509,11 +524,11 @@ body {
 }
 
 @media (max-width: 1024px) {
-    .agents-grid { grid-template-columns: repeat(2, 1fr); }
+    .agent-card { flex: 0 0 calc(50% - 0.75rem); max-width: none; }
 }
 
 @media (max-width: 600px) {
-    .agents-grid { grid-template-columns: 1fr; }
+    .agent-card { flex: 0 0 100%; max-width: none; }
 }
 
 /* === SERVICES === */
