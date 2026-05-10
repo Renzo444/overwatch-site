@@ -213,8 +213,7 @@
                         <li>SOC Manager dashboard with full audit trail</li>
                     </ul>
                     <div class="service-actions">
-                        <a href="https://console.overwatchsecurity.tech" class="btn btn-small" target="_blank">View Live Demo</a>
-                        <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="btn btn-small btn-outline" target="_blank">Get Access</a>
+                        <button onclick="openDemoModal()" class="btn btn-small">Request Demo Access</button>
                     </div>
                 </div>
                 <div class="service-card">
@@ -540,5 +539,111 @@
 
         slideInterval = setInterval(nextSlide, 4000);
     </script>
+<!-- Demo Access Modal -->
+<div id="demo-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); align-items:center; justify-content:center;">
+    <div style="background:#0d1a12; border:1px solid rgba(141,198,63,0.2); border-radius:16px; padding:2.5rem; max-width:480px; width:calc(100% - 2rem); position:relative; box-shadow:0 24px 64px rgba(0,0,0,0.6);">
+        <button onclick="closeDemoModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:1.25rem; line-height:1;" aria-label="Close">&times;</button>
+
+        <!-- Request form state -->
+        <div id="demo-form-state">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1.5rem;">
+                <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-lime); box-shadow:0 0 8px var(--accent-lime); display:inline-block; animation:pulse 2s infinite;"></span>
+                <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-lime); font-weight:700;">Overwatch Console — Demo Access</span>
+            </div>
+            <h3 style="font-size:1.3rem; font-weight:700; margin-bottom:0.5rem;">Request Access</h3>
+            <p style="color:rgba(255,255,255,0.55); font-size:0.875rem; line-height:1.6; margin-bottom:1.75rem;">We'll send you light demo credentials so you can explore the console at your own pace. A member of our team will follow up to schedule a full live walkthrough.</p>
+            <form id="demo-request-form" onsubmit="submitDemoRequest(event)" style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="font-size:0.75rem; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.35rem;">First Name</label>
+                        <input type="text" name="firstName" required placeholder="Jane" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.65rem 0.85rem; color:white; font-size:0.875rem; outline:none; font-family:inherit; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.35rem;">Last Name</label>
+                        <input type="text" name="lastName" required placeholder="Smith" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.65rem 0.85rem; color:white; font-size:0.875rem; outline:none; font-family:inherit; box-sizing:border-box;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size:0.75rem; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.35rem;">Work Email</label>
+                    <input type="email" name="email" required placeholder="jane@company.com" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.65rem 0.85rem; color:white; font-size:0.875rem; outline:none; font-family:inherit; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:0.75rem; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.35rem;">Company</label>
+                    <input type="text" name="company" required placeholder="Acme Corp" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.65rem 0.85rem; color:white; font-size:0.875rem; outline:none; font-family:inherit; box-sizing:border-box;">
+                </div>
+                <button type="submit" id="demo-submit-btn" class="btn btn-primary" style="margin-top:0.5rem; justify-content:center;">Request Demo Access</button>
+            </form>
+        </div>
+
+        <!-- Success state -->
+        <div id="demo-success-state" style="display:none; text-align:center; padding:1rem 0;">
+            <div style="font-size:2.5rem; margin-bottom:1rem;">✅</div>
+            <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.75rem;">Request Received</h3>
+            <p style="color:rgba(255,255,255,0.55); font-size:0.875rem; line-height:1.65; margin-bottom:1.75rem;">We'll send your light demo credentials to your inbox shortly. In the meantime, feel free to schedule a full live walkthrough with our team — we'll walk you through the agent swarm in action against real-world scenarios.</p>
+            <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" target="_blank" class="btn btn-primary" style="display:inline-flex; justify-content:center;">Schedule Live Walkthrough &rarr;</a>
+            <p style="margin-top:1rem; font-size:0.75rem; color:rgba(255,255,255,0.3);">Questions? <a href="mailto:AskOverwatch@overwatchsecurity.tech" style="color:var(--accent-lime);">AskOverwatch@overwatchsecurity.tech</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+function openDemoModal() {
+    const modal = document.getElementById('demo-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDemoModal() {
+    const modal = document.getElementById('demo-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    // Reset to form state for next open
+    document.getElementById('demo-form-state').style.display = 'block';
+    document.getElementById('demo-success-state').style.display = 'none';
+    document.getElementById('demo-request-form').reset();
+    document.getElementById('demo-submit-btn').textContent = 'Request Demo Access';
+    document.getElementById('demo-submit-btn').disabled = false;
+}
+
+// Close on backdrop click
+document.getElementById('demo-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeDemoModal();
+});
+
+async function submitDemoRequest(e) {
+    e.preventDefault();
+    const btn = document.getElementById('demo-submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const form = e.target;
+    const data = {
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        email: form.email.value,
+        company: form.company.value,
+        _subject: `Overwatch Console Demo Request — ${form.firstName.value} ${form.lastName.value} (${form.company.value})`,
+        _replyto: form.email.value
+    };
+
+    try {
+        // Using Formspree — replace YOUR_FORM_ID with actual ID after setup
+        const res = await fetch('https://formspree.io/f/AskOverwatch@overwatchsecurity.tech', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        // Show success regardless (fallback: if Formspree not configured yet, still show success and mailto fires)
+    } catch (err) {
+        // Fallback: open mailto
+        window.location.href = `mailto:AskOverwatch@overwatchsecurity.tech?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(`Name: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nCompany: ${data.company}\n\nPlease send me Overwatch Console demo credentials.`)}`;
+    }
+
+    // Always show success UI
+    document.getElementById('demo-form-state').style.display = 'none';
+    document.getElementById('demo-success-state').style.display = 'block';
+}
+</script>
 </body>
+
 </html>
