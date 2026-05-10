@@ -538,7 +538,7 @@ body {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
 
@@ -631,6 +631,11 @@ body {
 
 @media (max-width: 1024px) {
     .services-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+}
+
+.service-card--featured {
+    border-left-color: var(--accent-lime);
+    background: rgba(141, 198, 63, 0.03);
 }
 
 /* === HOW WE OPERATE === */
