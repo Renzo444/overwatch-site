@@ -276,35 +276,41 @@
             </div>
 
             <!-- Certification Badges -->
+            <!--
+                TODO: To use real badge images, save your badge PNGs to this directory as:
+                badge-oscp.png, badge-az500.png, badge-btl2.png, badge-cysa.png, badge-secplus.png, badge-pmrp.png
+                Then replace each <div class="cert-badge cert-badge-text">...</div> with:
+                <img src="badge-oscp.png" alt="OSCP" class="cert-badge" />
+            -->
             <div class="certs-grid">
                 <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/ec81134d-e80b-4eb5-ae07-0eb8e1a60fcd/image.png" alt="OSCP" class="cert-badge" />
+                    <div class="cert-badge cert-badge-text cert-offsec">OSCP</div>
                     <span class="cert-name">OSCP</span>
                     <span class="cert-issuer">Offensive Security</span>
                 </div>
                 <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/c3ab66f8-5d59-4afa-a6c2-0ba30a1989ca/CERT-Expert-DevSecOps-702x702.png" alt="AZ-500" class="cert-badge" />
-                    <span class="cert-name">AZ-500</span>
-                    <span class="cert-issuer">Microsoft Azure Security</span>
+                    <div class="cert-badge cert-badge-text cert-microsoft">AZ-500</div>
+                    <span class="cert-name">Azure Security Engineer</span>
+                    <span class="cert-issuer">Microsoft Certified</span>
                 </div>
                 <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/5e463f9d-0b03-4b53-be3a-b5b8bb391758/image.png" alt="BTL2" class="cert-badge" />
-                    <span class="cert-name">BTL1 + BTL2</span>
+                    <div class="cert-badge cert-badge-text cert-blueteam">BTL2</div>
+                    <span class="cert-name">Blue Team Level 1 + 2</span>
                     <span class="cert-issuer">Security Blue Team</span>
                 </div>
                 <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/2bef6a34-6571-4f59-b8fb-0d4753a8436e/image.png" alt="CySA+" class="cert-badge" />
+                    <div class="cert-badge cert-badge-text cert-comptia">CySA+</div>
                     <span class="cert-name">CySA+</span>
                     <span class="cert-issuer">CompTIA</span>
                 </div>
                 <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/74790a75-8451-400a-8536-92d792c5184a/CompTIA_Security_2Bce.png" alt="Security+" class="cert-badge" />
+                    <div class="cert-badge cert-badge-text cert-comptia">Sec+</div>
                     <span class="cert-name">Security+</span>
                     <span class="cert-issuer">CompTIA</span>
                 </div>
                 <div class="cert-card">
-                    <div class="cert-badge cert-badge-text">TCM</div>
-                    <span class="cert-name">PMRP</span>
+                    <div class="cert-badge cert-badge-text cert-tcm">PMRP</div>
+                    <span class="cert-name">Malware Research Professional</span>
                     <span class="cert-issuer">TCM Security</span>
                 </div>
             </div>
