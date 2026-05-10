@@ -687,6 +687,125 @@ body {
     .step-connector { width: 1px; height: 30px; }
 }
 
+/* === CREDENTIALS & TRUST === */
+.credentials {
+    padding: 6rem 0;
+}
+
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+}
+
+.cert-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: all 0.3s var(--transition);
+}
+
+.cert-card:hover {
+    border-color: var(--border-color);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cert-badge {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    filter: drop-shadow(0 0 8px rgba(30, 181, 58, 0.15));
+}
+
+.cert-badge-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-green);
+    background: rgba(30, 181, 58, 0.1);
+    border: 1px solid rgba(30, 181, 58, 0.2);
+}
+
+.cert-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.cert-issuer {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.trust-strip {
+    text-align: center;
+    padding: 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.trust-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+}
+
+.trust-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.trust-icon {
+    font-size: 1.2rem;
+}
+
+.trust-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 1024px) {
+    .certs-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .certs-grid { grid-template-columns: repeat(2, 1fr); }
+    .trust-items { gap: 1rem; }
+    .trust-divider { display: none; }
+}
+
 /* === METRICS === */
 .metrics {
     padding: 4rem 0;
