@@ -729,12 +729,21 @@ body {
 
 .cert-badge-text {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     border-radius: 12px;
+}
+
+.cert-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
 .cert-offsec {
