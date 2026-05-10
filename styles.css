@@ -692,11 +692,30 @@ body {
     padding: 6rem 0;
 }
 
-.certs-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1.25rem;
+.certs-marquee-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
     margin-bottom: 3rem;
+    padding: 1rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.certs-marquee-content {
+    display: flex;
+    gap: 1.5rem;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+}
+
+.certs-marquee-content:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 0.75rem)); }
 }
 
 .cert-card {
@@ -708,6 +727,8 @@ body {
     background: var(--glass-bg-light);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
+    width: 200px;
+    flex-shrink: 0;
     transition: all 0.3s var(--transition);
 }
 
