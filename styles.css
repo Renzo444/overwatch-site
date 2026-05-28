@@ -10,6 +10,7 @@
     --accent-green: #1eb53a;
     --accent-lime: #a4f522;
     --accent-purple: #b026ff;
+    --accent-glow: #3bdd5c;
     --border-color: rgba(59, 209, 93, 0.22);
     --glass-bg: rgba(6, 14, 10, 0.82);
     --glass-bg-light: rgba(255, 255, 255, 0.03);
@@ -41,7 +42,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, var(--accent-green), var(--accent-lime));
+    background: linear-gradient(90deg, #3bdd5c, #b8ff4a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
