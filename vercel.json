@@ -1,4 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/blogs", "destination": "/blogs/index.html" },
+    { "source": "/blogs/", "destination": "/blogs/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -12,6 +16,13 @@
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://outlook.office.com; connect-src 'self'; base-uri 'self'; form-action 'self' https://outlook.office.com"
         }
+      ]
+    },
+    {
+      "source": "/blogs/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, s-maxage=3600, stale-while-revalidate=86400" },
+        { "key": "X-Robots-Tag", "value": "index, follow" }
       ]
     }
   ]

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatory | Overwatch Security - Verified KQL Detections & Threat Hunt Reports</title>
+    <meta name="description" content="Verified KQL detections and autonomous threat hunt reports from Overwatch Security. Every query validated against Azure Sentinel before publication.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/blogs/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <style>
+        /* === OBSERVATORY PAGE STYLES === */
+        /* Prefixed with obs- to avoid collisions with main styles.css */
+
+        .obs-hero {
+            padding: 10rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .obs-hero-content {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .obs-hero-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-green);
+            padding: 0.35rem 1rem;
+            border: 1px solid rgba(30, 181, 58, 0.2);
+            border-radius: 100px;
+            background: rgba(30, 181, 58, 0.06);
+            margin-bottom: 1.5rem;
+        }
+
+        .obs-hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+
+        .obs-hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === CONTENT GRID === */
+        .obs-content {
+            padding: 2rem 0 6rem;
+        }
+
+        .obs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .obs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === CARDS === */
+        .obs-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s var(--transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .obs-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-lime));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .obs-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), var(--shadow-glow);
+        }
+
+        .obs-card:hover::before {
+            opacity: 1;
+        }
+
+        /* === CARD HEADER === */
+        .obs-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .obs-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .obs-badge--detection {
+            color: var(--accent-green);
+            background: rgba(30, 181, 58, 0.1);
+            border: 1px solid rgba(30, 181, 58, 0.25);
+        }
+
+        .obs-badge--hunt {
+            color: var(--accent-purple);
+            background: rgba(197, 76, 255, 0.1);
+            border: 1px solid rgba(197, 76, 255, 0.25);
+        }
+
+        .obs-badge--severity {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+
+        .obs-badge--high {
+            color: #da3633;
+            background: rgba(218, 54, 51, 0.1);
+            border: 1px solid rgba(218, 54, 51, 0.25);
+        }
+
+        .obs-badge--medium {
+            color: #d29922;
+            background: rgba(210, 153, 34, 0.1);
+            border: 1px solid rgba(210, 153, 34, 0.25);
+        }
+
+        .obs-badge--low {
+            color: #3fb950;
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid rgba(63, 185, 80, 0.25);
+        }
+
+        .obs-badge--informational {
+            color: var(--text-secondary);
+            background: rgba(139, 155, 181, 0.1);
+            border: 1px solid rgba(139, 155, 181, 0.2);
+        }
+
+        /* === CARD BODY === */
+        .obs-card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .obs-card-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* === CARD FOOTER === */
+        .obs-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .obs-tactics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .obs-tactic-tag {
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .obs-date {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .obs-findings-count {
+            font-size: 0.7rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* === FILTER BAR === */
+        .obs-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .obs-filter-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .obs-filter-btn:hover {
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .obs-filter-btn.active {
+            color: var(--accent-green);
+            border-color: rgba(30, 181, 58, 0.3);
+            background: rgba(30, 181, 58, 0.08);
+        }
+
+        /* === EMPTY STATE === */
+        .obs-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 5rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .obs-empty-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1.5rem;
+            color: var(--text-secondary);
+            opacity: 0.4;
+        }
+
+        .obs-empty-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .obs-empty-desc {
+            font-size: 0.85rem;
+            max-width: 460px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* === LOADING STATE === */
+        .obs-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .obs-loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(59, 221, 92, 0.2);
+            border-top-color: var(--accent-green);
+            border-radius: 50%;
+            animation: obs-spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes obs-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .obs-loading-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <img src="../logo.png" alt="Overwatch Security" />
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/#credentials" class="nav-link">Credentials</a>
+                <a href="/#how" class="nav-link">How We Operate</a>
+                <a href="/blogs/" class="nav-link active">Observatory</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="obs-hero">
+        <div class="obs-hero-content">
+            <span class="obs-hero-tag">Threat Intelligence</span>
+            <h1 class="obs-hero-title">Overwatch <span class="gradient-text">Observatory</span></h1>
+            <p class="obs-hero-subtitle">
+                Verified KQL detections and autonomous threat hunt reports. Every query validated against Azure Sentinel before publication.
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Listing -->
+    <section class="obs-content">
+        <div class="container">
+            <!-- Filters -->
+            <div class="obs-filters" id="obsFilters">
+                <button class="obs-filter-btn active" data-filter="all">All</button>
+                <button class="obs-filter-btn" data-filter="detection">Detections</button>
+                <button class="obs-filter-btn" data-filter="hunt">Hunt Reports</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="obs-grid" id="obsGrid">
+                <!-- Loading state shown while fetching -->
+                <div class="obs-loading" id="obsLoading">
+                    <div class="obs-loading-spinner"></div>
+                    <p class="obs-loading-text">Loading published content...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="../logo.png" alt="Overwatch Security" class="footer-logo" />
+                    <p>AI-powered managed detection and response, built on the Microsoft security stack.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="/">Home</a>
+                    <a href="/#platform">Platform</a>
+                    <a href="/#services">Services</a>
+                    <a href="/#how">How We Operate</a>
+                    <a href="/blogs/">Observatory</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <a href="mailto:AskOverwatch@overwatchsecurity.tech">AskOverwatch@overwatchsecurity.tech</a>
+                    <p>Charlotte, North Carolina 28202</p>
+                    <p>(704) 292-6449</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Overwatch Security LLC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile toggle
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // --- Observatory data rendering ---
+        const grid = document.getElementById('obsGrid');
+        const loadingEl = document.getElementById('obsLoading');
+        let allItems = [];
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function truncate(str, len) {
+            if (!str) return '';
+            return str.length > len ? str.substring(0, len) + '...' : str;
+        }
+
+        function severityClass(severity) {
+            const s = (severity || '').toLowerCase();
+            if (s === 'high' || s === 'critical') return 'obs-badge--high';
+            if (s === 'medium') return 'obs-badge--medium';
+            if (s === 'low') return 'obs-badge--low';
+            return 'obs-badge--informational';
+        }
+
+        function renderDetectionCard(item) {
+            const tactics = (item.mitreTactics || []).map(t =>
+                `<span class="obs-tactic-tag">${t}</span>`
+            ).join('');
+
+            return `
+                <a href="/blogs/detections/${item.slug}.html" class="obs-card">
+                    <div class="obs-card-header">
+                        <span class="obs-badge obs-badge--detection">Detection</span>
+                        ${item.severity ? `<span class="obs-badge obs-badge--severity ${severityClass(item.severity)}">${item.severity}</span>` : ''}
+                    </div>
+                    <h3 class="obs-card-title">${item.title}</h3>
+                    <p class="obs-card-desc">${truncate(item.description, 180)}</p>
+                    <div class="obs-card-meta">
+                        <div class="obs-tactics">${tactics}</div>
+                        <span class="obs-date">${item.publishedAt ? formatDate(item.publishedAt) : ''}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderHuntCard(item) {
+            const tactics = (item.mitreTactics || []).map(t =>
+                `<span class="obs-tactic-tag">${t}</span>`
+            ).join('');
+
+            const findingsLabel = item.findingsCount != null
+                ? `<span class="obs-findings-count">${item.findingsCount} finding${item.findingsCount !== 1 ? 's' : ''}</span>`
+                : '';
+
+            return `
+                <a href="/blogs/hunts/${item.id}.html" class="obs-card">
+                    <div class="obs-card-header">
+                        <span class="obs-badge obs-badge--hunt">Hunt Report</span>
+                        ${findingsLabel}
+                    </div>
+                    <h3 class="obs-card-title">${item.title || 'Threat Hunt Report'}</h3>
+                    <p class="obs-card-desc">${truncate(item.hypothesis, 180)}</p>
+                    <div class="obs-card-meta">
+                        <div class="obs-tactics">${tactics}</div>
+                        <span class="obs-date">${item.publishedAt ? formatDate(item.publishedAt) : ''}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderEmpty() {
+            return `
+                <div class="obs-empty">
+                    <svg class="obs-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                        <path d="M19 10H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2Z"/>
+                        <path d="M12 15v7"/>
+                        <path d="M8 22h8"/>
+                    </svg>
+                    <h3 class="obs-empty-title">No published content yet</h3>
+                    <p class="obs-empty-desc">
+                        Detections and hunt reports will appear here as they are verified and deployed to production Azure Sentinel workspaces.
+                    </p>
+                </div>
+            `;
+        }
+
+        function renderGrid(filter) {
+            let items = allItems;
+            if (filter === 'detection') items = allItems.filter(i => i.type === 'detection');
+            if (filter === 'hunt') items = allItems.filter(i => i.type === 'hunt');
+
+            if (items.length === 0) {
+                grid.innerHTML = renderEmpty();
+                return;
+            }
+
+            // Sort by date descending
+            items.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0));
+
+            grid.innerHTML = items.map(item => {
+                if (item.type === 'detection') return renderDetectionCard(item);
+                if (item.type === 'hunt') return renderHuntCard(item);
+                return '';
+            }).join('');
+        }
+
+        // Filter buttons
+        document.getElementById('obsFilters').addEventListener('click', (e) => {
+            const btn = e.target.closest('.obs-filter-btn');
+            if (!btn) return;
+            document.querySelectorAll('.obs-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderGrid(btn.dataset.filter);
+        });
+
+        // Fetch data
+        fetch('/blogs/data.json')
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to load data');
+                return res.json();
+            })
+            .then(data => {
+                allItems = Array.isArray(data) ? data : [];
+                renderGrid('all');
+            })
+            .catch(() => {
+                allItems = [];
+                renderGrid('all');
+            });
+    </script>
+</body>
+</html>
