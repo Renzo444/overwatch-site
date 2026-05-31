@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Remote-SSH RCE Lets Attackers Pivot From Developer Machines to Cloud Servers | Overwatch Observatory</title>
+    <meta name="description" content="Cyber Security News recently reported on a critical vulnerability in VS Code's Remote-SSH extension, detailing a Time-of-Check to Time-of-Use (TOCTOU)...">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/blogs/detections/vs-code-remote-ssh-rce-lets-attackers-pivot-from-developer-machines-to-cloud-servers">
+    <!-- Open Graph -->
+    <meta property="og:title" content="VS Code Remote-SSH RCE Lets Attackers Pivot From Developer Machines to Cloud Servers | Overwatch Observatory">
+    <meta property="og:description" content="Cyber Security News recently reported on a critical vulnerability in VS Code's Remote-SSH extension, detailing a Time-of-Check to Time-of-Use (TOCTOU)...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/blogs/detections/vs-code-remote-ssh-rce-lets-attackers-pivot-from-developer-machines-to-cloud-servers">
+    <meta property="og:site_name" content="Overwatch Security">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        /* === Observatory Article – Detection Template === */
+        /* Design tokens from Overwatch site design system */
+        :root {
+            --bg-primary: #0a110e;
+            --bg-secondary: #121d18;
+            --bg-tertiary: #1d2d25;
+            --text-primary: #e8edf5;
+            --text-secondary: #8b9bb5;
+            --text-tertiary: #6e7681;
+            --accent-green: #3bdd5c;
+            --accent-lime: #b8ff4a;
+            --accent-purple: #c54cff;
+            --border-color: rgba(59, 221, 92, 0.25);
+            --glass-bg: rgba(14, 25, 20, 0.85);
+            --glass-bg-light: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.10);
+            --shadow-glow: 0 0 60px -20px rgba(59, 221, 92, 0.20);
+            --transition: cubic-bezier(0.22, 1, 0.36, 1);
+            --severity-high: #da3633;
+            --severity-medium: #d29922;
+            --severity-low: #3fb950;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 15% 50%, rgba(59, 221, 92, 0.09), transparent 55%),
+                radial-gradient(ellipse at 85% 20%, rgba(184, 255, 74, 0.07), transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(197, 76, 255, 0.05), transparent 45%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3bdd5c, #b8ff4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* === NAVIGATION (from main site) === */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000; padding: 1rem 0;
+            transition: all 0.3s ease;
+            background: rgba(10, 17, 14, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 221, 92, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .nav-logo img { height: 120px; width: auto; }
+
+        .nav-links {
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500;
+            padding: 0.5rem 1rem; border-radius: 8px;
+            transition: all 0.2s ease; position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--accent-green); }
+
+        .nav-link.active::after {
+            content: ''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 2px;
+            background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); border-radius: 2px;
+        }
+
+        .nav-cta {
+            color: var(--accent-lime); text-decoration: none;
+            font-size: 0.8rem; font-weight: 600;
+            padding: 0.5rem 1.25rem;
+            border: 1px solid rgba(141, 198, 63, 0.3);
+            border-radius: 8px; background: rgba(141, 198, 63, 0.1);
+            transition: all 0.2s ease; margin-left: 0.5rem;
+        }
+
+        .nav-cta:hover {
+            background: rgba(141, 198, 63, 0.2);
+            box-shadow: 0 0 15px rgba(141, 198, 63, 0.15);
+        }
+
+        .nav-mobile-toggle {
+            display: none; background: none; border: none;
+            cursor: pointer; flex-direction: column; gap: 5px;
+        }
+
+        .nav-mobile-toggle span {
+            width: 24px; height: 2px; background: var(--text-primary); transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-mobile-toggle { display: flex; }
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10, 17, 14, 0.96); backdrop-filter: blur(20px);
+                flex-direction: column; padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.open { display: flex; }
+            .nav-cta { margin-left: 0; margin-top: 0.5rem; text-align: center; }
+        }
+
+        /* === ARTICLE LAYOUT === */
+        .obs-article-wrapper {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 10rem 2rem 4rem;
+        }
+
+        /* Breadcrumbs */
+        .obs-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-bottom: 2rem;
+        }
+
+        .obs-breadcrumbs a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .obs-breadcrumbs a:hover {
+            color: var(--accent-green);
+        }
+
+        .obs-breadcrumbs-sep {
+            color: var(--text-tertiary);
+            user-select: none;
+        }
+
+        .obs-breadcrumbs-current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Article Header */
+        .obs-article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .obs-article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .obs-article-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .obs-severity-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+        }
+
+        .obs-severity-badge--high {
+            color: var(--severity-high);
+            background: rgba(218, 54, 51, 0.12);
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+
+        .obs-severity-badge--medium {
+            color: var(--severity-medium);
+            background: rgba(210, 153, 34, 0.12);
+            border: 1px solid rgba(210, 153, 34, 0.3);
+        }
+
+        .obs-severity-badge--low {
+            color: var(--severity-low);
+            background: rgba(63, 185, 80, 0.12);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+        }
+
+        .obs-severity-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .obs-article-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .obs-article-byline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .obs-article-byline strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Section Styling */
+        .obs-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .obs-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(59, 221, 92, 0.15);
+        }
+
+        .obs-body-text {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+        }
+
+        .obs-body-text p {
+            margin-bottom: 1rem;
+        }
+
+        .obs-body-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Source Blockquote */
+        .obs-source-block {
+            background: var(--glass-bg-light);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .obs-source-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+        }
+
+        .obs-source-link {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+
+        .obs-source-link:hover {
+            color: var(--accent-lime);
+        }
+
+        .obs-source-domain {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 0.25rem;
+        }
+
+        /* Code Block */
+        .obs-code-container {
+            background: #161b22;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .obs-code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .obs-code-lang {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+        }
+
+        .obs-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .obs-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .obs-copy-btn.obs-copied {
+            color: var(--accent-green);
+            border-color: rgba(59, 221, 92, 0.3);
+            background: rgba(59, 221, 92, 0.08);
+        }
+
+        .obs-code-body {
+            padding: 1.25rem;
+            overflow-x: auto;
+        }
+
+        .obs-code-body pre {
+            margin: 0;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            line-height: 1.65;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Verified badge */
+        .obs-verified-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        .obs-verified-icon {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* What This Catches */
+        .obs-catches-text {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+        }
+
+        /* MITRE ATT&CK Tags */
+        .obs-mitre-group {
+            margin-bottom: 1rem;
+        }
+
+        .obs-mitre-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .obs-mitre-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+        }
+
+        .obs-mitre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .obs-mitre-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            background: var(--glass-bg-light);
+            border: 1px solid var(--glass-border);
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .obs-mitre-tag:hover {
+            border-color: var(--border-color);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* CTA Box */
+        .obs-cta-box {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(30, 181, 58, 0.06);
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .obs-cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-lime), transparent);
+        }
+
+        .obs-cta-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .obs-cta-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .obs-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s var(--transition);
+            border: none;
+            background: rgba(30, 181, 58, 0.2);
+            color: var(--accent-lime);
+            border: 1px solid rgba(30, 181, 58, 0.4);
+            box-shadow: 0 0 20px rgba(30, 181, 58, 0.1);
+        }
+
+        .obs-cta-btn:hover {
+            background: rgba(30, 181, 58, 0.3);
+            box-shadow: 0 0 30px rgba(30, 181, 58, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* === FOOTER (from main site) === */
+        .footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            height: 130px;
+            width: auto;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 300px;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a, .footer-contact a, .footer-contact p {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover, .footer-contact a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .obs-article-wrapper { padding-top: 8rem; padding-left: 1rem; padding-right: 1rem; }
+            .obs-article-title { font-size: 1.5rem; }
+            .obs-code-body { padding: 0.75rem; }
+            .obs-code-body pre { font-size: 0.75rem; }
+            .obs-cta-box { padding: 2rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <img src="/logo.png" alt="Overwatch Security" />
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/#credentials" class="nav-link">Credentials</a>
+                <a href="/#how" class="nav-link">How We Operate</a>
+                <a href="/blogs/" class="nav-link active">Observatory</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <article class="obs-article-wrapper">
+
+        <!-- Breadcrumbs -->
+        <nav class="obs-breadcrumbs" aria-label="Breadcrumb">
+            <a href="/blogs/">Observatory</a>
+            <span class="obs-breadcrumbs-sep">/</span>
+            <a href="/blogs/detections/">Detections</a>
+            <span class="obs-breadcrumbs-sep">/</span>
+            <span class="obs-breadcrumbs-current">VS Code Remote-SSH RCE Lets Attackers Pivot From Developer Machines to Cloud Servers</span>
+        </nav>
+
+        <!-- Header -->
+        <header class="obs-article-header">
+            <div class="obs-article-meta">
+                <span class="obs-article-date">May 29, 2026</span>
+                <span class="obs-severity-badge obs-severity-badge--high">
+                    <span class="obs-severity-dot"></span>
+                    High Confidence
+                </span>
+            </div>
+            <h1 class="obs-article-title">VS Code Remote-SSH RCE Lets Attackers Pivot From Developer Machines to Cloud Servers</h1>
+            <p class="obs-article-byline">By <strong>Overwatch Observatory</strong> &mdash; Automated Detection Engineering</p>
+        </header>
+
+        <!-- Threat Overview -->
+        <section class="obs-section">
+        <h2 class="obs-section-title">Detection Rules</h2>
+        
+      <div style="margin-bottom:1.5rem">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.4rem;font-weight:600">TA0005 / T1574</div>
+          <div class="obs-code-container">
+              <div class="obs-code-header">
+                  <span class="obs-code-lang">KQL</span>
+                  <button class="obs-copy-btn" onclick="copyKql(this)" data-query="let%20timeWindow%20%3D%2010s%3B%0Alet%20tempFolders%20%3D%20dynamic(%5B%22%2Ftmp%2F%22%2C%20%22%2Fvar%2Ftmp%2F%22%5D)%3B%0A%0ADeviceFileEvents%0A%7C%20where%20TimeGenerated%20%3E%20ago(1d)%0A%7C%20where%20ActionType%20%3D%3D%20%22FileCreated%22%20and%20FileName%20endswith%20%22.sh%22%0A%7C%20where%20FolderPath%20has_any%20(tempFolders)%20or%20FolderPath%20contains%20%22%2F.vscode-server%2F%22%20or%20FolderPath%20contains%20%22%2Ftmp%2Fvscode-ssh-remote-%22%0A%7C%20project%20CreatedTime%3DTimeGenerated%2C%20FilePath%3Dstrcat(FolderPath%2C%20FileName)%2C%20CreatingProcessId%3DInitiatingProcessId%2C%20CreatingProcessName%3DInitiatingProcessFileName%2C%20DeviceId%2C%20ReportId_Created%3DReportId%0A%0A%7C%20join%20kind%3Dinner%20(%0A%20%20%20%20DeviceFileEvents%0A%20%20%20%20%7C%20where%20TimeGenerated%20%3E%20ago(1d)%0A%20%20%20%20%7C%20where%20ActionType%20%3D%3D%20%22FileModified%22%20and%20FileName%20endswith%20%22.sh%22%0A%20%20%20%20%7C%20where%20FolderPath%20has_any%20(tempFolders)%20or%20FolderPath%20contains%20%22%2F.vscode-server%2F%22%20or%20FolderPath%20contains%20%22%2Ftmp%2Fvscode-ssh-remote-%22%0A%20%20%20%20%7C%20project%20ModifiedTime%3DTimeGenerated%2C%20FilePath%3Dstrcat(FolderPath%2C%20FileName)%2C%20ModifyingProcessId%3DInitiatingProcessId%2C%20ModifyingProcessName%3DInitiatingProcessFileName%2C%20DeviceId%2C%20ReportId_Modified%3DReportId%0A)%20on%20DeviceId%2C%20FilePath%0A%0A%7C%20where%20ModifiedTime%20between%20(CreatedTime%20..%20(CreatedTime%20%2B%20timeWindow))%0A%0A%7C%20where%20CreatingProcessId%20!%3D%20ModifyingProcessId%0A%7C%20project%0A%20%20%20%20TimeGenerated%20%3D%20ModifiedTime%2C%0A%20%20%20%20Timestamp_Created%20%3D%20CreatedTime%2C%0A%20%20%20%20Timestamp_Modified%20%3D%20ModifiedTime%2C%0A%20%20%20%20DeviceId%2C%0A%20%20%20%20FilePath%2C%0A%20%20%20%20CreatingProcessName%2C%0A%20%20%20%20CreatingProcessId%2C%0A%20%20%20%20ModifyingProcessName%2C%0A%20%20%20%20ModifyingProcessId%2C%0A%20%20%20%20ReportId_Created%2C%0A%20%20%20%20ReportId_Modified" aria-label="Copy KQL query">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      <span>Copy</span>
+                  </button>
+              </div>
+              <div class="obs-code-body">
+                  <pre>let timeWindow = 10s;
+let tempFolders = dynamic(["/tmp/", "/var/tmp/"]);
+
+DeviceFileEvents
+| where TimeGenerated &gt; ago(1d)
+| where ActionType == "FileCreated" and FileName endswith ".sh"
+| where FolderPath has_any (tempFolders) or FolderPath contains "/.vscode-server/" or FolderPath contains "/tmp/vscode-ssh-remote-"
+| project CreatedTime=TimeGenerated, FilePath=strcat(FolderPath, FileName), CreatingProcessId=InitiatingProcessId, CreatingProcessName=InitiatingProcessFileName, DeviceId, ReportId_Created=ReportId
+
+| join kind=inner (
+    DeviceFileEvents
+    | where TimeGenerated &gt; ago(1d)
+    | where ActionType == "FileModified" and FileName endswith ".sh"
+    | where FolderPath has_any (tempFolders) or FolderPath contains "/.vscode-server/" or FolderPath contains "/tmp/vscode-ssh-remote-"
+    | project ModifiedTime=TimeGenerated, FilePath=strcat(FolderPath, FileName), ModifyingProcessId=InitiatingProcessId, ModifyingProcessName=InitiatingProcessFileName, DeviceId, ReportId_Modified=ReportId
+) on DeviceId, FilePath
+
+| where ModifiedTime between (CreatedTime .. (CreatedTime + timeWindow))
+
+| where CreatingProcessId != ModifyingProcessId
+| project
+    TimeGenerated = ModifiedTime,
+    Timestamp_Created = CreatedTime,
+    Timestamp_Modified = ModifiedTime,
+    DeviceId,
+    FilePath,
+    CreatingProcessName,
+    CreatingProcessId,
+    ModifyingProcessName,
+    ModifyingProcessId,
+    ReportId_Created,
+    ReportId_Modified</pre>
+              </div>
+          </div>
+      </div>
+    
+        <div class="obs-verified-badge">
+            <svg class="obs-verified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Verified against live Sentinel &mdash; May 29, 2026
+        </div>
+      </section>
+      <script>
+        function copyKql(btn) {
+          const query = decodeURIComponent(btn.dataset.query);
+          const span = btn.querySelector('span');
+          navigator.clipboard.writeText(query).then(() => {
+              btn.classList.add('obs-copied');
+              span.textContent = 'Copied';
+              setTimeout(() => { btn.classList.remove('obs-copied'); span.textContent = 'Copy'; }, 2000);
+          });
+        }
+      </script>
+
+        <!-- What This Catches -->
+        <section class="obs-section">
+            <h2 class="obs-section-title">What This Catches</h2>
+            <div class="obs-catches-text">
+                <p>This detection logic targets specific behavioral indicators mapped to the MITRE framework as identified in the source intelligence.</p>
+            </div>
+        </section>
+
+        <!-- MITRE ATT&CK -->
+        <section class="obs-section">
+            <h2 class="obs-section-title">MITRE ATT&CK</h2>
+            <div class="obs-mitre-group">
+                <div class="obs-mitre-label">Tactics</div>
+                <div class="obs-mitre-tags">
+                    <span class="obs-mitre-tag">TA0005</span>
+                </div>
+            </div>
+            <div class="obs-mitre-group">
+                <div class="obs-mitre-label">Techniques</div>
+                <div class="obs-mitre-tags">
+                    <span class="obs-mitre-tag">T1574</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="obs-cta-box">
+            <h3 class="obs-cta-title">Want This Detection in <span class="gradient-text">Your Environment</span>?</h3>
+            <p class="obs-cta-desc">Overwatch deploys and manages detection rules like this across your Microsoft Sentinel workspace, with continuous tuning and 24/7 monitoring.</p>
+            <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="obs-cta-btn" target="_blank">
+                Book a Consultation
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+            </a>
+        </div>
+
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="/logo.png" alt="Overwatch Security" class="footer-logo" />
+                    <p>AI-powered managed detection and response, built on the Microsoft security stack.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="/">Home</a>
+                    <a href="/#platform">Platform</a>
+                    <a href="/#services">Services</a>
+                    <a href="/#how">How We Operate</a>
+                    <a href="/blogs/">Observatory</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <a href="mailto:AskOverwatch@overwatchsecurity.tech">AskOverwatch@overwatchsecurity.tech</a>
+                    <p>Charlotte, North Carolina 28202</p>
+                    <p>(704) 292-6449</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Overwatch Security LLC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile toggle
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // Copy KQL
+        document.getElementById('obsCopyBtn')?.addEventListener('click', function() {
+            var codeEl = document.getElementById('obsKqlCode');
+            var textEl = document.getElementById('obsCopyText');
+            var btn = this;
+            if (!codeEl) return;
+
+            var text = codeEl.textContent || codeEl.innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    btn.classList.add('obs-copied');
+                    textEl.textContent = 'Copied';
+                    setTimeout(function() {
+                        btn.classList.remove('obs-copied');
+                        textEl.textContent = 'Copy';
+                    }, 2000);
+                });
+            } else {
+                // Fallback
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(textarea);
+                btn.classList.add('obs-copied');
+                textEl.textContent = 'Copied';
+                setTimeout(function() {
+                    btn.classList.remove('obs-copied');
+                    textEl.textContent = 'Copy';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

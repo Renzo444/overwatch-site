@@ -329,6 +329,72 @@
             font-size: 0.8rem;
             color: var(--text-secondary);
         }
+        /* === ARTICLE MODAL === */
+        .obs-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .obs-modal {
+            background: #0a0f1a;
+            border: 1px solid rgba(30, 181, 58, 0.12);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+        }
+        .obs-modal-close {
+            position: absolute;
+            top: 1rem; right: 1.2rem;
+            background: none; border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .obs-modal-close:hover { color: white; }
+        .obs-modal-body p { margin-bottom: 1rem; }
+        .obs-kql-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(30, 181, 58, 0.12);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Fira Code', 'SF Mono', 'Consolas', monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #c8d6e5;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+        .obs-copy-btn {
+            margin-top: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: rgba(30, 181, 58, 0.08);
+            color: var(--accent-green);
+            border: 1px solid rgba(30, 181, 58, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .obs-copy-btn:hover {
+            background: rgba(30, 181, 58, 0.15);
+            border-color: rgba(30, 181, 58, 0.35);
+        }
     </style>
 </head>
 <body>
@@ -376,14 +442,201 @@
 
             <!-- Grid -->
             <div class="obs-grid" id="obsGrid">
-                <!-- Loading state shown while fetching -->
-                <div class="obs-loading" id="obsLoading">
-                    <div class="obs-loading-spinner"></div>
-                    <p class="obs-loading-text">Loading published content...</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <a href="/blogs/detections/wp-maps-pro-bug-exploited-to-create-admin-accounts-on-wordpress-sites/" class="obs-card" data-category="ta0004">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">TA0004</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">WP Maps Pro bug exploited to create admin accounts on WordPress sites</h3>
+          <p class="obs-card-desc">We observed a report from BleepingComputer detailing active exploitation of a vulnerability in the WP Maps Pro WordPress plugin. This critical flaw allows unauthenticated attackers...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">TA0004</span></div>
+              <span class="obs-date">May 31, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/palo-alto-globalprotect-vpn-auth-bypass-flaw-now-exploited-in-attacks/" class="obs-card" data-category="initial access">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Initial Access</span>
+              <span class="obs-badge medium">80/100</span>
+          </div>
+          <h3 class="obs-card-title">Palo Alto GlobalProtect VPN auth bypass flaw now exploited in attacks</h3>
+          <p class="obs-card-desc">BleepingComputer recently reported active exploitation of a Palo Alto GlobalProtect VPN authentication bypass, CVE-2026-0257. This vulnerability allows attackers to forge authentic...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Initial Access</span></div>
+              <span class="obs-date">May 30, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/attackers-abuse-trusted-developer-tooling-to-exfiltrate-source-code-and-secrets/" class="obs-card" data-category="persistence">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Persistence</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">Attackers Abuse Trusted Developer Tooling to Exfiltrate Source Code and Secrets</h3>
+          <p class="obs-card-desc">Cyber Security News recently detailed an attack campaign where adversaries abused trusted developer tooling to exfiltrate source code and secrets. This is a significant threat as i...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Persistence</span><span class="obs-tactic-tag">Execution</span><span class="obs-tactic-tag">Command and Control</span><span class="obs-tactic-tag">Credential Access</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/microsoftsystem64-malware-uses-huggingface-datasets-for-stealthy-data-exfiltration/" class="obs-card" data-category="persistence">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Persistence</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">MicrosoftSystem64 Malware Uses HuggingFace Datasets for Stealthy Data Exfiltration</h3>
+          <p class="obs-card-desc">We recently analyzed a report from Cyber Security News detailing the "MicrosoftSystem64" malware, which leverages HuggingFace datasets for stealthy data exfiltration. This threat i...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Persistence</span><span class="obs-tactic-tag">Exfiltration</span><span class="obs-tactic-tag">Execution</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/critical-samba-vulnerability-enables-remote-code-execution-attacks/" class="obs-card" data-category="execution">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Execution</span>
+              <span class="obs-badge high">90/100</span>
+          </div>
+          <h3 class="obs-card-title">Critical Samba Vulnerability Enables Remote Code Execution Attacks</h3>
+          <p class="obs-card-desc">We recently observed reports from Cyber Security News detailing a critical Samba vulnerability, CVE-2026-4480, which enables unauthenticated Remote Code Execution (RCE). This vulne...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Execution</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/typosquatted-npm-packages-used-to-steal-cloud-and-cicd-secrets/" class="obs-card" data-category="execution">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Execution</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">Typosquatted npm packages used to steal cloud and CI/CD secrets</h3>
+          <p class="obs-card-desc">Microsoft Security recently detailed a campaign leveraging typosquatted npm packages to compromise software supply chains and steal cloud and CI/CD secrets. This activity, which we...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Execution</span><span class="obs-tactic-tag">Command and Control</span><span class="obs-tactic-tag">Defense Evasion</span><span class="obs-tactic-tag">Credential Access</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/typosquatted-npm-packages-used-to-steal-cloud-and-cicd-secrets/" class="obs-card" data-category="execution">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Execution</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">Typosquatted npm packages used to steal cloud and CI/CD secrets</h3>
+          <p class="obs-card-desc">Microsoft Security recently published details on a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets. This threat is significant as it directly...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Execution</span><span class="obs-tactic-tag">Command and Control</span><span class="obs-tactic-tag">Defense Evasion</span><span class="obs-tactic-tag">Credential Access</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/vs-code-remote-ssh-rce-lets-attackers-pivot-from-developer-machines-to-cloud-servers/" class="obs-card" data-category="ta0005">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">TA0005</span>
+              <span class="obs-badge high">85/100</span>
+          </div>
+          <h3 class="obs-card-title">VS Code Remote-SSH RCE Lets Attackers Pivot From Developer Machines to Cloud Servers</h3>
+          <p class="obs-card-desc">Cyber Security News recently reported on a critical vulnerability in VS Code's Remote-SSH extension, detailing a Time-of-Check to Time-of-Use (TOCTOU) race condition. This attack v...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">TA0005</span></div>
+              <span class="obs-date">May 29, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/new-gogs-0-day-vulnerability-lets-attackers-run-malicious-code-on-the-server-remotely/" class="obs-card" data-category="execution">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Execution</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">New Gogs 0-Day Vulnerability Lets Attackers Run Malicious Code on the Server Remotely</h3>
+          <p class="obs-card-desc">Cyber Security News recently reported a new Gogs 0-day vulnerability, detailing an argument injection flaw in branch names that could lead to remote code execution (RCE). This expl...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Execution</span></div>
+              <span class="obs-date">May 28, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/the-gentlemen-ransomware-dissecting-a-self-propagating-go-encryptor/" class="obs-card" data-category="privilege escalation">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Privilege Escalation</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">The Gentlemen ransomware: Dissecting a self-propagating Go encryptor</h3>
+          <p class="obs-card-desc">Microsoft Security recently published a detailed analysis of "The Gentlemen ransomware," a self-propagating Go encryptor. This report provided extensive behavioral indicators, incl...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Privilege Escalation</span><span class="obs-tactic-tag">Defense Evasion</span><span class="obs-tactic-tag">Impact</span></div>
+              <span class="obs-date">May 28, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/new-linux-cifswitch-kernel-vulnerability-allows-attackers-to-gain-root-access/" class="obs-card" data-category="ta0004 - privilege escalation">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">TA0004 - Privilege Escalation</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">New Linux CIFSwitch Kernel Vulnerability Allows Attackers to Gain Root Access</h3>
+          <p class="obs-card-desc">Cyber Security News recently reported on the CIFSwitch kernel vulnerability, a Linux LPE that allows attackers to gain root access by exploiting specific kernel functions and helpe...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">TA0004 - Privilege Escalation</span></div>
+              <span class="obs-date">May 28, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/new-linux-cifswitch-kernel-vulnerability-allows-attackers-to-gain-root-access/" class="obs-card" data-category="ta0004 - privilege escalation">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">TA0004 - Privilege Escalation</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">New Linux CIFSwitch Kernel Vulnerability Allows Attackers to Gain Root Access</h3>
+          <p class="obs-card-desc">We recently analyzed a report from Cyber Security News detailing a new Linux CIFSwitch kernel vulnerability that allows attackers to gain root access. This local privilege escalati...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">TA0004 - Privilege Escalation</span></div>
+              <span class="obs-date">May 28, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/new-linux-cifswitch-kernel-vulnerability-allows-attackers-to-gain-root-access/" class="obs-card" data-category="ta0004 - privilege escalation">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">TA0004 - Privilege Escalation</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">New Linux CIFSwitch Kernel Vulnerability Allows Attackers to Gain Root Access</h3>
+          <p class="obs-card-desc">We recently observed a detailed report from Cyber Security News describing a new Linux kernel vulnerability, dubbed 'CIFSwitch,' which allows for local privilege escalation (LPE). ...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">TA0004 - Privilege Escalation</span></div>
+              <span class="obs-date">May 28, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/cisa-gives-feds-4-days-to-patch-actively-exploited-cpanel-plugin-flaw/" class="obs-card" data-category="initial access">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Initial Access</span>
+              <span class="obs-badge high">90/100</span>
+          </div>
+          <h3 class="obs-card-title">CISA gives feds 4 days to patch actively exploited cPanel plugin flaw</h3>
+          <p class="obs-card-desc">BleepingComputer recently reported on active exploitation of a cPanel plugin flaw, CVE-2026-48172, prompting CISA to mandate patching for federal agencies. This vulnerability repre...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Initial Access</span></div>
+              <span class="obs-date">May 27, 2026</span>
+          </div>
+      </a>
+    
+      <a href="/blogs/detections/ai-chatbot-recommendations-redirect-users-to-cryptojacking-malware-sites/" class="obs-card" data-category="command and control">
+          <div class="obs-card-header">
+              <span class="obs-badge obs-badge--detection">Command and Control</span>
+              <span class="obs-badge high">95/100</span>
+          </div>
+          <h3 class="obs-card-title">AI Chatbot Recommendations Redirect Users to Cryptojacking Malware Sites</h3>
+          <p class="obs-card-desc">We recently observed a detailed report from The Hacker News outlining a cryptojacking campaign that leverages AI chatbot recommendations to redirect users to malicious sites. This ...</p>
+          <div class="obs-card-meta">
+              <div class="obs-tactics"><span class="obs-tactic-tag">Command and Control</span><span class="obs-tactic-tag">Defense Evasion</span><span class="obs-tactic-tag">Execution</span></div>
+              <span class="obs-date">May 27, 2026</span>
+          </div>
+      </a>
+    </div></div></section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -414,6 +667,7 @@
         </div>
     </footer>
 
+    
     <script>
         // Nav scroll effect
         window.addEventListener('scroll', () => {
@@ -426,135 +680,26 @@
             document.querySelector('.nav-links').classList.toggle('open');
         });
 
-        // --- Observatory data rendering ---
-        const grid = document.getElementById('obsGrid');
-        const loadingEl = document.getElementById('obsLoading');
-        let allItems = [];
-
-        function formatDate(dateStr) {
-            const d = new Date(dateStr);
-            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        }
-
-        function truncate(str, len) {
-            if (!str) return '';
-            return str.length > len ? str.substring(0, len) + '...' : str;
-        }
-
-        function severityClass(severity) {
-            const s = (severity || '').toLowerCase();
-            if (s === 'high' || s === 'critical') return 'obs-badge--high';
-            if (s === 'medium') return 'obs-badge--medium';
-            if (s === 'low') return 'obs-badge--low';
-            return 'obs-badge--informational';
-        }
-
-        function renderDetectionCard(item) {
-            const tactics = (item.mitreTactics || []).map(t =>
-                `<span class="obs-tactic-tag">${t}</span>`
-            ).join('');
-
-            return `
-                <a href="/blogs/detections/${item.slug}.html" class="obs-card">
-                    <div class="obs-card-header">
-                        <span class="obs-badge obs-badge--detection">Detection</span>
-                        ${item.severity ? `<span class="obs-badge obs-badge--severity ${severityClass(item.severity)}">${item.severity}</span>` : ''}
-                    </div>
-                    <h3 class="obs-card-title">${item.title}</h3>
-                    <p class="obs-card-desc">${truncate(item.description, 180)}</p>
-                    <div class="obs-card-meta">
-                        <div class="obs-tactics">${tactics}</div>
-                        <span class="obs-date">${item.publishedAt ? formatDate(item.publishedAt) : ''}</span>
-                    </div>
-                </a>
-            `;
-        }
-
-        function renderHuntCard(item) {
-            const tactics = (item.mitreTactics || []).map(t =>
-                `<span class="obs-tactic-tag">${t}</span>`
-            ).join('');
-
-            const findingsLabel = item.findingsCount != null
-                ? `<span class="obs-findings-count">${item.findingsCount} finding${item.findingsCount !== 1 ? 's' : ''}</span>`
-                : '';
-
-            return `
-                <a href="/blogs/hunts/${item.id}.html" class="obs-card">
-                    <div class="obs-card-header">
-                        <span class="obs-badge obs-badge--hunt">Hunt Report</span>
-                        ${findingsLabel}
-                    </div>
-                    <h3 class="obs-card-title">${item.title || 'Threat Hunt Report'}</h3>
-                    <p class="obs-card-desc">${truncate(item.hypothesis, 180)}</p>
-                    <div class="obs-card-meta">
-                        <div class="obs-tactics">${tactics}</div>
-                        <span class="obs-date">${item.publishedAt ? formatDate(item.publishedAt) : ''}</span>
-                    </div>
-                </a>
-            `;
-        }
-
-        function renderEmpty() {
-            return `
-                <div class="obs-empty">
-                    <svg class="obs-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                        <path d="M19 10H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2Z"/>
-                        <path d="M12 15v7"/>
-                        <path d="M8 22h8"/>
-                    </svg>
-                    <h3 class="obs-empty-title">No published content yet</h3>
-                    <p class="obs-empty-desc">
-                        Detections and hunt reports will appear here as they are verified and deployed to production Azure Sentinel workspaces.
-                    </p>
-                </div>
-            `;
-        }
-
-        function renderGrid(filter) {
-            let items = allItems;
-            if (filter === 'detection') items = allItems.filter(i => i.type === 'detection');
-            if (filter === 'hunt') items = allItems.filter(i => i.type === 'hunt');
-
-            if (items.length === 0) {
-                grid.innerHTML = renderEmpty();
-                return;
-            }
-
-            // Sort by date descending
-            items.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0));
-
-            grid.innerHTML = items.map(item => {
-                if (item.type === 'detection') return renderDetectionCard(item);
-                if (item.type === 'hunt') return renderHuntCard(item);
-                return '';
-            }).join('');
-        }
-
-        // Filter buttons
-        document.getElementById('obsFilters').addEventListener('click', (e) => {
+        // Category Filter buttons
+        document.getElementById('obsFilters')?.addEventListener('click', (e) => {
             const btn = e.target.closest('.obs-filter-btn');
             if (!btn) return;
+            
             document.querySelectorAll('.obs-filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderGrid(btn.dataset.filter);
-        });
-
-        // Fetch data
-        fetch('/blogs/data.json')
-            .then(res => {
-                if (!res.ok) throw new Error('Failed to load data');
-                return res.json();
-            })
-            .then(data => {
-                allItems = Array.isArray(data) ? data : [];
-                renderGrid('all');
-            })
-            .catch(() => {
-                allItems = [];
-                renderGrid('all');
+            
+            const filter = btn.dataset.filter;
+            const cards = document.querySelectorAll('.obs-card');
+            
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.category.includes(filter.toLowerCase())) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
+        });
     </script>
+  
 </body>
 </html>
