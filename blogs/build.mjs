@@ -75,9 +75,46 @@ async function buildSite() {
     const htmlBody = (article.article || '').split(/\n{2,}/).map(p => `<p>${p.trim()}</p>`).join('');
 
     // Generate KQL blocks
-    const kqlBlocks = (article.kqlQueries || []).map(q => `
-      <div style="margin-bottom:1.5rem">
-          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.4rem;font-weight:600">${q.tactic} / ${q.technique}</div>
+    const kqlBlocks = (article.kqlQueries || []).map(q => {
+      // Try to extract an inline Description from the KQL query itself
+      let desc = '';
+      const descMatch = q.query.match(/Description\s*=\s*"([^"]+)"/);
+      if (descMatch) {
+        desc = descMatch[1];
+      } else {
+        // Synthesize a description from the table name and filters
+        const tableMatch = q.query.match(/^(\w+)\s*$/m) || q.query.match(/^(\w+)\s*\n/m) || q.query.match(/^(\w+Events?|SecurityEvent|Syslog|SigninLogs|AuditLogs|CommonSecurityLog|OfficeActivity|ThreatIntelligenceIndicator)/m);
+        const tableName = tableMatch ? tableMatch[1] : 'telemetry';
+        
+        const tableDescriptions = {
+          'DeviceProcessEvents': 'process execution activity',
+          'DeviceNetworkEvents': 'network connection activity',
+          'DeviceFileEvents': 'file system activity',
+          'DeviceRegistryEvents': 'registry modification activity',
+          'DeviceImageLoadEvents': 'DLL/image load activity',
+          'DeviceLogonEvents': 'logon activity',
+          'SecurityEvent': 'Windows security events',
+          'Syslog': 'syslog entries',
+          'SigninLogs': 'Azure AD sign-in activity',
+          'AuditLogs': 'audit log activity',
+          'CommonSecurityLog': 'CEF-formatted security events',
+          'OfficeActivity': 'Office 365 activity',
+          'EmailEvents': 'email activity',
+          'UrlClickEvents': 'URL click activity',
+          'CloudAppEvents': 'cloud application activity',
+          'IdentityLogonEvents': 'identity logon activity',
+          'ThreatIntelligenceIndicator': 'threat intelligence indicators',
+        };
+        
+        const tableDesc = tableDescriptions[tableName] || 'endpoint telemetry';
+        const techClean = q.technique.replace(/\s*\(T\d+[\.\d]*\)\s*$/, '');
+        desc = `Monitors ${tableDesc} for behavioral patterns associated with ${techClean} (${q.tactic}). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.`;
+      }
+
+      return `
+      <div style="margin-bottom:2rem">
+          <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">${q.tactic} / ${q.technique}</div>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">${desc}</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
@@ -91,7 +128,8 @@ async function buildSite() {
               </div>
           </div>
       </div>
-    `).join('');
+      `;
+    }).join('');
 
     const tactics = (article.kqlQueries || [])
       .map(q => q.tactic)
