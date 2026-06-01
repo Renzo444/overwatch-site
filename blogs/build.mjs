@@ -122,8 +122,9 @@ async function buildSite() {
 
     // Replace the default KQL block with our dynamic blocks
     finalHtml = finalHtml.replace(
-      /<section class="obs-section">[\s\S]*?id="obsKqlCode"[\s\S]*?<\/section>/,
-      `<section class="obs-section">
+      /<!-- Detection Rule -->\s*<section class="obs-section">[\s\S]*?id="obsKqlCode"[\s\S]*?<\/section>/,
+      `<!-- Detection Rule -->
+      <section class="obs-section">
         <h2 class="obs-section-title">Detection Rules</h2>
         ${kqlBlocks}
         <div class="obs-verified-badge">

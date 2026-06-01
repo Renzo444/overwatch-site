@@ -641,6 +641,24 @@
 
         <!-- Threat Overview -->
         <section class="obs-section">
+            <h2 class="obs-section-title">Threat Overview</h2>
+            <div class="obs-body-text">
+                <p>Microsoft Security recently published details on a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets. This threat is significant as it directly targets the software supply chain (T1195.002), posing a risk to development environments and cloud infrastructure. Our analysis of their report informed the development of several KQL detection rules.</p><p>We generated queries to identify various stages of this attack. For initial execution (T1059.007), we monitor DeviceProcessEvents for `node.exe` or `npm.exe` processes executing `preinstall`, `postinstall`, or `install` commands involving known malicious package names like "@vpmdhaj". To detect command and control (T1071.001), our query examines DeviceNetworkEvents for connections to the C2 domain `aab.sportsontheweb.net` or the unique `X-Supply: 1` HTTP header, as detailed by Microsoft Security.</p><p>Further, we developed detections for defense evasion (T1218) and credential access (T1552.009). Our defense evasion query looks for `node.exe` processes making network connections to `github.com/oven-sh/bun/releases` in DeviceNetworkEvents, indicating the download of the Bun runtime for proxy execution. For credential theft, we monitor DeviceNetworkEvents for `node.exe`, `bun.exe`, or `payload.bin` processes attempting to connect to cloud metadata service IPs such as `169.254.169.254` or `169.254.170.2`. Finally, another execution query (T1059.007) in DeviceProcessEvents targets the `__DAEMONIZED=1` flag in command lines, a specific indicator of the malicious payload's execution.</p><p>Defenders should deploy and monitor these KQL queries in their environments, focusing on `DeviceProcessEvents` and `DeviceNetworkEvents` tables. Reviewing any hits, especially the `ProcessCommandLine` and `RemoteUrl` fields, is crucial to identify potential supply chain compromises and attempts to steal cloud credentials. Consider tuning these queries with known legitimate processes to minimize false positives.</p>
+            </div>
+        </section>
+
+        <!-- Source -->
+        <section class="obs-section">
+            <h2 class="obs-section-title">Source</h2>
+            <div class="obs-source-block">
+                <div class="obs-source-label">Threat Intelligence Source</div>
+                <a href="https://www.microsoft.com/en-us/security/blog/2026/05/28/typosquatted-npm-packages-used-steal-cloud-ci-cd-secrets/" class="obs-source-link" target="_blank" rel="noopener noreferrer">https://www.microsoft.com/en-us/security/blog/2026/05/28/typosquatted-npm-packages-used-steal-cloud-ci-cd-secrets/</a>
+                <div class="obs-source-domain">Microsoft Security</div>
+            </div>
+        </section>
+
+        <!-- Detection Rule -->
+      <section class="obs-section">
         <h2 class="obs-section-title">Detection Rules</h2>
         
       <div style="margin-bottom:1.5rem">

@@ -641,6 +641,24 @@
 
         <!-- Threat Overview -->
         <section class="obs-section">
+            <h2 class="obs-section-title">Threat Overview</h2>
+            <div class="obs-body-text">
+                <p>Cyber Security News recently detailed an attack campaign where adversaries abused trusted developer tooling to exfiltrate source code and secrets. This is a significant threat as it targets the software supply chain (T1195.002) and sensitive intellectual property, making robust detection crucial for development environments.</p><p>Our analysis led to several KQL queries to identify these behaviors. For persistence (T1543.001), we look for the creation of `com.user.kitty-monitor.plist` within the `/Library/LaunchAgents/` directory using `DeviceFileEvents`. We also detect the staging of the Python backdoor payload, `cat.py`, in `/.local/share/kitty/` via `DeviceFileEvents`, indicating execution (T1059.006).</p><p>To identify command and control (T1102.002), our `DeviceNetworkEvents` query targets network connections to `api.github.com/search/commits` containing the specific `q=firedalazer` string, indicative of the GitHub dead-drop resolver. For credential access (T1552.005), we monitor `DeviceNetworkEvents` for connections to cloud instance metadata IPs like `169.254.169.254` and `169.254.170.2`, specifically flagging those not initiated by legitimate cloud processes such as `aws` or `azure`.</p><p>Finally, we leverage a union of `DeviceFileEvents` and `DeviceProcessEvents` to detect the execution of known malicious components (T1204.002) by their SHA256 hashes, including `1a4afce34918bdc74ae3f31edaffffaa0ee074d83618f53edfd88137927340b8`. This provides a direct indicator match for the reported malware.</p><p>Defenders should actively monitor file system changes in user LaunchAgent directories and sensitive application paths, scrutinize network egress for unusual GitHub API calls, and audit attempts to access cloud metadata services from non-standard processes. Tuning these detections to your specific environment can help reduce false positives.</p>
+            </div>
+        </section>
+
+        <!-- Source -->
+        <section class="obs-section">
+            <h2 class="obs-section-title">Source</h2>
+            <div class="obs-source-block">
+                <div class="obs-source-label">Threat Intelligence Source</div>
+                <a href="https://cybersecuritynews.com/attackers-abuse-trusted-developer-tooling/" class="obs-source-link" target="_blank" rel="noopener noreferrer">https://cybersecuritynews.com/attackers-abuse-trusted-developer-tooling/</a>
+                <div class="obs-source-domain">Cyber Security News</div>
+            </div>
+        </section>
+
+        <!-- Detection Rule -->
+      <section class="obs-section">
         <h2 class="obs-section-title">Detection Rules</h2>
         
       <div style="margin-bottom:1.5rem">
