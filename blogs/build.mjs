@@ -76,16 +76,35 @@ async function buildSite() {
 
     // Generate KQL blocks
     const kqlBlocks = (article.kqlQueries || []).map(q => {
-      // Try to extract an inline Description from the KQL query itself
+      // Priority: 1) reasoning from detection library, 2) detectionStrategy summary, 
+      // 3) inline Description from KQL, 4) synthesized fallback
       let desc = '';
-      const descMatch = q.query.match(/Description\s*=\s*"([^"]+)"/);
-      if (descMatch) {
-        desc = descMatch[1];
-      } else {
-        // Synthesize a description from the table name and filters
-        const tableMatch = q.query.match(/^(\w+)\s*$/m) || q.query.match(/^(\w+)\s*\n/m) || q.query.match(/^(\w+Events?|SecurityEvent|Syslog|SigninLogs|AuditLogs|CommonSecurityLog|OfficeActivity|ThreatIntelligenceIndicator)/m);
+      
+      if (q.reasoning) {
+        // Best source: the AI-generated reasoning from the detection library
+        desc = q.reasoning;
+      } else if (q.detectionStrategy) {
+        // Second best: compose from detectionStrategy fields
+        const strat = q.detectionStrategy;
+        const parts = Object.entries(strat)
+          .filter(([, v]) => v)
+          .map(([k, v]) => `${k.replace(/([A-Z])/g, ' $1').trim()}: ${v}`)
+          .join('. ');
+        desc = parts || '';
+      }
+      
+      if (!desc) {
+        // Try extracting an inline Description from the KQL query itself
+        const descMatch = q.query.match(/Description\s*=\s*"([^"]+)"/);
+        if (descMatch) {
+          desc = descMatch[1];
+        }
+      }
+      
+      if (!desc) {
+        // Last resort: synthesize from table + technique
+        const tableMatch = q.query.match(/^(\w+Events?|SecurityEvent|Syslog|SigninLogs|AuditLogs|CommonSecurityLog|OfficeActivity|ThreatIntelligenceIndicator)/m);
         const tableName = tableMatch ? tableMatch[1] : 'telemetry';
-        
         const tableDescriptions = {
           'DeviceProcessEvents': 'process execution activity',
           'DeviceNetworkEvents': 'network connection activity',
@@ -105,7 +124,6 @@ async function buildSite() {
           'IdentityLogonEvents': 'identity logon activity',
           'ThreatIntelligenceIndicator': 'threat intelligence indicators',
         };
-        
         const tableDesc = tableDescriptions[tableName] || 'endpoint telemetry';
         const techClean = q.technique.replace(/\s*\(T\d+[\.\d]*\)\s*$/, '');
         desc = `Monitors ${tableDesc} for behavioral patterns associated with ${techClean} (${q.tactic}). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.`;
