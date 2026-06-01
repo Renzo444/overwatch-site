@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typosquatted npm packages used to steal cloud and CI/CD secrets | Overwatch Observatory</title>
-    <meta name="description" content="Microsoft Security recently published details on a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets. This threat...">
+    <meta name="description" content="Microsoft Security recently detailed a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets, a critical supply chain...">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.overwatchsecurity.tech/blogs/detections/typosquatted-npm-packages-used-to-steal-cloud-and-cicd-secrets">
     <!-- Open Graph -->
     <meta property="og:title" content="Typosquatted npm packages used to steal cloud and CI/CD secrets | Overwatch Observatory">
-    <meta property="og:description" content="Microsoft Security recently published details on a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets. This threat...">
+    <meta property="og:description" content="Microsoft Security recently detailed a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets, a critical supply chain...">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.overwatchsecurity.tech/blogs/detections/typosquatted-npm-packages-used-to-steal-cloud-and-cicd-secrets">
     <meta property="og:site_name" content="Overwatch Security">
@@ -643,7 +643,7 @@
         <section class="obs-section">
             <h2 class="obs-section-title">Threat Overview</h2>
             <div class="obs-body-text">
-                <p>Microsoft Security recently published details on a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets. This threat is significant as it directly targets the software supply chain (T1195.002), posing a risk to development environments and cloud infrastructure. Our analysis of their report informed the development of several KQL detection rules.</p><p>We generated queries to identify various stages of this attack. For initial execution (T1059.007), we monitor DeviceProcessEvents for `node.exe` or `npm.exe` processes executing `preinstall`, `postinstall`, or `install` commands involving known malicious package names like "@vpmdhaj". To detect command and control (T1071.001), our query examines DeviceNetworkEvents for connections to the C2 domain `aab.sportsontheweb.net` or the unique `X-Supply: 1` HTTP header, as detailed by Microsoft Security.</p><p>Further, we developed detections for defense evasion (T1218) and credential access (T1552.009). Our defense evasion query looks for `node.exe` processes making network connections to `github.com/oven-sh/bun/releases` in DeviceNetworkEvents, indicating the download of the Bun runtime for proxy execution. For credential theft, we monitor DeviceNetworkEvents for `node.exe`, `bun.exe`, or `payload.bin` processes attempting to connect to cloud metadata service IPs such as `169.254.169.254` or `169.254.170.2`. Finally, another execution query (T1059.007) in DeviceProcessEvents targets the `__DAEMONIZED=1` flag in command lines, a specific indicator of the malicious payload's execution.</p><p>Defenders should deploy and monitor these KQL queries in their environments, focusing on `DeviceProcessEvents` and `DeviceNetworkEvents` tables. Reviewing any hits, especially the `ProcessCommandLine` and `RemoteUrl` fields, is crucial to identify potential supply chain compromises and attempts to steal cloud credentials. Consider tuning these queries with known legitimate processes to minimize false positives.</p>
+                <p>Microsoft Security recently detailed a campaign involving typosquatted npm packages designed to steal cloud and CI/CD secrets, a critical supply chain compromise (T1195.002). This activity leverages npm lifecycle hooks (T1059.007) to execute malicious code, ultimately targeting cloud credentials (T1552.009) and establishing command and control (T1071.001) via custom HTTP headers. Our analysis focused on generating high-fidelity detections for these specific tactics.</p><p>We developed several KQL queries leveraging DeviceProcessEvents and DeviceNetworkEvents to identify this activity. One query targets the initial execution, looking for `node.exe`, `npm.exe`, or `npx.exe` processes executing `preinstall`, `postinstall`, or `install` hooks in conjunction with known malicious package names like "@vpmdhaj" or "opensearch-setup". This allows defenders to identify attempts to install these specific malicious packages within their environments.</p><p>Another query focuses on command and control, searching DeviceNetworkEvents for connections to the C2 domain "aab.sportsontheweb.net" or the presence of the unique "X-Supply: 1" HTTP header, which indicates active beaconing by the threat actor. For defense evasion (T1218), we monitor DeviceNetworkEvents for `node.exe` processes connecting to "github.com/oven-sh/bun/releases", signaling the download of the Bun runtime for proxy execution. This helps identify the setup phase of the attack.</p><p>To detect credential access attempts, a KQL query on DeviceNetworkEvents identifies `node.exe`, `bun.exe`, or `payload.bin` processes attempting to connect to cloud metadata service IPs such as "169.254.169.254" or "169.254.170.2". This directly flags attempts to steal cloud credentials (T1552.009). Finally, we also look for the persistence mechanism by identifying processes or initiating processes with "__DAEMONIZED=1" in their command line, a specific indicator of the daemonized payload.</p><p>Defenders should implement these queries to monitor for suspicious npm and node execution, network connections to known C2 infrastructure, and attempts to access cloud metadata services from development or CI/CD environments. Regular review of process command lines and network traffic from build agents is crucial for detecting such supply chain attacks.</p>
             </div>
         </section>
 
@@ -663,7 +663,7 @@
         
       <div style="margin-bottom:2rem">
           <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">Execution / T1059.007</div>
-          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">Monitors process execution activity for behavioral patterns associated with T1059.007 (Execution). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.</p>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">This detection identifies the initial execution vector of the attack, where npm lifecycle hooks ('preinstall', 'install', 'postinstall') are used to run malicious code. The query is scoped to the specific malicious package names identified in the vpmdhaj campaign, making it a high-fidelity indicator of compromise. This is an ATTACKER action.</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
@@ -686,7 +686,7 @@ DeviceProcessEvents
       
       <div style="margin-bottom:2rem">
           <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">Command and Control / T1071.001</div>
-          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">Monitors network connection activity for behavioral patterns associated with T1071.001 (Command and Control). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.</p>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">This query detects the unique C2 beacon of the Gen-1 stager. The combination of the specific C2 domain 'aab.sportsontheweb.net' and the custom HTTP header 'X-Supply: 1' are strong, high-fidelity indicators of this specific threat actor's malware. This is an ATTACKER action.</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
@@ -707,7 +707,7 @@ DeviceProcessEvents
       
       <div style="margin-bottom:2rem">
           <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">Defense Evasion / T1218</div>
-          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">Monitors network connection activity for behavioral patterns associated with T1218 (Defense Evasion). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.</p>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">This detection targets the Gen-2 stager's technique of downloading the legitimate Bun runtime to use as a loader for its malicious payload. A Node.js or npm process initiating a download from the official Bun GitHub releases page is highly anomalous and a key behavior of this attack. This is an ATTACKER action.</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
@@ -728,7 +728,7 @@ DeviceProcessEvents
       
       <div style="margin-bottom:2rem">
           <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">Credential Access / T1552.009</div>
-          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">Monitors network connection activity for behavioral patterns associated with T1552.009 (Credential Access). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.</p>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">The final payload attempts to steal AWS credentials by querying the EC2 Instance Metadata Service (IMDS). A Node.js or Bun process making network connections to the IMDS endpoint (169.254.169.254) is a strong signal of credential theft activity, especially in a developer or CI/CD environment where such behavior is not standard for these processes. This is an ATTACKER action.</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
@@ -749,7 +749,7 @@ DeviceProcessEvents
       
       <div style="margin-bottom:2rem">
           <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-green);margin-bottom:0.5rem;font-weight:600">Execution / T1059.007</div>
-          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">Monitors process execution activity for behavioral patterns associated with T1059.007 (Execution). Deploy this query in Microsoft Sentinel to surface suspicious activity in your environment.</p>
+          <p style="font-size:0.88rem;line-height:1.65;color:var(--text-secondary);margin-bottom:0.75rem">This detection hunts for the unique environment variable '__DAEMONIZED=1' used by the malware to spawn its second stage as a detached process. This string is a custom artifact of the malware and is extremely unlikely to appear in legitimate software, making this a high-fidelity indicator of this specific campaign's execution phase. This is an ATTACKER action.</p>
           <div class="obs-code-container">
               <div class="obs-code-header">
                   <span class="obs-code-lang">KQL</span>
