@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to run an agent | Overwatch Console docs</title>
+    <meta name="description" content="Start an agent on request from its workspace on the Agents page, instead of waiting for its schedule.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/run-an-agent/">
+    <meta property="og:title" content="How to run an agent | Overwatch Console docs">
+    <meta property="og:description" content="Start an agent on request from its workspace on the Agents page, instead of waiting for its schedule.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/run-an-agent/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/" aria-current="page">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to run an agent</h1>
+<p>Start an agent on request from its workspace on the Agents page, instead of waiting for its schedule.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>Analyst</strong> or <strong>Admin</strong> role. Viewers see the buttons disabled.</li><li>Caleb's detonation lab, and sending an Orion hunt to Renzo, need the <strong>Admin</strong> role.</li><li>Dax and Demitry read your Sentinel incidents, so your tenant's Sentinel connection must be set up.</li></ul>
+<h2 id="steps">Steps</h2>
+<ol><li>In the sidebar, open <strong>Agents</strong> &gt; <strong>Agents</strong>.</li><li>Click the agent's card to open its workspace.</li><li>Click the agent's main button in the summary row, or use the workspace controls:<ul><li><strong>Dax</strong>: pick an incident in the <strong>Analyze an incident</strong> panel and click <strong>Analyze</strong>, or click <strong>Analyze all queued</strong> to let the server pick every eligible queued incident. In the <strong>Triage runs</strong> list, an unassessed incident also has <strong>Analyze now</strong>.</li><li><strong>Demitry</strong>: click <strong>Run QA now</strong>. Demitry reviews one incident per run.</li><li><strong>Marien</strong>: click <strong>Refresh recommendations</strong>. This reloads proposals and asks Marien for a new tuning poll.</li><li><strong>Orion</strong>: click <strong>Run proactive hunt</strong>. To run a saved proposal or a failed hunt, select it in <strong>Recorded threat hunts</strong> and click <strong>Execute hunt</strong> or <strong>Retry hunt</strong>. To save a proposal from an article, paste the URL and click <strong>Ingest intel</strong>.</li><li><strong>Renzo</strong>: paste an article URL and click <strong>Generate proposal</strong>, or click <strong>Run research cycle</strong>.</li><li><strong>Maxwell</strong>: click <strong>Review deployments</strong>, select a pending rule and click <strong>Review for deployment</strong>.</li><li><strong>Caleb</strong> (admin): click <strong>Select a sample</strong>, choose <strong>Analysis mode</strong> and <strong>VM image</strong>, then click <strong>Launch sandbox</strong>.</li><li><strong>Atlas</strong>: click <strong>Open copilot</strong> and type your question. See <a href="/docs/how-to/ask-atlas/">How to ask Atlas</a>.</li></ul></li><li>Wait for the toast message. While a run is in progress the button shows &quot;Analyzing…&quot;, &quot;Reviewing…&quot;, &quot;Refreshing…&quot;, &quot;Hunting…&quot; or &quot;Researching…&quot;.</li><li>Open the <strong>Outputs</strong> tab, or the workspace list, to see the result once the agent records it.</li></ol>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li>The server accepts the request and the agent works in the background. Acceptance is not completion; results appear when the agent records them.</li><li>Every run is recorded in <a href="/docs/features/agent-audit/">Agent Audit</a> and shows on the agent's roster card and <strong>Outputs</strong> tab.</li><li>Dax adds its assessment as a comment on the Sentinel incident. At autonomy level 1 or higher it also hands the incident to Demitry for QA.</li><li>Demitry may close a confirmed false or benign positive if your policy rules allow it, escalate to a human, or file response requests in <a href="/docs/features/approvals/">Approvals</a>.</li><li>Marien, Renzo and Orion produce proposals, drafts and hunt records. Nothing is deployed by these runs, except that Marien deploys tuning on its own when tuning auto-approve is on.</li><li>Maxwell's review records whether the rule may be deployed. Deploying is a separate admin step: <strong>Approve &amp; deploy</strong>.</li></ul>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul><li><strong>The button is disabled with &quot;Analysts and administrators can run …&quot;</strong>: your role is Viewer. Ask an admin.</li><li><strong>&quot;Your role cannot run this action.&quot;</strong>: the server refused the request for your role.</li><li><strong>&quot;Can't review yet: no QA evidence or passing backtest is recorded for this rule.&quot;</strong> (Maxwell): send the rule to QA from Renzo's workspace first.</li><li><strong>&quot;Load a writable tenant workspace before generating detections.&quot;</strong> (Renzo, Orion): the detection library did not load. Refresh the page.</li><li><strong>&quot;No detection was drafted.&quot;</strong> (Renzo): the article did not support a behavioral detection.</li><li><strong>Orion reports the daily hunt limit</strong>: Orion runs at most 10 scheduled and 20 requested hunts per day.</li><li><strong>Renzo refuses a research cycle</strong>: the daily allowance shown under the panel is used up for today (UTC).</li><li><strong>&quot;Latest run reported a problem.&quot;</strong> on the workspace: open <strong>Outputs</strong> or Agent Audit to read the failure.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/agents/">Agents</a></li><li><a href="/docs/concepts/the-agents/">The agents</a></li><li><a href="/docs/how-to/triage-an-incident/">How to triage an incident</a></li><li><a href="/docs/how-to/run-a-threat-hunt/">How to run a threat hunt</a></li><li><a href="/docs/how-to/turn-intel-into-a-detection/">How to turn intel into a detection</a></li><li><a href="/docs/how-to/review-agent-decisions/">How to review agent decisions</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

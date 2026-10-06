@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to approve or deny an action | Overwatch Console docs</title>
+    <meta name="description" content="Decide a request an agent filed in Approvals, and, for an approved containment response, run it.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/approve-or-deny-an-action/">
+    <meta property="og:title" content="How to approve or deny an action | Overwatch Console docs">
+    <meta property="og:description" content="Decide a request an agent filed in Approvals, and, for an approved containment response, run it.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/approve-or-deny-an-action/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/" aria-current="page">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to approve or deny an action</h1>
+<p>Decide a request an agent filed in Approvals, and, for an approved containment response, run it.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>admin</strong> role to approve, deny, select a response or run one. Analysts can read requests and add comments; viewers can read them.</li><li>To run an approved containment response, your tenant needs response provider credentials for Microsoft Entra ID (disable account) or Microsoft Defender for Endpoint (isolate host). An administrator sets them under <strong>Reconciliation &gt; Response provider configuration</strong> on the Approvals page.</li><li>Requests expire 24 hours after they are created. Decide, and run an approved response, within that window.</li></ul>
+<h2 id="steps">Steps</h2>
+<h3 id="approve-a-request">Approve a request</h3>
+<ol><li>In the sidebar, open <strong>Operate &gt; Approvals</strong>. The <strong>Pending</strong> tab is selected.</li><li>Find the request's card. The highest-risk requests are first.</li><li>Read the <strong>Dax · analysis</strong>, <strong>Demitry · QA</strong> and <strong>Policy</strong> tiles. Open <strong>More evidence</strong> for the response, the target ID and the query that returned the target.</li><li>To open the linked incident, click its number next to &quot;Requested by&quot;.</li><li>Click <strong>Approve</strong>.</li><li>In the dialog, check the <strong>Scope</strong>, <strong>What happens</strong>, <strong>Rollback</strong> and <strong>Quorum</strong>.</li><li>Optionally type a <strong>Rationale</strong>. It is stored with your vote and shown on the request.</li><li>Click <strong>Approve</strong>, <strong>Approve isolation</strong> or <strong>Approve account disable</strong>.</li><li>Within 10 seconds, click <strong>Undo</strong> if you changed your mind. Otherwise your vote is recorded.</li></ol>
+<h3 id="deny-a-request">Deny a request</h3>
+<ol><li>On the request's card, click <strong>Deny</strong>.</li><li>Pick a <strong>Reason</strong>: False positive, Wrong target, Business impact too high, Needs more evidence, Already handled or Policy exception.</li><li>Optionally type a note under <strong>What should the agents know?</strong></li><li>Leave <strong>Apply to similar future cases</strong> on if the agents should cite your note on similar cases, or turn it off for this request only.</li><li>Click <strong>Deny &amp; store feedback</strong>. To deny without giving a reason, click <strong>Deny without feedback</strong> instead.</li></ol>
+<h3 id="select-a-response-for-a-confirmed-threat">Select a response for a confirmed threat</h3>
+<p>Some requests read &quot;Select a response for confirmed threat&quot;. Demitry confirmed the threat but did not name a target.</p>
+<ol><li>On that card, choose the <strong>Proposed response</strong>: <strong>Disable account (no session revocation)</strong> or <strong>Isolate endpoint (Full)</strong>.</li><li>Enter the <strong>Entra user object ID</strong> or <strong>Defender machine ID</strong> from your investigation.</li><li>Write the <strong>Evidence and response justification</strong>.</li><li>Click <strong>Create response approval</strong>. A new request appears in the queue. Approve it with the steps above.</li></ol>
+<h3 id="run-an-approved-response">Run an approved response</h3>
+<ol><li>Approve a containment request (once the quorum is met, <strong>Run the approved response</strong> appears on the card), or open the <strong>History</strong> tab and find the approved request.</li><li>Under <strong>Run the approved response</strong>, click <strong>Review execution</strong>.</li><li>Check the response, target ID, incident and directory.</li><li>Click <strong>Confirm response execution</strong>, or <strong>Cancel execution</strong> to back out.</li><li>Click <strong>Refresh response</strong> to see the provider's status.</li></ol>
+<p>You can also approve or deny from the <strong>Needs your decision</strong> card on Overview and from <strong>Awaiting your approval</strong> in an incident's panel. Both open the same dialogs.</p>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li>A request is approved once the number of administrators it requires have approved it. A single deny resolves it as denied. Each administrator votes once.</li><li>Approving a request with no bound response records the decision for the agent that owns the work. It does not run anything.</li><li>Approving a containment request does not run it. It only runs when an administrator confirms it under <strong>Run the approved response</strong>.</li><li>At that point the approval, its expiry, the target and your tenant's policy are checked again before anything is sent. The outcome is written to Agent Audit.</li><li>Isolating a host blocks all network traffic except the Defender management channel and cuts active sessions on the device. To undo it, release the device from isolation in Defender, or request a release through Approvals.</li><li>Disabling an account stops it signing in. Existing sessions are not revoked; revoke them separately if needed. To undo it, re-enable the account in Entra ID, or request it through Approvals.</li><li>A denial reason is stored in <strong>Decision memory</strong>. Dax and Demitry see it on similar cases. It does not retrain any model.</li></ul>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul><li><strong>Approve</strong> and <strong>Deny</strong> are disabled with &quot;Only an administrator can record approval decisions.&quot;: your role is not admin.</li><li><strong>&quot;This approval changed while you were deciding. Reload it before voting again.&quot;</strong>: someone else voted or the request changed. Click <strong>Refresh</strong> and decide again.</li><li><strong>&quot;Denied. The feedback could not be stored; add it again from Decision memory.&quot;</strong>: the denial was recorded but the reason was not saved.</li><li><strong>&quot;Approval expired. A new review is required to execute.&quot;</strong>: the 24 hours ran out before the response was run. A new request is needed.</li><li><strong>&quot;Outcome uncertain. Verify provider state before taking further action.&quot;</strong>: click <strong>Verify provider state</strong> to ask the provider what happened. Do not run the response again.</li><li><strong>&quot;Response outcome is unknown. Refresh or verify; do not resubmit containment.&quot;</strong>: the console did not get a clear answer. Click <strong>Refresh response</strong> or <strong>Verify provider state</strong>.</li><li><strong>&quot;Approvals unavailable&quot;</strong>: the queue could not be read. This does not mean the queue is empty. Click <strong>Retry</strong>.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/approvals/">Approvals</a></li><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a></li><li><a href="/docs/how-to/triage-an-incident/">How to triage an incident</a></li><li><a href="/docs/features/overview/">Overview</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

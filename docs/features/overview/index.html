@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview | Overwatch Console docs</title>
+    <meta name="description" content="Overview is the console's home page. It puts the decisions waiting for you first, then what the agents recorded, then what the threat-intel feed is reporting. U">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/overview/">
+    <meta property="og:title" content="Overview | Overwatch Console docs">
+    <meta property="og:description" content="Overview is the console's home page. It puts the decisions waiting for you first, then what the agents recorded, then what the threat-intel feed is reporting. U">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/overview/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/" aria-current="page">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Overview</h1>
+<p>Overview is the console's home page. It puts the decisions waiting for you first, then what the agents recorded, then what the threat-intel feed is reporting. Use it at the start of a shift, or any time you want to know what needs you.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Operate &gt; Overview</strong>. It is also the page the console opens on the first time you sign in; after that the console reopens the last page you used.</li><li>Command palette (Ctrl+K or Cmd+K): <strong>Go to Overview</strong>.</li><li>Keyboard: press <code>g</code> then <code>h</code>.</li></ul>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Role</th><th>What you can do here</th></tr></thead><tbody><tr><td>Viewer</td><td>See every panel, change the layout and windows, refresh, and click through to other pages.</td></tr><tr><td>Analyst</td><td>Everything a viewer can do. Approve and Deny on the decision card are shown but disabled.</td></tr><tr><td>Admin</td><td>Everything above, plus <strong>Approve</strong> and <strong>Deny</strong> on the &quot;Needs your decision&quot; card.</td></tr></tbody></table></div>
+<h2 id="what-you-see">What you see</h2>
+<p>The page header reads &quot;Know what needs you.&quot; Every count on the page shows where it came from and the window it covers, in a small line under the panel title. When a source cannot be read, the panel says &quot;Unavailable&quot; or shows an error. It never shows a zero in place of missing data.</p>
+<p><strong>Overview layout.</strong> A toggle with two options, <strong>Analyst</strong> and <strong>SOC lead</strong>.</p>
+<ul><li><strong>Analyst</strong> (the default): &quot;Your decisions and queue first.&quot; The strategic brief sits near the bottom as a collapsed row.</li><li><strong>SOC lead</strong>: &quot;Brief and adversary activity first.&quot; A strategic brief card appears at the top with four tallies: awaiting decision, issue reports, articles with hunt hits, and new articles in the selected article window. Clicking the card opens the Relationships page.</li></ul>
+<p><strong>Stat strip.</strong> Four counts. Each one is a button that opens the page behind it.</p>
+<ul><li><strong>Open incidents returned</strong>: open Sentinel incidents created in the last 7 days, up to 50 per read (shown as &quot;50+&quot; at the cap). Opens Incidents.</li><li><strong>Pending approvals</strong>: requests in the current approval queue, up to 100 per read. Opens Approvals.</li><li><strong>Recorded dispositions</strong>: agent events that recorded a disposition, from the latest 200 agent events in the agent window. Opens Agent Audit.</li><li><strong>Issue reports</strong>: agent events that report a failure or blocked work, from the same 200 events. Opens Agent Audit.</li></ul>
+<p><strong>Needs your decision.</strong> The highest-risk pending approval in the queue (high, then medium, then low). It shows the requested action, who asked for it, the linked incident number, the risk and how many approvals it has (for example &quot;0 of 1 approvals&quot;). Below that, two tiles quote the recorded analysis from Dax and the QA review from Demitry for that incident, or say that none was recorded. If the queue is empty you see &quot;No requests are waiting for you.&quot;</p>
+<p><strong>Swarm activity.</strong> One row per agent with its latest output from the last 7 days, newest first. Agents with nothing recorded still appear, marked &quot;No recorded output in this snapshot&quot;. When the console tracks what you have read, each row shows your unread count. Clicking a row opens that agent on the Agents page; <strong>All agents</strong> opens the Agents page.</p>
+<p><strong>Needs attention.</strong> The five most severe open incidents from the same 7-day, 50-incident read, with a search box (&quot;Find an incident or ID…&quot;) and a severity filter (<strong>All severities</strong>, Critical, High, Medium, Low, Informational). A footer says how many of the matching incidents are shown. Clicking an incident opens its full investigation workspace. <strong>All incidents</strong> opens the Incidents page.</p>
+<p><strong>Recent issue reports.</strong> Up to four recent agent log entries that mention failures or blocked work. These are leads, not a health check. <strong>Inspect evidence</strong> opens Agent Audit.</p>
+<p><strong>Adversary operations.</strong> A carousel of articles from the Live Feed, ranked by relevance to your tenant: articles with hunt hits in your tenant first, then articles linked to your detections, then the newest. Each card shows the source, age, the named threat group (or &quot;Unattributed&quot;), up to three ATT&amp;CK technique IDs named in the article, the hunt status and how many detections link to it. The carousel moves on its own every few seconds while there is more than one article; it pauses while your pointer or keyboard focus is on it, and it does not move if your system asks for reduced motion. If some feeds failed to load, a line names them.</p>
+<p><strong>Techniques in reporting.</strong> ATT&amp;CK techniques named in the window's articles, with how often each appears and your coverage for it: detection deployed, hunted only, or a gap. A technique only counts when an article names its ID; nothing is inferred.</p>
+<p><strong>Actor watch.</strong> Threat groups named in the window's articles, how often, and how they relate to your tenant: &quot;Hunt hits in tenant&quot;, &quot;Covered&quot; or &quot;Coverage gap&quot;.</p>
+<p><strong>Strategic brief</strong> (Analyst layout). A collapsed row. Open it to read the latest generated brief, its top threats and when it was generated. The text is labelled as generated. If there is no brief, it tells you to generate one from Relationships.</p>
+<p><strong>More telemetry.</strong> A collapsed section with two panels:</p>
+<ul><li><strong>Sign-in geography</strong>: Sentinel sign-ins for the last 24 hours, top 20 countries, on a map and in a ranked list. Select a country to see its sign-ins, recorded failures, unknown outcomes and how many had coordinates. This is sign-in telemetry, not confirmed threats.</li><li><strong>Swarm conversations</strong>: recent agent records grouped into threads when they share an incident or correlation ID, up to 50 records.</li></ul>
+<h2 id="what-you-can-do">What you can do</h2>
+<ul><li><strong>Refresh</strong> (header): re-reads incidents, approvals, agent activity, sign-in geography and agent outputs. Any role. The page also refreshes on its own about every 30 seconds (sign-in geography about every 5 minutes).</li><li><strong>Agent Audit</strong> (header): opens the Agent Audit page. Any role.</li><li><strong>Overview layout</strong>: switch between <strong>Analyst</strong> and <strong>SOC lead</strong>. Any role. The choice is saved in this browser only.</li><li><strong>Article window</strong>: <strong>24h</strong>, <strong>7d</strong>, <strong>14d</strong> or <strong>30d</strong>. Sets the window for Adversary operations, Techniques in reporting, Actor watch and the SOC lead tally. Any role.</li><li><strong>Previous article</strong> / <strong>Next article</strong> arrows and the dots under the carousel: move through the articles. Clicking an article title opens it on the Live Feed page. <strong>Live Feed</strong> opens the Live Feed page.</li><li><strong>Approve</strong> on the decision card (admin only). Opens the approval dialog described in <a href="/docs/features/approvals/">Approvals</a>. When the request is a containment response the button reads <strong>Approve isolation</strong> or <strong>Approve account disable</strong>. Your vote is held for 10 seconds with an <strong>Undo</strong> button before it is recorded. Approving never runs a response by itself.</li><li><strong>Choose a response</strong> (shown instead of Approve when Demitry confirmed a threat but did not name a target): opens the Approvals page, where an admin selects the response.</li><li><strong>Deny</strong> on the decision card (admin only). Opens the deny dialog, where you pick a reason and can add a note for the agents.</li><li><strong>Review evidence</strong>: opens the full investigation workspace for the linked incident. Any role.</li><li><strong>Agent window</strong> (inside More telemetry): <strong>Last hour</strong>, <strong>Last 6 hours</strong> or <strong>Last 24 hours</strong>. Sets the window for the Recorded dispositions and Issue reports counts, Recent issue reports and Swarm conversations. Any role.</li><li>In Swarm conversations: <strong>Show</strong> (<strong>All activity</strong>, <strong>Linked investigations</strong>, <strong>Issues</strong>), <strong>Search records</strong>, and <strong>Pause</strong> / <strong>Resume</strong> to freeze the display while you read. Any role.</li></ul>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li>Every count is bounded: up to 50 incidents, up to 100 approvals and the latest 200 agent events per read. A count at the cap is shown with a &quot;+&quot;.</li><li>&quot;Open incidents returned&quot; is not a count of all open incidents in Sentinel. It covers incidents created in the last 7 days, up to 50.</li><li>The decision card shows one request. If more are waiting, it says how many more are in Approvals.</li><li>If your tenant is not connected yet, panels say so (&quot;Connect a tenant to see approvals.&quot;) instead of showing empty data.</li><li>The strategic brief is generated on request from the Relationships page. Opening Overview never generates one.</li><li>The Overview layout choice is stored in your browser, so it does not follow you to another device.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/approvals/">Approvals</a></li><li><a href="/docs/features/incidents/">Incidents</a></li><li><a href="/docs/how-to/approve-or-deny-an-action/">How to approve or deny an action</a></li><li><a href="/docs/how-to/triage-an-incident/">How to triage an incident</a></li><li><a href="/docs/features/live-feed/">Live Feed</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li><li><a href="/docs/features/relationships/">Relationships</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

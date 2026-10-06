@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Overwatch Console docs</title>
+    <meta name="description" content="Settings holds your organization's configuration (external notifications, branding, threat-intelligence credentials and agent policies) and your own preferences">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/settings/">
+    <meta property="og:title" content="Settings | Overwatch Console docs">
+    <meta property="og:description" content="Settings holds your organization's configuration (external notifications, branding, threat-intelligence credentials and agent policies) and your own preferences">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/settings/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/" aria-current="page">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Settings</h1>
+<p>Settings holds your organization's configuration (external notifications, branding, threat-intelligence credentials and agent policies) and your own preferences for how agents appear. Most of it is for admins; everyone can set their own agent appearance.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Govern &gt; Settings</strong>.</li><li>Keyboard: <strong>g</strong> then <strong>s</strong>.</li><li>Command palette: &quot;Go to Settings&quot;.</li><li>The Live Feed's link to Agent Policies opens the <strong>Agent Policies</strong> tab directly.</li></ul>
+<p>Settings opens on the <strong>Agent appearance</strong> tab.</p>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Tab</th><th>Viewer</th><th>Analyst</th><th>Admin</th></tr></thead><tbody><tr><td>Notifications</td><td>No access</td><td>No access</td><td>View and change</td></tr><tr><td>Branding</td><td>No access (see Good to know)</td><td>No access</td><td>View and change</td></tr><tr><td>Threat Intel</td><td>No access</td><td>No access</td><td>View and change</td></tr><tr><td>Agent Policies</td><td>View</td><td>View</td><td>View and change</td></tr><tr><td>Agent appearance</td><td>Own profile</td><td>Own profile</td><td>Own profile and the tenant default</td></tr><tr><td>Setup wizard link</td><td>Hidden</td><td>Hidden</td><td>Shown</td></tr></tbody></table></div>
+<p>Where you have no access, the tab says so (for example &quot;Tenant administrators manage external notification destinations.&quot;) and asks nothing of you.</p>
+<h2 id="what-you-see">What you see</h2>
+<p><strong>Header.</strong> <strong>Refresh</strong> re-reads every settings tab.</p>
+<p><strong>Tabs.</strong> <strong>Notifications</strong>, <strong>Branding</strong>, <strong>Threat Intel</strong>, <strong>Agent Policies</strong>, <strong>Agent appearance</strong>. Admins also see a <strong>Setup wizard</strong> link at the end of the tab row, which reopens the first-time setup wizard (see <a href="/docs/getting-started/">Getting started</a>).</p>
+<h3 id="notifications">Notifications</h3>
+<p>Where Overwatch Console sends alerts outside the console.</p>
+<ul><li><strong>Delivery policy</strong>: <strong>Enable external notifications</strong> (master switch), <strong>Minimum severity for external delivery</strong> (<strong>Critical only</strong>, <strong>High and above</strong>, <strong>Medium and above</strong>, <strong>Low and above</strong>, <strong>All</strong>), and event switches: <strong>Orion hunt findings</strong> and <strong>Workflow notification steps</strong>. <strong>Approvals waiting</strong> and <strong>IOC matches</strong> are shown as <strong>Not available</strong>.</li><li><strong>Destinations</strong>: <strong>Slack</strong>, <strong>Microsoft Teams</strong> and <strong>Webhook</strong>, each with a write-only webhook URL field, a <strong>Deliver to ...</strong> switch, <strong>Save</strong>, <strong>Send test</strong> (disabled) and <strong>Remove</strong> once configured.</li></ul>
+<p>Step by step: <a href="/docs/how-to/configure-notifications/">Configure notifications</a>.</p>
+<h3 id="branding">Branding</h3>
+<p>Your organization's name and logo.</p>
+<ul><li><strong>Organization name</strong> (required).</li><li><strong>Logo URL</strong> (HTTPS only, no embedded credentials).</li><li><strong>Accent</strong> choices, and <strong>Advanced colours</strong> for exact values.</li><li><strong>Preview</strong> of the name and logo.</li><li><strong>Save branding</strong>.</li></ul>
+<p>Step by step: <a href="/docs/how-to/set-up-branding/">Set up branding</a>.</p>
+<h3 id="threat-intel">Threat Intel</h3>
+<p>Credentials for threat-intelligence providers. Credentials are write-only: once saved they are never shown again.</p>
+<ul><li><strong>VirusTotal</strong>: used for Caleb's file hash reputation lookups. Shows <strong>Configured</strong> or <strong>Not configured</strong>, and Caleb's last recorded lookup in the last 30 days. <strong>Connect</strong> (or <strong>Rotate key</strong>) opens a dialog to enter a <strong>New VirusTotal API key</strong> and <strong>Save key</strong>. <strong>Remove credentials</strong> asks you to confirm, then blocks future hash lookups.</li><li><strong>AbuseIPDB</strong>, <strong>AlienVault OTX</strong> and <strong>MISP</strong> are listed as <strong>Not available</strong>: there is no integration for them yet.</li></ul>
+<p>Saving a key does not test it. Only file hashes are sent to VirusTotal; this does not enable sample uploads or sandbox execution.</p>
+<h3 id="agent-policies">Agent Policies</h3>
+<p>How much the agents may do on their own, and the rules they must follow.</p>
+<ul><li><strong>Scheduled operations</strong>: <strong>Automatic threat-intelligence ingestion</strong> (the agent worker reads the feeds and Renzo scores each new relevant article; articles scoring 80 or higher become Auto-ingested drafts in the Detection Library) and <strong>Caleb scheduled hash lookups</strong>. Each shows On or Off.</li><li><strong>Tenant autonomy level</strong>: Level 0 <strong>Manual</strong>, Level 1 <strong>Advisory</strong>, Level 2 <strong>Semi-auto</strong>, Level 3 <strong>Autonomous</strong>. Level 4 <strong>Full auto</strong> is shown as <strong>Not available</strong>. Moving to level 2 or higher, or back to 0, asks you to confirm.</li><li><strong>Enforced boundaries</strong>: what the policy engine enforces today.</li><li><strong>Custom rules</strong>: rules per agent that <strong>Allow</strong>, <strong>Deny</strong> or <strong>Require Approval</strong> based on severity, classification, entity count, confidence score or action type. <strong>Add rule</strong> opens the rule builder. Each policy can be switched on or off, expanded, and deleted with <strong>Delete policy</strong>.</li><li><strong>More policy controls</strong>: ready-made <strong>Policy templates</strong> to apply.</li></ul>
+<p>Step by step: <a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a>. Background: <a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a>.</p>
+<h3 id="agent-appearance">Agent appearance</h3>
+<p>How agent names and faces appear in the console.</p>
+<ul><li><strong>Agent names</strong>: <strong>Specialist names</strong> (Dax, Orion, Maxwell...) or <strong>Role titles</strong> (Security Analyst, Threat Hunter...).</li><li><strong>Avatar style</strong>: <strong>Portraits</strong>, <strong>Bot icons</strong> or <strong>Monograms</strong>.</li><li><strong>Per-agent icon</strong>: pick an icon for each agent, or reset it to the avatar style default.</li></ul>
+<p>A banner shows the admin default. Your choices apply only to you. <strong>Use admin default</strong> removes your own choices. Admins can switch <strong>Edit appearance for</strong> between <strong>Your profile</strong> and <strong>Tenant default</strong>; the tenant default applies to everyone who has not made their own choice.</p>
+<h2 id="what-you-can-do">What you can do</h2>
+<div class="docs-table"><table><thead><tr><th>Action</th><th>Who</th><th>Takes effect</th></tr></thead><tbody><tr><td>Change notification policy or destinations</td><td>Admin</td><td>Immediately for new notifications. Policy switches save as you change them; a destination URL saves when you select <strong>Save</strong>.</td></tr><tr><td>Save branding</td><td>Admin</td><td>Immediately</td></tr><tr><td>Connect, rotate or remove the VirusTotal key</td><td>Admin</td><td>Immediately; lookups already running may still finish</td></tr><tr><td>Switch scheduled operations</td><td>Admin</td><td>For new agent-worker requests; work in progress is not cancelled</td></tr><tr><td>Change the autonomy level</td><td>Admin</td><td>Immediately, for the whole organization</td></tr><tr><td>Add, switch, delete or apply policy rules</td><td>Admin</td><td>Immediately</td></tr><tr><td>Change your own agent appearance</td><td>Everyone</td><td>Immediately, for you only</td></tr><tr><td>Change the tenant default appearance</td><td>Admin</td><td>Immediately, for everyone without their own choice</td></tr></tbody></table></div>
+<p>Every tenant setting change is recorded in the <a href="/docs/features/audit-trail/">Audit Trail</a> under <strong>Configuration changes</strong>, with before and after values. None of these changes go through Approvals; they are made directly by the admin.</p>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li><strong>Not available on Notifications</strong>: test messages (<strong>Send test</strong> is disabled), email, daily digests, SLA alerts, agent-failure subscriptions, and the <strong>Approvals waiting</strong> and <strong>IOC matches</strong> events.</li><li><strong>Branding only applies in a few places.</strong> The organization name appears in your account menu and the trial pages. The logo and accent choices are stored and shown in the Branding preview, but the console does not use them yet (Planned).</li><li><strong>The Branding tab currently loads only for admins.</strong> Analysts and viewers see &quot;Branding unavailable&quot;.</li><li><strong>Conflicting edits.</strong> If another admin changed notifications or policies since you loaded them, you see &quot;Settings changed elsewhere. Reload before saving.&quot; (or &quot;Policies changed elsewhere. Refresh before saving.&quot;). Select <strong>Refresh</strong> and try again.</li><li>Scheduled operations need an active agent worker. Check <strong>Tenant worker heartbeat</strong> on <a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a>.</li><li>There is no user management, SLA target or retention screen in Settings. Ask the Overwatch team for these.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/how-to/configure-notifications/">Configure notifications</a></li><li><a href="/docs/how-to/set-up-branding/">Set up branding</a></li><li><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a></li><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a></li><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

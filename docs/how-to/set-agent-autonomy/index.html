@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to set agent autonomy | Overwatch Console docs</title>
+    <meta name="description" content="Turn an agent's scheduled work on or off, or change Dax's autonomy level, for your whole tenant.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/set-agent-autonomy/">
+    <meta property="og:title" content="How to set agent autonomy | Overwatch Console docs">
+    <meta property="og:description" content="Turn an agent's scheduled work on or off, or change Dax's autonomy level, for your whole tenant.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/set-agent-autonomy/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/" aria-current="page">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to set agent autonomy</h1>
+<p>Turn an agent's scheduled work on or off, or change Dax's autonomy level, for your whole tenant.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>Admin</strong> role. Other roles see the controls disabled with &quot;Only administrators can change agent configuration.&quot;</li><li>Read <a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a> first. In particular: Dax levels 1, 2 and 3 currently behave the same in Dax's own run, and Demitry closes confirmed false positives whenever it runs unless a policy rule stops it.</li><li>Scheduled work also needs the background agent worker to be running. Check <strong>SLA &amp; health</strong> on the Agents page for the worker heartbeat.</li><li>Optional: open <strong>Autonomy readiness</strong> on the Agents page to see every agent's current setting and the QA agreement comparison before you change anything.</li></ul>
+<h2 id="steps">Steps</h2>
+<h3 id="change-daxs-autonomy-level">Change Dax's autonomy level</h3>
+<ol><li>Open <strong>Agents</strong> &gt; <strong>Agents</strong> and click Dax's card.</li><li>Click the autonomy control in the summary row (it reads &quot;Autonomy ON&quot; or &quot;Autonomy OFF&quot; with the level name).</li><li>In <strong>Choose an autonomy level</strong>, click <strong>L0 Manual</strong>, <strong>L1 Semi</strong>, <strong>L2 Near Full</strong> or <strong>L3 Full</strong>.</li><li>If asked, confirm: <strong>Yes, Enable</strong> for level 2 or 3, <strong>Yes, Disable</strong> to go back to Manual. Click <strong>Cancel</strong> to keep the current level.</li></ol>
+<p>Or, in Settings:</p>
+<ol><li>Open <strong>Settings</strong> &gt; <strong>Agent Policies</strong>.</li><li>Under <strong>Tenant autonomy level</strong>, click <strong>Level 0</strong>, <strong>Level 1</strong>, <strong>Level 2</strong> or <strong>Level 3</strong>.</li><li>If asked, click <strong>Change level</strong> to confirm.</li></ol>
+<h3 id="turn-another-agents-schedule-on-or-off">Turn another agent's schedule on or off</h3>
+<ol><li>Open <strong>Agents</strong> &gt; <strong>Agents</strong> and click the agent's card (Demitry, Marien, Orion, Renzo or Caleb).</li><li>Click the autonomy switch in the summary row.</li><li>Wait for the toast &quot;… autonomy is on in tenant configuration&quot; (or off).</li></ol>
+<p>For <strong>Automatic threat-intelligence ingestion</strong> and <strong>Caleb scheduled hash lookups</strong>:</p>
+<ol><li>Open <strong>Settings</strong> &gt; <strong>Agent Policies</strong>.</li><li>Under <strong>Scheduled operations</strong>, switch the setting on or off.</li></ol>
+<h3 id="add-a-policy-rule-optional">Add a policy rule (optional)</h3>
+<ol><li>Open <strong>Settings</strong> &gt; <strong>Agent Policies</strong>.</li><li>Under <strong>Custom rules</strong>, click <strong>Add rule</strong>.</li><li>Choose the <strong>Agent</strong>, <strong>Field</strong>, <strong>Op</strong> and <strong>Value</strong>, pick <strong>Allow</strong>, <strong>Deny</strong> or <strong>Require Approval</strong>, and write a <strong>Reason</strong>.</li><li>Click <strong>Add rule</strong>.</li></ol>
+<p>To apply a ready-made set, open <strong>More policy controls</strong> and click <strong>Conservative</strong>, <strong>Balanced</strong> or <strong>Autonomous</strong> under <strong>Policy templates</strong>.</p>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li>The setting is saved for the whole tenant and recorded in the audit trail.</li><li>The agent worker reads the configuration before each scheduled run, so a change applies to the next run. Work already in progress is not cancelled.</li><li>The workspace shows the saved value only after the server confirms it.</li><li>Response actions still need an admin's approval in <a href="/docs/features/approvals/">Approvals</a> at every level.</li><li>To follow what the agents do after the change, use <a href="/docs/features/agent-audit/">Agent Audit</a> or the agent's <strong>Outputs</strong> tab.</li></ul>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul><li><strong>&quot;Configuration change not confirmed: … Refresh configuration before retrying.&quot;</strong>: the server did not confirm the save. Click <strong>Refresh</strong> and check the value before trying again.</li><li><strong>&quot;Autonomy unknown&quot;</strong> with &quot;configuration unavailable&quot;: the configuration could not be read. Click <strong>Refresh</strong>.</li><li><strong>&quot;Policies changed elsewhere. Refresh before saving.&quot;</strong>: another admin changed the policies. Reload the page and repeat your change.</li><li><strong>Level 4 · Full auto is disabled</strong>: it is not available. The configuration accepts levels 0 to 3.</li><li><strong>The setting is on but nothing happens</strong>: check the worker heartbeat in <strong>SLA &amp; health</strong>. The setting does not prove a worker is running.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a></li><li><a href="/docs/features/agents/">Agents</a></li><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/concepts/the-agents/">The agents</a></li><li><a href="/docs/how-to/run-an-agent/">How to run an agent</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

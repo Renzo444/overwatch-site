@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The agents | Overwatch Console docs</title>
+    <meta name="description" content="Overwatch Console has eight agents. Each one owns one kind of SOC work. This page explains what each agent does, what starts it, where you see its results, and ">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/concepts/the-agents/">
+    <meta property="og:title" content="The agents | Overwatch Console docs">
+    <meta property="og:description" content="Overwatch Console has eight agents. Each one owns one kind of SOC work. This page explains what each agent does, what starts it, where you see its results, and ">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/concepts/the-agents/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/" aria-current="page">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>The agents</h1>
+<p>Overwatch Console has eight agents. Each one owns one kind of SOC work. This page explains what each agent does, what starts it, where you see its results, and what it may do on its own versus what needs a person.</p>
+<h2 id="how-agents-are-started">How agents are started</h2>
+<p>Agents start in one of two ways:</p>
+<ul><li><strong>On request</strong>: a person clicks a run button (on the Agents page, the Incidents page, the Live Feed or the Detection Library). Running an agent needs the Analyst or Admin role unless noted.</li><li><strong>On a schedule</strong>: a background agent worker runs alongside Overwatch Console and calls the agents on a timer. It only runs an agent when that agent's switch (or Dax's autonomy level) is on for your tenant. An admin sets these on the Agents page or under Settings &gt; Agent Policies. See <a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a>.</li></ul>
+<p>A switch being on does not prove the worker is running. Check <strong>SLA &amp; health</strong> on the Agents page for the worker heartbeat, and Agent Audit for what was actually recorded.</p>
+<p>Every agent action is recorded and visible in <a href="/docs/features/agent-audit/">Agent Audit</a> and in the agent's <strong>Outputs</strong> tab on the <a href="/docs/features/agents/">Agents</a> page.</p>
+<h2 id="dax-incident-triage">Dax: incident triage</h2>
+<p><strong>What it does.</strong> Dax investigates open Microsoft Sentinel incidents. It runs read-only KQL queries, looks at entities and similar past incidents, and records a verdict (true positive, false positive, benign positive or needs investigation), a confidence score and a written analysis. It can ask Caleb to look at a suspicious file or hash, which pauses the incident with a sandbox label.</p>
+<p><strong>What starts it.</strong></p>
+<ul><li>On request: <strong>Analyze</strong>, <strong>Analyze all queued</strong> or <strong>Analyze now</strong> in Dax's workspace, or <strong>Analyze unassessed</strong> on the Incidents page.</li><li>On a schedule: when Dax's autonomy level is 1, 2 or 3, the worker runs Dax about every 30 seconds on eligible incidents (open, unassigned or owned by Dax, and not already triaged or handed off). At level 0 Dax never runs on a schedule.</li></ul>
+<p><strong>What it produces.</strong> A comment on the Sentinel incident with Dax's assessment, an investigation chain (steps, queries, reasoning), and an output on the Agents page. At levels 1 to 3, Dax also assigns the incident to itself and labels it for Demitry's QA. At level 0, a run you start only adds the comment and does not hand the incident to Demitry.</p>
+<p><strong>Alone vs approval.</strong> Dax does not close incidents. If Dax tries a disruptive tool during an investigation, the call is blocked, and the incident is labelled for senior QA and human review with a comment explaining why. Response actions only happen through Approvals.</p>
+<h2 id="demitry-quality-review">Demitry: quality review</h2>
+<p><strong>What it does.</strong> Demitry re-checks Dax's work. It picks one incident per run (incidents waiting for QA first, then recently closed incidents Dax handled), runs its own queries and records one of: confirm true positive, confirm false positive, override to true positive, override to false positive, or escalate to a human.</p>
+<p><strong>What starts it.</strong></p>
+<ul><li>On request: <strong>Run QA now</strong> in Demitry's workspace.</li><li>On a schedule: when Demitry's switch is on, about every 5 minutes.</li></ul>
+<p><strong>What it produces.</strong></p>
+<ul><li>Confirmed or overridden false or benign positive: Demitry closes the incident in Sentinel with Dax's classification, unless a policy rule requires approval or denies closure. In that case it escalates instead.</li><li>Confirmed or overridden true positive: the incident stays open and Demitry files up to five high-risk response requests in Approvals (&quot;Disable account …&quot; or &quot;Isolate endpoint (Full) …&quot;) for targets its queries observed, or a &quot;Select a response for confirmed threat&quot; request when it found no specific target.</li><li>Escalate: the incident stays open, labelled for human review, with Demitry's reasoning as a comment.</li><li>QA decisions appear in Demitry's workspace (QA reviews list and tiles) and on the incident.</li></ul>
+<p><strong>Alone vs approval.</strong> Demitry may close confirmed false and benign positives on its own when your policy rules allow it. It never runs a response action; those wait in <a href="/docs/features/approvals/">Approvals</a>.</p>
+<h2 id="marien-detection-tuning">Marien: detection tuning</h2>
+<p><strong>What it does.</strong> Marien looks for the analytics rule producing the most false positives, studies the closed false-positive incidents and live data, and proposes a tuned query (for example excluding a verified benign account). A proposal whose exclusions do not match the false-positive evidence is blocked and saved as needing investigation. After repeated tuning failures on a rule, a circuit breaker stops Marien retrying that rule until an admin clears it.</p>
+<p><strong>What starts it.</strong></p>
+<ul><li>On request: <strong>Refresh recommendations</strong> in Marien's workspace, or <strong>Ask Marien to review</strong> from a backtest in the Detection Library.</li><li>On a schedule: when Marien's switch is on, about every 10 minutes. Separately, the worker checks the effect of already-deployed tunings about every 15 minutes; this only reads Sentinel.</li></ul>
+<p><strong>What it produces.</strong> Tuning proposals with reasoning, a query diff, the recorded false-positive count and attribution, listed in Marien's workspace.</p>
+<p><strong>Alone vs approval.</strong> By default a proposal waits for an admin: attest known positives, run the read-only backtest, then <strong>Approve &amp; deploy</strong> (a confirmation dialog, not an Approvals request). If an admin turns on <strong>tuning auto-approve</strong> on the Approvals page, Marien deploys its proposals to Sentinel without review.</p>
+<h2 id="renzo-detection-engineering">Renzo: detection engineering</h2>
+<p><strong>What it does.</strong> Renzo turns threat intelligence into draft detection rules (KQL mapped to MITRE ATT&amp;CK), tailored to your industry, and tests queries against your workspace tables.</p>
+<p><strong>What starts it.</strong></p>
+<ul><li>On request: <strong>Generate proposal</strong> (from an article URL) or <strong>Run research cycle</strong> in Renzo's workspace, <strong>Generate detection</strong> on the Live Feed, or <strong>Send to Renzo as detection</strong> from an Orion hunt (admin).</li><li>On a schedule: when Renzo's switch is on, a research cycle about every 10 minutes, limited by a daily allowance (3 drafts per day unless your configuration says otherwise). When <strong>Automatic threat-intelligence ingestion</strong> is on (Settings &gt; Agent Policies), the worker also reads the feeds about every 2 hours, scores new relevant articles, and adds those scoring 80 or higher to the Detection Library as Auto-ingested drafts.</li></ul>
+<p><strong>What it produces.</strong> Draft detections in the Detection Library and in Renzo's <strong>Generated detections</strong> list.</p>
+<p><strong>Alone vs approval.</strong> Renzo never deploys. Every draft needs QA (<strong>Send to QA</strong>) and an admin's deployment through Maxwell.</p>
+<h2 id="orion-threat-hunting">Orion: threat hunting</h2>
+<p><strong>What it does.</strong> Orion builds hunt hypotheses from threat intelligence and your detection library, prioritising techniques you have not hunted yet, and runs read-only KQL hunts in your workspace. It records the hypothesis, query, hit count and reasoning. You can also paste an article URL to save a hunt proposal for review.</p>
+<p><strong>What starts it.</strong></p>
+<ul><li>On request: <strong>Run proactive hunt</strong>, <strong>Execute hunt</strong>, <strong>Retry hunt</strong> or <strong>Ingest intel</strong> in Orion's workspace, or <strong>Ask Orion to hunt</strong> in the Detection Library.</li><li>On a schedule: when Orion's switch is on, about every 10 minutes.</li><li>Daily limits: 10 scheduled hunts and 20 requested hunts per day.</li></ul>
+<p><strong>What it produces.</strong> Hunt records in Orion's <strong>Recorded threat hunts</strong> list (with hits, verified zero hits, proposed or failed), also used by Relationships and the Detection Library.</p>
+<p><strong>Alone vs approval.</strong> Orion only reads. It does not change incidents or rules. Turning a hunt into a detection goes through Renzo, QA and an admin deployment.</p>
+<h2 id="caleb-malware-analysis">Caleb: malware analysis</h2>
+<p><strong>What it does.</strong> Caleb handles suspicious files and hashes.</p>
+<ul><li>Scheduled hash lookups: when Dax asks for sandbox analysis, Caleb looks up the hash reputation (this needs a VirusTotal key under Settings &gt; Threat Intel), adds the result as an incident comment, and labels the incident for Dax to look at again.</li><li>Detonation lab: an admin uploads a sample, Caleb provisions a sandbox VM in your Azure subscription, runs the analysis and writes a report.</li></ul>
+<p><strong>What starts it.</strong></p>
+<ul><li>On a schedule: when <strong>Caleb scheduled hash lookups</strong> is on, about every 2 minutes. This does not enable sandbox execution.</li><li>On request: the <strong>Detonation lab</strong> in Caleb's workspace (admin only).</li></ul>
+<p><strong>What it produces.</strong> Incident comments with hash reputation, and sandbox reports listed under <strong>Saved investigations &amp; sessions</strong>.</p>
+<p><strong>Alone vs approval.</strong> Lookups and reports change nothing in your environment beyond incident comments and labels. Sandbox provisioning and cleanup are admin actions.</p>
+<h2 id="maxwell-deployment-and-response">Maxwell: deployment and response</h2>
+<p><strong>What it does.</strong> Maxwell deploys detection rules to Sentinel, recalls them, and carries out approved response actions (such as isolating an endpoint or disabling an account).</p>
+<p><strong>What starts it.</strong> Only people. Maxwell has no schedule.</p>
+<ul><li><strong>Review for deployment</strong> (analyst or admin) runs the deployment QA review.</li><li><strong>Approve &amp; deploy</strong> and <strong>Recall rule</strong> (admin) deploy or delete a rule after a confirmation dialog.</li><li>On the Approvals page, an admin uses the <strong>Run the approved response</strong> section of an approved request to carry out the response action.</li></ul>
+<p><strong>What it produces.</strong> Deployed or recalled Sentinel rules (shown in Maxwell's <strong>Deployment queue</strong>), and response results recorded on the approval.</p>
+<p><strong>Alone vs approval.</strong> Nothing. Rule deployment needs a current passed review and an admin's confirmation; the server re-checks the review and query hash. Response actions need an approved request in Approvals, and approval, expiry, target and policy are re-checked when the response runs.</p>
+<h2 id="atlas-soc-copilot">Atlas: SOC copilot</h2>
+<p><strong>What it does.</strong> Atlas answers questions in a chat drawer. It hands data questions to Dax, Demitry or Orion (read-only queries) and reads records owned by Renzo, Marien and Caleb, then explains the results.</p>
+<p><strong>What starts it.</strong> Only people, by asking a question. No schedule.</p>
+<p><strong>What it produces.</strong> Answers in the drawer, which you can pin to an incident's case notes, and an audit record of each question.</p>
+<p><strong>Alone vs approval.</strong> Atlas cannot approve, deny or run anything. An admin can ask it to file an Approvals request; approving that request records the decision but does not run the action. See <a href="/docs/features/atlas-copilot/">Atlas copilot</a>.</p>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/agents/">Agents</a></li><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a></li><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a></li><li><a href="/docs/features/approvals/">Approvals</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li><li><a href="/docs/how-to/run-an-agent/">How to run an agent</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#how-agents-are-started">How agents are started</a><a href="#dax-incident-triage">Dax: incident triage</a><a href="#demitry-quality-review">Demitry: quality review</a><a href="#marien-detection-tuning">Marien: detection tuning</a><a href="#renzo-detection-engineering">Renzo: detection engineering</a><a href="#orion-threat-hunting">Orion: threat hunting</a><a href="#caleb-malware-analysis">Caleb: malware analysis</a><a href="#maxwell-deployment-and-response">Maxwell: deployment and response</a><a href="#atlas-soc-copilot">Atlas: SOC copilot</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

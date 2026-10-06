@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting started | Overwatch Console docs</title>
+    <meta name="description" content="Overwatch Console is a security operations console for Microsoft Sentinel. A team of AI agents triages incidents, hunts, writes and tunes detections, and record">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/getting-started/">
+    <meta property="og:title" content="Getting started | Overwatch Console docs">
+    <meta property="og:description" content="Overwatch Console is a security operations console for Microsoft Sentinel. A team of AI agents triages incidents, hunts, writes and tunes detections, and record">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/getting-started/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/" aria-current="page">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Getting started with Overwatch Console</h1>
+<p>Overwatch Console is a security operations console for Microsoft Sentinel. A team of AI agents triages incidents, hunts, writes and tunes detections, and records everything they do. Consequential actions wait for a person in Approvals. This page gets you signed in and oriented, then points you to the feature guides.</p>
+<h2 id="getting-access">Getting access</h2>
+<p>Today, access is arranged with the Overwatch team. They create your organization and your user accounts, and set each person's role (viewer, analyst or admin). See <a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a>.</p>
+<p><strong>Planned: self-service signup is not open yet.</strong> The sign-in page links to <strong>Start a 14-day Sentinel trial</strong>. That page currently shows &quot;Trial enrollment is not open yet&quot; and offers <strong>Sign in to an existing account</strong> and <strong>Check again</strong>. When enrollment opens, you will request a verification link with your organization name and work email, set a password from the emailed link, then sign in and connect Sentinel.</p>
+<h2 id="sign-in">Sign in</h2>
+<ol><li>Open your Overwatch Console address. If you are not signed in, you are sent to the sign-in page.</li><li>Enter your <strong>Username</strong> (your email address) and <strong>Password</strong>.</li><li>Select <strong>Sign In</strong>.</li></ol>
+<p>If the details are wrong you see &quot;Invalid credentials&quot;. After five attempts in a minute from the same network, sign-in is paused for 60 seconds.</p>
+<p>Your sign-in lasts up to 8 hours. If your account or organization is deactivated, or your role changes, the change applies on your next request.</p>
+<h2 id="two-ways-in">Two ways in</h2>
+<h3 id="explore-demo">Explore Demo</h3>
+<p>Explore Demo is a separate, read-only demo access window for a signed-in account. It does not need an Azure connection.</p>
+<ul><li>Go to <code>/demo</code> (or choose <strong>Explore Demo</strong> on the &quot;Choose your workspace&quot; page) and select <strong>Start or resume demo</strong>.</li><li>Your access lasts seven days from first entry. Signing in again, returning or using <strong>Reset demo progress</strong> does not extend it.</li><li>Demo mode cannot run agents, hunts, deployments, uploads or response actions.</li><li>Right now the shared demo data source is not set up, so the page shows &quot;Demo records unavailable&quot; and no incidents or results. Prepared playback is also disabled.</li><li><strong>Connect your environment</strong> leaves the demo and takes you to the connected trial setup.</li></ul>
+<h3 id="connected-trial">Connected trial</h3>
+<p>The connected trial uses your own Sentinel workspace and isolated credentials. An organization admin sets it up on the &quot;Your trial workspace&quot; page (<code>/trial/setup</code>):</p>
+<ol><li>Under <strong>Connect Microsoft Sentinel</strong>, enter the <strong>Azure directory (tenant) ID</strong>, <strong>Subscription ID</strong>, <strong>Resource group</strong>, <strong>Log Analytics workspace name</strong>, <strong>Application (client) ID</strong> and <strong>Client secret value</strong> of an application with read access to the workspace.</li><li>Select <strong>Verify and start trial</strong>.</li></ol>
+<p>Overwatch Console checks the workspace identity, reads up to one incident without keeping it, and runs a zero-row SecurityAlert query. Only a successful check stores the reader credentials (encrypted) and starts the 14-day trial. Connecting does not deploy rules or create Azure resources. Viewers and analysts can read the trial status; only an admin can submit the connection.</p>
+<p>The page then shows the plan, trial start and end dates, and today's AI request usage against any daily limit. When the trial expires, new agent requests are blocked but stored evidence stays readable. Select <strong>Open console</strong> to go to the main console.</p>
+<h2 id="the-console-at-a-glance">The console at a glance</h2>
+<h3 id="navigation">Navigation</h3>
+<p>The left sidebar has four groups:</p>
+<div class="docs-table"><table><thead><tr><th>Group</th><th>Pages</th></tr></thead><tbody><tr><td>Operate</td><td><a href="/docs/features/overview/">Overview</a>, <a href="/docs/features/incidents/">Incidents</a>, <a href="/docs/features/approvals/">Approvals</a>, <a href="/docs/features/actions/">Actions</a></td></tr><tr><td>Agents</td><td><a href="/docs/features/agents/">Agents</a>, <a href="/docs/features/agent-audit/">Agent Audit</a></td></tr><tr><td>Intelligence</td><td><a href="/docs/features/live-feed/">Live Feed</a>, <a href="/docs/features/detection-library/">Detection Library</a>, <a href="/docs/features/data-connectors/">Data connectors</a>, <a href="/docs/features/relationships/">Relationships</a></td></tr><tr><td>Govern</td><td><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a>, <a href="/docs/features/audit-trail/">Audit Trail</a>, <a href="/docs/features/settings/">Settings</a></td></tr></tbody></table></div>
+<ul><li><strong>Approvals</strong> shows a badge with the number of pending requests (shown as 99+ above 99).</li><li><strong>Agents</strong> shows a badge with your unread agent outputs from the last seven days.</li><li><strong>Collapse sidebar</strong> shrinks the sidebar to icons. This is remembered in your browser.</li><li>The Atlas box at the bottom of the sidebar lets analysts and admins ask Atlas about the page they are on. See <a href="/docs/features/atlas-copilot/">Atlas copilot</a>.</li></ul>
+<h3 id="top-bar">Top bar</h3>
+<ul><li><strong>Breadcrumb</strong>: where you are. Select <strong>Overview</strong> to go back.</li><li><strong>Search incidents, detections, agents</strong>: opens the command palette (see below).</li><li><strong>Live / Offline</strong>: whether the console's live event stream is connected.</li><li><strong>Light/dark toggle</strong>: switches between the light and dark theme. Remembered in your browser.</li><li><strong>Notifications</strong> (bell): see below.</li><li><strong>Account</strong> (your initials): shows your name, organization and role, plus <strong>Setup</strong> (admins only), <strong>Keyboard shortcuts</strong> and <strong>Sign out</strong>.</li></ul>
+<p>On a demonstration deployment, the top bar also shows an <strong>Example features</strong> label.</p>
+<h3 id="notifications-panel">Notifications panel</h3>
+<p>The bell lists what needs attention in what the console has loaded:</p>
+<ul><li>approvals waiting for a decision,</li><li>problems an agent reported in the last 24 hours,</li><li>new threat-intelligence articles since the feed last refreshed.</li></ul>
+<p>Selecting an item opens the matching page (Approvals, Agent Audit or Live Feed). <strong>Mark all read</strong> clears the unread count. Read state is kept in your browser only, so it does not follow you to another device. Opening a notification never approves anything.</p>
+<p>These are in-console notices. To send alerts to Slack, Teams or a webhook, see <a href="/docs/how-to/configure-notifications/">Configure notifications</a>.</p>
+<h3 id="command-palette">Command palette</h3>
+<p>Press <strong>Ctrl+K</strong> (or <strong>⌘K</strong> on a Mac) or select the search box. Type to find:</p>
+<ul><li>loaded incidents (by number or title), which open the investigation view,</li><li>detections in your library,</li><li>agents, which open that agent on the Agents page (Atlas opens the Atlas panel),</li><li>pages (&quot;Go to Approvals&quot;).</li></ul>
+<p>It also has run commands: <strong>Run Dax (Analyst)</strong>, <strong>Run Demitry (Senior QA)</strong>, <strong>Run Orion (Threat Hunter)</strong>, <strong>Run Caleb (Malware Analyst)</strong> and <strong>Force Intel Sync</strong>. Running an agent needs the analyst role (Caleb needs admin). Follow progress in <a href="/docs/features/agent-audit/">Agent Audit</a>. <strong>Run Marien (Tuning)</strong> is listed but does not currently start a run; use Marien's workspace on the <a href="/docs/features/agents/">Agents</a> page instead.</p>
+<p>The palette shows up to 50 matches.</p>
+<h3 id="keyboard-shortcuts">Keyboard shortcuts</h3>
+<p>Press <strong>Shift+?</strong> or choose <strong>Keyboard shortcuts</strong> in the account menu.</p>
+<div class="docs-table"><table><thead><tr><th>Keys</th><th>Action</th></tr></thead><tbody><tr><td>Ctrl/⌘ + K</td><td>Open the command palette</td></tr><tr><td>Ctrl/⌘ + J</td><td>Open or close Atlas</td></tr><tr><td>g then h</td><td>Overview</td></tr><tr><td>g then i</td><td>Incidents</td></tr><tr><td>g then d</td><td>Detection Library</td></tr><tr><td>g then f</td><td>Live Feed</td></tr><tr><td>g then m</td><td>Metrics &amp; Health</td></tr><tr><td>g then s</td><td>Settings</td></tr><tr><td>g then a</td><td>Agent Audit</td></tr><tr><td>Esc</td><td>Close a dialog</td></tr></tbody></table></div>
+<p>The &quot;g&quot; shortcuts do not work while you are typing in a field or while a dialog is open.</p>
+<h3 id="activity-indicator">Activity indicator</h3>
+<p>A thin bar under the top bar shrinks over 30 minutes without mouse, keyboard, scroll or touch activity, and changes when 5 minutes are left. It is only an indicator: it does not sign you out.</p>
+<h2 id="first-time-setup-wizard-admins">First-time setup wizard (admins)</h2>
+<p>When an admin signs in to an organization that is not configured yet, the setup wizard opens. Admins can reopen it from <strong>Setup</strong> in the account menu or <strong>Setup wizard</strong> in Settings. It has six steps:</p>
+<ol><li><strong>Tenant Settings</strong>: tenant name and Azure tenant ID.</li><li><strong>Azure Config</strong>: choose <strong>I already have Sentinel</strong> and enter the subscription, resource group and workspace name.</li><li><strong>Service Principals</strong>: copy the generated Cloud Shell setup script, run it in Azure, and enter the client IDs and secrets it creates.</li><li><strong>Connection Test</strong>: <strong>Test All Connections</strong> saves the credentials and checks them.</li><li><strong>Rule Pack</strong>: choose Baseline, TI Mapping or Full Suite.</li><li><strong>Provisioning</strong>: validates the credentials, then deploys the chosen rule pack to your Sentinel workspace.</li></ol>
+<p>Rule pack deployment from the wizard runs straight away when the admin reaches the last step. It does not go through Approvals.</p>
+<p><strong>Planned:</strong> the <strong>Deploy Sentinel for me</strong> option in step 2 (create a new workspace) is shown but cannot complete yet. Use an existing workspace.</p>
+<p><strong>Close</strong> dismisses the wizard. It will not reopen on its own for you in this browser.</p>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a>: what you can do with your role.</li><li><a href="/docs/concepts/the-agents/">The agents</a>: who Dax, Demitry, Marien, Renzo, Orion, Caleb, Maxwell and Atlas are.</li><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a>: what runs on its own and what waits for a person.</li><li><a href="/docs/how-to/triage-an-incident/">Triage an incident</a> and <a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a>.</li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#getting-access">Getting access</a><a href="#sign-in">Sign in</a><a href="#two-ways-in">Two ways in</a><a href="#the-console-at-a-glance">The console at a glance</a><a href="#first-time-setup-wizard-admins">First-time setup wizard (admins)</a><a href="#where-to-go-next">Where to go next</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

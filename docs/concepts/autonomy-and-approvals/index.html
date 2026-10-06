@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomy and approvals | Overwatch Console docs</title>
+    <meta name="description" content="Autonomy settings decide which agents run on their own schedule. Policy rules restrict what agents may do automatically. Approvals are where a person decides on">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/concepts/autonomy-and-approvals/">
+    <meta property="og:title" content="Autonomy and approvals | Overwatch Console docs">
+    <meta property="og:description" content="Autonomy settings decide which agents run on their own schedule. Policy rules restrict what agents may do automatically. Approvals are where a person decides on">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/concepts/autonomy-and-approvals/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/" aria-current="page">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Autonomy and approvals</h1>
+<p>Autonomy settings decide which agents run on their own schedule. Policy rules restrict what agents may do automatically. Approvals are where a person decides on consequential actions. This page explains how the three fit together, as the product works today.</p>
+<h2 id="autonomy-settings">Autonomy settings</h2>
+<p>All autonomy settings apply to the whole tenant, are stored in the tenant's agent configuration, and can only be changed by an admin. Every change is audited. Viewers and analysts can see the current values.</p>
+<p>A setting is configuration only. Scheduled work also needs the background agent worker to be running; the console says &quot;It does not show that a worker is running&quot; wherever autonomy appears.</p>
+<h3 id="daxs-autonomy-level-0-to-3">Dax's autonomy level (0 to 3)</h3>
+<p>Dax has a level instead of an on/off switch. The Agents page and Settings use different names for the same levels:</p>
+<div class="docs-table"><table><thead><tr><th>Level</th><th>Agents page name</th><th>Settings name</th><th>What it does today</th></tr></thead><tbody><tr><td>0</td><td>Manual</td><td>Manual</td><td>Dax never runs on a schedule. A run you start adds Dax's assessment as an incident comment only; the incident is not handed to Demitry.</td></tr><tr><td>1</td><td>Semi</td><td>Advisory</td><td>The worker runs Dax on eligible incidents about every 30 seconds. Each assessed incident gets Dax's comment, is assigned to Dax and is labelled for Demitry's QA.</td></tr><tr><td>2</td><td>Near Full</td><td>Semi-auto</td><td>Same as level 1 in Dax's own run.</td></tr><tr><td>3</td><td>Full</td><td>Autonomous</td><td>Same as level 1 in Dax's own run.</td></tr></tbody></table></div>
+<p>The level descriptions in the console (&quot;Auto-close False Positives&quot;, &quot;Full auto: prompts response on TPs&quot;) describe what happens after Demitry's QA, not something Dax does itself. In the current version:</p>
+<ul><li>Dax never closes an incident and never runs a response action at any level. Disruptive tools are blocked and the incident is routed to senior QA and human review.</li><li>False-positive closure is done by Demitry, whenever Demitry runs (on request or on its own schedule), and only when your policy rules allow it.</li><li>On a confirmed true positive, Demitry files response requests in Approvals. Nothing runs until an admin approves and then runs the response.</li></ul>
+<p>Settings also shows a <strong>Level 4 · Full auto</strong> option. It is disabled (&quot;Not available: the agent configuration accepts levels 0–3, and no stored level runs SOAR playbooks automatically.&quot;).</p>
+<p>Changing the level to 2 or 3 from a lower level, or back to 0, asks for confirmation.</p>
+<h3 id="agent-switches">Agent switches</h3>
+<p>These are on/off. Each turns on that agent's scheduled run.</p>
+<div class="docs-table"><table><thead><tr><th>Setting</th><th>Where to change it</th><th>When on</th></tr></thead><tbody><tr><td>Demitry autonomy</td><td>Demitry's workspace (Agents page)</td><td>QA runs about every 5 minutes, one incident per run.</td></tr><tr><td>Marien autonomy</td><td>Marien's workspace</td><td>A tuning poll runs about every 10 minutes and produces proposals.</td></tr><tr><td>Orion autonomy</td><td>Orion's workspace</td><td>A proactive hunt runs about every 10 minutes (up to 10 scheduled hunts per day).</td></tr><tr><td>Renzo autonomy</td><td>Renzo's workspace</td><td>A research cycle runs about every 10 minutes, within Renzo's daily allowance. Drafts only.</td></tr><tr><td>Caleb autonomy, also <strong>Caleb scheduled hash lookups</strong></td><td>Caleb's workspace, or Settings &gt; Agent Policies &gt; <strong>Scheduled operations</strong></td><td>Hash reputation lookups for sandbox requests about every 2 minutes. Does not enable sandbox execution.</td></tr><tr><td><strong>Automatic threat-intelligence ingestion</strong></td><td>Settings &gt; Agent Policies &gt; <strong>Scheduled operations</strong></td><td>About every 2 hours the worker reads the feeds; Renzo scores new relevant articles and those scoring 80 or higher become Auto-ingested drafts in the Detection Library.</td></tr></tbody></table></div>
+<p>Maxwell and Atlas have no schedule. They show &quot;On demand&quot;.</p>
+<p>Turning a switch off stops new scheduled requests. Work already in progress is not cancelled.</p>
+<h3 id="tuning-auto-approve">Tuning auto-approve</h3>
+<p>On the Approvals page, admins see &quot;tuning auto-approve: on/off&quot; with <strong>turn on</strong> / <strong>turn off</strong>. When it is on, Marien deploys its tuning proposals to Sentinel without human review, whether the proposal came from the schedule or from someone clicking <strong>Refresh recommendations</strong>. Leave it off if every rule change should be reviewed.</p>
+<h2 id="policy-rules">Policy rules</h2>
+<p>Policy rules restrict what agents may do automatically. They are managed under Settings &gt; Agent Policies (admins change them; everyone can read them).</p>
+<h3 id="where-rules-are-enforced">Where rules are enforced</h3>
+<p>Rules are checked at two points today:</p>
+<ol><li><strong>Incident closure by Demitry.</strong> When Demitry would close a confirmed false or benign positive, the rules for Dax and Demitry are evaluated with the incident's original Sentinel severity. If a rule says Deny or Require Approval, Demitry escalates the incident to a human instead of closing it.</li><li><strong>Running an approved response.</strong> When an approved containment request is run, the rules for Maxwell and the requesting agent are evaluated again. A rule can stop it; a rule never replaces the human approval.</li></ol>
+<p>Detection deployment, tuning and agent queries are not covered by custom rules yet. The Settings page says so under <strong>Enforced boundaries</strong>.</p>
+<h3 id="how-rules-work">How rules work</h3>
+<p>Each rule has:</p>
+<ul><li><strong>Agent</strong>: All Agents, or one agent.</li><li><strong>Field</strong>: Severity, Classification, Entity Count, Confidence Score or Action Type.</li><li><strong>Op</strong>: =, ≠, &gt;, &lt;, ≥, ≤ or contains. Number comparisons only work on Entity Count and Confidence Score.</li><li><strong>Value</strong>: for example Critical.</li><li><strong>Action</strong>: Allow, Deny or Require Approval.</li><li><strong>Reason</strong>: shown in decisions and audit records.</li></ul>
+<p>When several rules match, the most restrictive wins: Deny, then Require Approval, then Allow. If a rule needs a value the request does not have (for example a confidence score that was not recorded), a Deny or Require Approval rule still applies. With no rules at all, closure is allowed.</p>
+<p>Rules you add with <strong>Add rule</strong> are grouped into a policy named &quot;Custom Rules&quot; per agent choice. Each policy has an on/off switch, and expanding it shows its rules and <strong>Delete policy</strong>. Every change is audited, and if someone else changed the policies first you are asked to refresh before saving.</p>
+<h3 id="templates">Templates</h3>
+<p>Under <strong>More policy controls</strong> &gt; <strong>Policy templates</strong>, admins can apply one of three templates. Applying a template adds it as a policy for all agents; existing policies stay in force.</p>
+<ul><li><strong>Conservative</strong>: requires approval for every severity (Critical, High, Medium, Low) and for every closure. In practice Demitry escalates every false positive to a human.</li><li><strong>Balanced</strong>: requires approval for High and Critical; allows Medium and Low; requires approval for endpoint isolation and account disabling.</li><li><strong>Autonomous</strong>: adds no severity restriction; still requires approval for endpoint isolation, account disabling and IP blocking. It does not grant full autonomy.</li></ul>
+<h2 id="approvals">Approvals</h2>
+<p>The <a href="/docs/features/approvals/">Approvals</a> page holds requests for consequential actions. Requests come from Demitry (response actions on confirmed true positives), from Atlas when an admin asks it to file one, and from other parts of the product.</p>
+<ul><li><strong>Who decides</strong>: only admins can vote <strong>Approve</strong> or <strong>Deny</strong>. Analysts and admins can add comments, which never change the outcome.</li><li><strong>Quorum</strong>: each request states how many approvals it needs (1 unless set otherwise, up to 10). Each person votes once. The request is approved when enough different admins approve. A single Deny resolves it as denied.</li><li><strong>Undo</strong>: after you confirm an approval, the console waits 10 seconds before sending your vote. <strong>Undo</strong> in that time cancels it. After that the vote is recorded.</li><li><strong>Expiry</strong>: a request expires 24 hours after it was created if it was not decided. Expired requests move to History and can no longer be approved.</li><li><strong>Approval is not execution</strong>: approving records the decision. A response action runs only when an admin uses <strong>Run the approved response</strong> on the approved request, and approval, expiry, target and policy are checked again at that moment. Requests filed by Atlas never run on approval.</li></ul>
+<p>Rule deploys and recalls from the Maxwell and Marien workspaces are not Approvals requests. They are direct admin actions protected by a confirmation dialog and server checks.</p>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/how-to/set-agent-autonomy/">How to set agent autonomy</a></li><li><a href="/docs/how-to/approve-or-deny-an-action/">How to approve or deny an action</a></li><li><a href="/docs/concepts/the-agents/">The agents</a></li><li><a href="/docs/features/approvals/">Approvals</a></li><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#autonomy-settings">Autonomy settings</a><a href="#policy-rules">Policy rules</a><a href="#approvals">Approvals</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

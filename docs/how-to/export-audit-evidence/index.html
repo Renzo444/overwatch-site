@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export audit evidence | Overwatch Console docs</title>
+    <meta name="description" content="Download audit records, with proof that they have not been altered, for an auditor, a customer review or an incident report.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/export-audit-evidence/">
+    <meta property="og:title" content="Export audit evidence | Overwatch Console docs">
+    <meta property="og:description" content="Download audit records, with proof that they have not been altered, for an auditor, a customer review or an incident report.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/export-audit-evidence/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/" aria-current="page">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to export audit evidence</h1>
+<p>Download audit records, with proof that they have not been altered, for an auditor, a customer review or an incident report.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>Any role can export. To include a fresh chain verification in the export, you need the <strong>analyst</strong> or <strong>admin</strong> role.</li><li>Exports are built in your browser from the records currently loaded on the page: up to 200 records from the selected window. Decide the period you need before you start.</li></ul>
+<h2 id="steps">Steps</h2>
+<ol><li>Go to <strong>Audit Trail</strong> (sidebar, <strong>Govern</strong>).</li><li>Analysts and admins: in the chain pill next to the tabs, select <strong>Verify chain</strong> (or <strong>Re-verify</strong>). Wait until it shows the result, for example &quot;chain intact&quot;.</li><li>Select the <strong>Activity ledger</strong> tab and choose the window: <strong>Last 24 hours</strong>, <strong>Last 7 days</strong> or <strong>Last 30 days</strong>.</li><li>Optional: use <strong>Newer records</strong> / <strong>Older records</strong> to load the page of records you need.</li><li>Select the <strong>Export &amp; retention</strong> tab.</li><li>Select <strong>Export JSONL</strong> or <strong>Export CSV</strong>. The file downloads as <code>audit-ledger-&lt;window&gt;.jsonl</code> or <code>.csv</code>.</li><li>Optional: for a summary, tick the sections you want under <strong>Executive audit report</strong>, select <strong>Draft report</strong>, check the figures, then select <strong>Download draft (Markdown)</strong>.</li></ol>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li><strong>JSONL</strong> starts with a line describing the chain head (record number and fingerprint), the last verification result and time, the window and the record count, followed by one record per line.</li><li><strong>CSV</strong> has the columns Timestamp, Position, Actor type, Actor, Action, Type, Target, Outcome, Policy, Incident, Chain seq, Prev hash, Hash and Details, and a final <strong>Chain head</strong> row with the verification status.</li><li>Each record carries its own fingerprint and the fingerprint of the record before it. An auditor can compare these with the chain head to see whether anything was changed or removed after it was sealed. The chain is tamper-evident; it is not signed with a key.</li><li>The executive draft counts the loaded records only. In the console, each figure links back to the filtered records. Review it before sharing.</li><li>Exporting changes nothing and needs no approval.</li></ul>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul><li><strong>Export buttons are disabled</strong> and the tab says &quot;Ledger records unavailable; nothing to export.&quot; or &quot;Loading ledger records…&quot;: the ledger has not loaded. Go back to <strong>Activity ledger</strong>, select <strong>Retry</strong> or <strong>Refresh</strong>, then try again.</li><li><strong>You need more than 200 records.</strong> Export each page separately (use <strong>Older records</strong> between exports), or use a shorter window.</li><li><strong>You need records older than 30 days.</strong> The ledger window goes up to 30 days, and hot storage keeps agent records for 30 days unless your organization set a different period. There is no long-term archive today. Ask the Overwatch team if you need a longer retention period.</li><li><strong>The chain pill says &quot;Chain break at record N&quot;.</strong> Hover it to see the reason and the range checked. Records removed by retention cleanup are reported separately and are not a break. Raise any other break with the Overwatch team before sharing the evidence.</li><li><strong>&quot;Chain status unavailable&quot;</strong> with <strong>Retry</strong>: the chain status could not be read. The export still works, but it will show the verification as not run.</li><li><strong>Viewers</strong> see &quot;Hash-chained · status visible to analysts and admins&quot;. Ask an analyst or admin to verify the chain first.</li><li><strong>Approval votes are not in the ledger export.</strong> They are kept with <a href="/docs/features/approvals/">Approvals</a>.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/audit-trail/">Audit Trail</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li><li><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>
