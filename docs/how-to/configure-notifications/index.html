@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure notifications | Overwatch Console docs</title>
+    <meta name="description" content="Send Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/configure-notifications/">
+    <meta property="og:title" content="Configure notifications | Overwatch Console docs">
+    <meta property="og:description" content="Send Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/configure-notifications/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/" aria-current="page">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to configure notifications</h1>
+<p>Send Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>admin</strong> role.</li><li>Have an incoming webhook URL ready for each destination:<ul><li><strong>Slack</strong>: an incoming webhook (it starts with <code>https://hooks.slack.com/services/</code>).</li><li><strong>Microsoft Teams</strong>: a Teams Workflows webhook that accepts MessageCard payloads.</li><li><strong>Webhook</strong>: any HTTPS endpoint that accepts a JSON POST.</li></ul></li><li>These are notifications sent outside the console. The bell in the top bar works without any setup.</li></ul>
+<h2 id="steps">Steps</h2>
+<ol><li>Go to <strong>Settings</strong> and select the <strong>Notifications</strong> tab.</li><li>On the destination card (<strong>Slack</strong>, <strong>Microsoft Teams</strong> or <strong>Webhook</strong>), paste the webhook URL into the URL field.</li><li>Select <strong>Save</strong>. The card changes to <strong>Configured</strong>.</li><li>Turn on <strong>Deliver to Slack</strong> (or <strong>Deliver to Microsoft Teams</strong>, <strong>Deliver to Webhook</strong>) on that card.</li><li>Under <strong>Delivery policy</strong>, turn on <strong>Enable external notifications</strong>.</li><li>Choose the <strong>Minimum severity for external delivery</strong>: <strong>Critical only</strong>, <strong>High and above</strong>, <strong>Medium and above</strong>, <strong>Low and above</strong> or <strong>All</strong>.</li><li>Turn on the events you want: <strong>Orion hunt findings</strong> and/or <strong>Workflow notification steps</strong>.</li></ol>
+<p>Switches and the severity list save as soon as you change them. A notice confirms each save.</p>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li>A notification is sent only when all of these are true: the master switch is on, the event's switch is on, the event's severity is at or above your minimum, and at least one destination is configured and switched on.</li><li><strong>Orion hunt findings</strong> are sent when an Orion hunt records findings. <strong>Workflow notification steps</strong> are sent when a playbook in <a href="/docs/features/actions/">Actions</a> reaches a Notify step.</li><li>Each delivery attempt and whether the provider accepted it is recorded in <a href="/docs/features/agent-audit/">Agent Audit</a> under Notifications. Use <strong>Open Agent Audit</strong> at the bottom of the tab. &quot;Accepted&quot; means the provider took the message, not that someone read it.</li><li>Each settings change is recorded in the <a href="/docs/features/audit-trail/">Audit Trail</a> under <strong>Configuration changes</strong>.</li></ul>
+<p>To change a destination later, paste a new URL and select <strong>Save</strong> (leave the field blank to keep the current one). To stop using it, select <strong>Remove</strong>, then <strong>Remove destination</strong> to confirm. The stored webhook is deleted.</p>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul><li><strong>No test message.</strong> <strong>Send test</strong> is disabled: there is no test-send yet, and saving does not send a message. To check a destination, wait for a real event and look in Agent Audit.</li><li><strong>&quot;Settings changed elsewhere. Reload before saving.&quot;</strong> Another admin saved changes after you opened the tab. Select <strong>Refresh</strong> at the top of Settings and make your change again.</li><li><strong>&quot;Notification settings unavailable&quot;</strong> with <strong>Retry</strong>: the settings could not be read. Retry, or reload the page.</li><li><strong>The URL is not shown after saving.</strong> This is expected. URLs are write-only and stored encrypted.</li><li><strong>Approvals waiting</strong> and <strong>IOC matches</strong> show <strong>Not available</strong>. Nothing sends these events yet. Email, daily digests, SLA alerts and agent-failure subscriptions are not available either.</li><li><strong>&quot;Tenant administrators manage external notification destinations.&quot;</strong> You are not an admin. Ask one to make the change.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a></li><li><a href="/docs/how-to/build-a-playbook/">Build a playbook</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

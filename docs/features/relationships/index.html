@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationships | Overwatch Console docs</title>
+    <meta name="description" content="Relationships shows how your incidents, the entities in them, Orion's hunts and your detections connect to reported adversary activity. It keeps what was observ">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/relationships/">
+    <meta property="og:title" content="Relationships | Overwatch Console docs">
+    <meta property="og:description" content="Relationships shows how your incidents, the entities in them, Orion's hunts and your detections connect to reported adversary activity. It keeps what was observ">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/relationships/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/" aria-current="page">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Relationships</h1>
+<p>Relationships shows how your incidents, the entities in them, Orion's hunts and your detections connect to reported adversary activity. It keeps what was observed in your tenant separate from links that only come from threat intelligence. Use it to see whether something you read about is touching your environment, and to read or generate the strategic brief.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Intelligence &gt; Relationships</strong>.</li><li>Command palette: <strong>Go to Relationships</strong>.</li><li>The strategic brief on the Overview page opens this page.</li></ul>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Role</th><th>What you can do here</th></tr></thead><tbody><tr><td>Viewer</td><td>All three views, all filters, open records, read the saved brief.</td></tr><tr><td>Analyst</td><td>Everything a viewer can, plus <strong>Ask Atlas</strong>. Analysts can start <strong>Generate brief</strong>, but the server only saves a brief for admins (see &quot;Good to know&quot;).</td></tr><tr><td>Admin</td><td>Everything an analyst can. The generated brief is saved for the tenant.</td></tr></tbody></table></div>
+<h2 id="what-you-see">What you see</h2>
+<p>The page has three views, chosen with <strong>Entity graph</strong>, <strong>Campaigns</strong> and <strong>Strategic brief</strong>, and a <strong>Refresh</strong> button.</p>
+<h3 id="entity-graph">Entity graph</h3>
+<p>A graph of open incidents, the Sentinel entities mapped to them (users, accounts, devices, IP addresses, processes and others), Orion hunts, and threat actors linked by ingested articles. Lines are drawn either as <strong>Observed in your tenant</strong> or <strong>Linked by threat intel</strong>.</p>
+<ul><li><strong>Time window</strong>: <strong>24h</strong>, <strong>7d</strong> or <strong>30d</strong>. Open incidents are read for at most 7 days, even with <strong>30d</strong>.</li><li><strong>Evidence layer</strong>: <strong>Observed + intel</strong> or <strong>Observed only</strong>.</li><li><strong>Show library</strong> switches to a graph of library detections, source articles, hunts, techniques and actors instead.</li><li>Entities are read for the 8 most severe, most recent open incidents. Other incidents are noted but not drawn. Very busy graphs show the most connected items first, with a &quot;+N more not shown&quot; note.</li><li>Selecting a node opens a side panel with its type, its incidents (click to open the incident), the record behind it (detection or article), and everything it connects to. Buttons: <strong>Open hunt</strong> or <strong>Hunt with Orion</strong>, and <strong>Ask Atlas</strong> (analyst or admin).</li></ul>
+<p>If incidents or entities cannot be read, the page says so and shows hunts and intel links only.</p>
+<h3 id="campaigns">Campaigns</h3>
+<p>Cards that cluster your library detections, hunts and feed articles by a named actor or by a technique shared by two or more records in the selected window. Each card shows the techniques in order, the evidence for each, and a status: <strong>Observed in tenant</strong> (seen in your hunt hits), <strong>Reported only</strong> or <strong>Not observed</strong>. Links open the Orion hunt, the first detection, the Detection Library or the source article. Nine cards show at first; <strong>Show all … clusters</strong> shows the rest.</p>
+<h3 id="strategic-brief">Strategic brief</h3>
+<p>A generated summary of your detection library, recent hunts and ingested articles, with:</p>
+<ul><li>the headline, summary and <strong>Claims</strong>, each marked <strong>Supported</strong>, <strong>Partly supported</strong> or <strong>Unverified</strong>. Every <code>[n]</code> citation is checked on the server against your records and shown as verified only when the record was found;</li><li>tiles for <strong>IOC matches</strong>, <strong>verified true positives</strong>, <strong>hunt hits</strong> and <strong>new articles</strong>. A tile reads <strong>Not connected</strong> where no data source exists yet;</li><li><strong>In the wild</strong>: recent articles that name a technique or actor, with relevance and trend;</li><li><strong>IOC matches in your telemetry</strong>: currently &quot;IOC matching is not connected&quot; (Planned);</li><li><strong>Verified in your environment</strong>: hunts with verified hits in the window;</li><li><strong>Since your last brief</strong> and <strong>Recommended next steps</strong>, counted from your records;</li><li><strong>Full generated report</strong> (collapsed): connection hypotheses, assumptions and rationale.</li></ul>
+<p>The brief has its own window, <strong>24h</strong> or <strong>7d</strong>.</p>
+<p>A collapsed <strong>Library references and examples</strong> section at the bottom lists exact CVE and technique mentions shared across library entries, plus clearly labelled example campaigns for layout only. Their response buttons are disabled.</p>
+<h2 id="what-you-can-do">What you can do</h2>
+<ul><li><strong>Generate brief</strong> or <strong>Regenerate</strong> creates a new brief from the saved library. It needs at least one library detection and a saved, current library.</li><li><strong>Send brief</strong> opens a channel picker and <strong>Send</strong>. Brief delivery is Planned: nothing is sent, and the panel says so.</li><li><strong>Ask Atlas</strong> (analyst or admin) opens Atlas with a question about the selected node.</li><li><strong>Open hunt</strong> / <strong>Hunt with Orion</strong> opens Orion's workspace on the Agents page.</li><li>Detection, article and incident links open the full detection record, Live Feed or the incident.</li></ul>
+<p>Nothing on this page takes a response action. Containment is requested through Approvals, never from the graph.</p>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li><strong>The brief is generated.</strong> It is marked as generated and summarizes library content; shared mentions do not prove a common actor or an active campaign.</li><li><strong>Saving the brief is admin-only on the server.</strong> The brief is stored in the shared tenant workspace, which only admins can save. An analyst can start generation, but the brief is not saved and the console can show &quot;Dashboard changes could not be saved.&quot; Citations are checked only once a brief is saved.</li><li><strong>Limits.</strong> The brief reads up to 250 library records (120,000 characters), 50 recent hunts and 40 articles. A larger library returns an error asking for a scoped brief.</li><li><strong>Generation failures</strong> keep the previous brief.</li><li><strong>Empty states.</strong> &quot;Nothing to connect in this window&quot; (try a longer window), &quot;No clusters in this window&quot; and &quot;No brief generated yet&quot;.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/live-feed/">Live Feed</a></li><li><a href="/docs/features/detection-library/">Detection Library</a></li><li><a href="/docs/features/atlas-copilot/">Atlas copilot</a></li><li><a href="/docs/how-to/run-a-threat-hunt/">How to run a threat hunt</a></li><li><a href="/docs/how-to/ask-atlas/">How to ask Atlas</a></li><li><a href="/docs/features/overview/">Overview</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

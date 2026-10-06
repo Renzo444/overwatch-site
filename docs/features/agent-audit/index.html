@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Audit | Overwatch Console docs</title>
+    <meta name="description" content="Agent Audit lists every action the agents recorded for your tenant, with the investigation behind it. Use it to check why an agent reached a verdict, which quer">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/agent-audit/">
+    <meta property="og:title" content="Agent Audit | Overwatch Console docs">
+    <meta property="og:description" content="Agent Audit lists every action the agents recorded for your tenant, with the investigation behind it. Use it to check why an agent reached a verdict, which quer">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/agent-audit/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/" aria-current="page">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Agent Audit</h1>
+<p>Agent Audit lists every action the agents recorded for your tenant, with the investigation behind it. Use it to check why an agent reached a verdict, which queries and tools it used, and whether a tool call was allowed by policy.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Agents</strong> group &gt; <strong>Agent Audit</strong>.</li><li>Keyboard: press <strong>g</strong> then <strong>a</strong>.</li><li><strong>Open in Agent Audit</strong> and <strong>Agent Audit</strong> buttons on the Agents page open it filtered to that agent.</li><li>A &quot;reported a problem&quot; item in the top bar notifications opens it filtered to the agent concerned.</li></ul>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Role</th><th>What you can do here</th></tr></thead><tbody><tr><td>Viewer</td><td>Read events, the investigation chain and the tool permission table.</td></tr><tr><td>Analyst</td><td>Everything a viewer can, plus record <strong>Helpful</strong> or <strong>Needs review</strong> on an event.</td></tr><tr><td>Admin</td><td>Everything an analyst can, plus change agent tool permissions.</td></tr></tbody></table></div>
+<h2 id="what-you-see">What you see</h2>
+<h3 id="toolbar">Toolbar</h3>
+<ul><li>Search box: &quot;Search agent, action, disposition, incident…&quot;.</li><li>Agent filter: <strong>All agents</strong> or one of the eight agents.</li><li>Disposition filter: <strong>All dispositions</strong>, True Positive, Benign Positive, False Positive, Escalated, Hunt, Tuning.</li><li>Time range: <strong>Last 1h</strong>, <strong>Last 6h</strong>, <strong>Last 24h</strong> (default), <strong>Last 7d</strong>, <strong>Last 30d</strong>.</li><li><strong>Refresh</strong> in the page header.</li></ul>
+<h3 id="event-list">Event list</h3>
+<p>Up to 300 events for the chosen agent, disposition and time range, newest first. Each row shows the agent, the time, what it did, and the disposition and confidence when recorded. Reviewer feedback is not listed as a separate event; it appears under the event it is about.</p>
+<p>When you first open the page, the newest Dax event linked to an incident is selected.</p>
+<h3 id="event-detail">Event detail</h3>
+<ul><li><strong>Events linked to an incident</strong> replay the incident's investigation chain:<ul><li>A summary line with the number of events, tool calls and reasoning steps, and the agents involved.</li><li>The final disposition with confidence and the recorded rationale, or &quot;No final disposition is recorded for this incident.&quot;</li><li>Each step in order: agent, time, step type, text, any KQL query, row counts and duration.</li><li>For a Dax event, only Dax's steps show first. Use <strong>Show all N recorded steps</strong> to include other agents and tools.</li><li>Tool calls have <strong>Inspect tool request and result</strong>: the permission decision and policy version, the outcome, HTTP status, an input preview, a result summary and <strong>Payload integrity hashes</strong>.</li><li>Permission records have <strong>Inspect permission decision</strong>.</li></ul></li><li><strong>Events without an incident</strong> say &quot;This event has no linked investigation chain. Its record is shown as written.&quot;</li><li><strong>Record as written</strong>: every stored field of the event (agent, action, time, incident, disposition, confidence, severity, correlation, duration, record id) and its raw details.</li><li>Earlier reviewer feedback on this event, with the reviewer, time and any note.</li></ul>
+<p>Text marked as generated was written by an agent's model.</p>
+<h3 id="collapsed-sections-at-the-bottom">Collapsed sections at the bottom</h3>
+<ul><li><strong>Tuning evidence</strong>: current and archived tuning baselines and detection backtests.</li><li><strong>Agent tool permissions and scope</strong>: the tool policy for every agent (tool, current permission, credential route) and <strong>Enforcement coverage and verification limits</strong>.</li></ul>
+<h2 id="what-you-can-do">What you can do</h2>
+<ul><li><strong>Open #N</strong>: opens the linked incident. All roles.</li><li><strong>Helpful</strong> / <strong>Needs review</strong>: records your opinion of this event. Analysts and admins. It is stored as its own audit record. It does not change the agent's verdict or retrain anything.</li><li>Change tool permissions (admins, in <strong>Agent tool permissions and scope</strong>): tick or untick <strong>Allow</strong> per agent and tool, then <strong>Review N permission changes</strong> and <strong>Apply permission changes</strong>, or <strong>Cancel permission changes</strong>. Revoking a tool blocks the agent's next call to it; work already running is not cancelled. <strong>Refresh permissions</strong> reloads the table.</li></ul>
+<p>Nothing on this page needs approval, and nothing here runs an agent.</p>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li>The list shows records, not proof that work succeeded. A permission decision without a completion record is intent, not proof of execution.</li><li>Payload hashes link a tool call to its input and output. They do not prove the storage is immutable.</li><li>If the list cannot be read you see &quot;Agent activity unavailable&quot; and the message &quot;Nothing here means the records could not be read, not that nothing happened.&quot;</li><li>If no events match, you see &quot;No agent activity matches these filters.&quot; Widen the time window or clear the search.</li><li>Requests that Atlas hands to another agent are recorded under that agent. In <strong>Record as written</strong>, the agent name ends with &quot;(via Atlas)&quot;.</li><li>For the tenant-wide tamper-evident ledger, exports and configuration changes, use <a href="/docs/features/audit-trail/">Audit Trail</a>.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/how-to/review-agent-decisions/">How to review agent decisions</a></li><li><a href="/docs/features/agents/">Agents</a></li><li><a href="/docs/concepts/the-agents/">The agents</a></li><li><a href="/docs/features/audit-trail/">Audit Trail</a></li><li><a href="/docs/how-to/export-audit-evidence/">How to export audit evidence</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

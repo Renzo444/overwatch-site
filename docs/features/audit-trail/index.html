@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Trail | Overwatch Console docs</title>
+    <meta name="description" content="The Audit Trail is the record of every agent and human action in your organization: who acted, what they did, what it touched, the outcome, and the policy decis">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/audit-trail/">
+    <meta property="og:title" content="Audit Trail | Overwatch Console docs">
+    <meta property="og:description" content="The Audit Trail is the record of every agent and human action in your organization: who acted, what they did, what it touched, the outcome, and the policy decis">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/audit-trail/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/" aria-current="page">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Audit Trail</h1>
+<p>The Audit Trail is the record of every agent and human action in your organization: who acted, what they did, what it touched, the outcome, and the policy decision that allowed, held or blocked it. Records are append-only and hash-chained, so a later change or removal shows up when the chain is verified. Use it to investigate what happened, to spot-check agent decisions, and to export evidence for an auditor.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Govern &gt; Audit Trail</strong>.</li><li>Command palette: &quot;Go to Audit Trail&quot;.</li><li>From Settings, the <strong>Audit Trail</strong> link under Branding.</li></ul>
+<p>For a step-by-step view of one agent's reasoning, queries and tool calls, use <a href="/docs/features/agent-audit/">Agent Audit</a> instead.</p>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Role</th><th>What they can do</th></tr></thead><tbody><tr><td>Viewer</td><td>Read the ledger, spot-check sample and configuration changes; draft the report and export JSONL or CSV</td></tr><tr><td>Analyst</td><td>Everything a viewer can, plus <strong>Verify chain</strong> and record <strong>Agree</strong> / <strong>Reopen</strong> spot-checks</td></tr><tr><td>Admin</td><td>Same as analyst</td></tr></tbody></table></div>
+<p>Viewers see &quot;Hash-chained · status visible to analysts and admins&quot; instead of the chain status.</p>
+<h2 id="what-you-see">What you see</h2>
+<p><strong>Header.</strong> <strong>Refresh</strong>.</p>
+<p><strong>View tabs.</strong> <strong>Activity ledger</strong>, <strong>Benign spot-check</strong>, <strong>Configuration changes</strong> and <strong>Export &amp; retention</strong>, each with a count.</p>
+<p><strong>Chain pill.</strong> Next to the tabs: how many records are sealed into the hash chain, the latest verification result and when it ran, for example &quot;1,204 records · chain intact · verified 3 minutes ago&quot;. If a check found a problem it says &quot;Chain break at record N&quot;. Hover it for the range that was checked.</p>
+<h3 id="activity-ledger">Activity ledger</h3>
+<ul><li><strong>How to read this ledger</strong>: a collapsible guide explaining each outcome and why records are chained.</li><li><strong>Filters</strong>: a search box (actor, action, target, incident, rule, hash), an action type list (<strong>All actions</strong>, Verdict, Approval, Containment, Deployment, Detection, Tuning, Hunt, Closure, Report, Access, Feedback, Config, Other), and a window (<strong>Last 24 hours</strong>, <strong>Last 7 days</strong>, <strong>Last 30 days</strong>).</li><li><strong>Actor chips</strong>: <strong>All actors</strong>, <strong>Agents</strong>, <strong>Humans</strong>, with counts.</li><li><strong>Outcome chips</strong>: <strong>Any outcome</strong>, <strong>Success</strong>, <strong>Failed</strong>, <strong>Denied</strong>, <strong>Held</strong>, <strong>Pending</strong>, with counts.</li><li><strong>Record list</strong>: newest first, up to 200 records per page, with time, actor, action, target, outcome and the policy decision. <strong>Newer records</strong> and <strong>Older records</strong> page through the window.</li><li><strong>Record detail</strong>: the selected record's explanation (&quot;What happened&quot;, &quot;What happens next&quot;), its tool calls, its chain link (<strong>Integrity</strong>), links to the related incident or workspace, <strong>Inspect recorded details</strong> and <strong>Copy record JSON</strong>.</li></ul>
+<p>Outcomes mean:</p>
+<div class="docs-table"><table><thead><tr><th>Outcome</th><th>Meaning</th></tr></thead><tbody><tr><td>Success</td><td>The action ran. It does not mean the conclusion was right.</td></tr><tr><td>Failed</td><td>The action was allowed but could not finish. Treat the result as unknown.</td></tr><tr><td>Denied by policy</td><td>A tenant policy blocked the action before it happened.</td></tr><tr><td>Held</td><td>Paused on purpose (for example autonomy off or a circuit breaker) until a person decides.</td></tr><tr><td>Pending</td><td>Waiting for a human decision. Nothing has executed.</td></tr></tbody></table></div>
+<h3 id="benign-spot-check">Benign spot-check</h3>
+<p>A random sample of records an agent closed as benign in the last 30 days (newest 100 read). Choose <strong>10% sample</strong>, <strong>25% sample</strong> or <strong>All records</strong>. Each row shows the incident, title and rationale, disposition, confidence, agent and time.</p>
+<h3 id="configuration-changes">Configuration changes</h3>
+<p>Agent configuration, policy, permission, credential, branding and notification changes from the last 90 days (newest 100), each with who made it, when, and the before and after values. Secrets show only their last four characters.</p>
+<h3 id="export-retention">Export &amp; retention</h3>
+<ul><li><strong>Executive audit report</strong>: choose a <strong>Report window</strong> and the sections to include (<strong>Approvals and denials, with reasons</strong>, <strong>Agent actions by outcome</strong>, <strong>Policy denials and holds</strong>, <strong>Configuration changes</strong>, <strong>Benign spot-check results</strong>).</li><li><strong>Retention &amp; integrity</strong>: <strong>Hot storage</strong> (how many days of records are kept), <strong>Long-term archive</strong>, <strong>Records in this tenant</strong>, <strong>Last chain verification</strong> and <strong>Export format</strong>.</li></ul>
+<h3 id="earlier-audit-views">Earlier audit views</h3>
+<p>A collapsed section at the bottom keeps the previous views: <strong>Benign disposition review</strong>, <strong>System audit logs</strong> (paged, with <strong>Export loaded records</strong>) and an executive report drafter.</p>
+<h2 id="what-you-can-do">What you can do</h2>
+<ul><li><strong>Filter and search the ledger.</strong> Anyone. Filters apply to the records loaded for the current page.</li><li><strong>Open the related incident or workspace</strong> from a record's detail. Anyone.</li><li><strong>Verify chain</strong> (or <strong>Re-verify</strong>). Analysts and admins. Re-checks the stored fingerprints. &quot;Chain intact&quot; means nothing has been altered since it was sealed. The chain shows changes; it does not prevent them.</li><li><strong>Agree</strong> or <strong>Reopen</strong> a spot-check row. Analysts and admins. Your verdict is stored as reviewer feedback. <strong>Reopen</strong> does not reopen the Sentinel incident; reopen it in Sentinel if it needs more work.</li><li><strong>Draft report.</strong> Builds a summary in your browser from the loaded ledger records. Every figure links back to the matching filtered records. <strong>Download draft (Markdown)</strong> saves it. Review before sharing.</li><li><strong>Export JSONL</strong> / <strong>Export CSV.</strong> Downloads the loaded ledger records with the chain head and last verification result. See <a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a>.</li></ul>
+<p>Nothing on this page needs approval, and nothing on it changes an incident or a rule.</p>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li><strong>Exports cover the loaded page only</strong>: up to 200 records from the selected window. For a longer period, page through with <strong>Older records</strong> and export each page, or use a shorter window.</li><li><strong>Retention.</strong> Hot storage keeps agent records for 30 days unless your organization has a different setting (&quot;(default)&quot; is shown when it has not been changed). Older records can be removed by retention cleanup, and the chain verification notes how many sealed records were removed. There is no screen in the console to change retention; ask the Overwatch team.</li><li><strong>Long-term archive</strong> is &quot;Not configured&quot;. There is no archive option today.</li><li>Approval votes are kept with Approvals, not in this ledger.</li><li>Outcomes that were not recorded are derived from the record and marked as derived in the tooltip.</li><li>If the ledger cannot be read you see &quot;Audit records unavailable&quot; with <strong>Retry</strong>. If a refresh fails, the page keeps showing the last records and says they may be stale.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a></li><li><a href="/docs/features/agent-audit/">Agent Audit</a></li><li><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a></li><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

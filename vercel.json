@@ -2,7 +2,9 @@
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/blogs", "destination": "/blogs/index.html" },
-    { "source": "/blogs/", "destination": "/blogs/index.html" }
+    { "source": "/blogs/", "destination": "/blogs/index.html" },
+    { "source": "/docs", "destination": "/docs/index.html" },
+    { "source": "/docs/", "destination": "/docs/index.html" }
   ],
   "headers": [
     {

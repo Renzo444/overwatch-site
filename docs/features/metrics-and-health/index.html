@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metrics &amp; Health | Overwatch Console docs</title>
+    <meta name="description" content="Metrics &amp; Health shows how your SOC is performing (detection, response and SLA measures, rule efficacy, coverage, QA agreement) and whether the platform behind ">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/metrics-and-health/">
+    <meta property="og:title" content="Metrics &amp; Health | Overwatch Console docs">
+    <meta property="og:description" content="Metrics &amp; Health shows how your SOC is performing (detection, response and SLA measures, rule efficacy, coverage, QA agreement) and whether the platform behind ">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/metrics-and-health/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/" aria-current="page">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Metrics &amp; Health</h1>
+<p>Metrics &amp; Health shows how your SOC is performing (detection, response and SLA measures, rule efficacy, coverage, QA agreement) and whether the platform behind it is healthy. Use it for a weekly review, a management report, or to check that the agents' worker is running.</p>
+<p>Every figure shows how many records it was measured from. A value that could not be measured shows as <strong>Unavailable</strong> or <strong>Not measured</strong>, never as zero.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>Sidebar: <strong>Govern &gt; Metrics &amp; Health</strong>.</li><li>Keyboard: <strong>g</strong> then <strong>m</strong>.</li><li>Command palette: &quot;Go to Metrics &amp; Health&quot;.</li></ul>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th>Role</th><th>What they can do</th></tr></thead><tbody><tr><td>Viewer</td><td>See everything on the page, change the window, print, refresh</td></tr><tr><td>Analyst</td><td>Same as viewer</td></tr><tr><td>Admin</td><td>Same as viewer</td></tr></tbody></table></div>
+<p>The page is read-only for everyone. Nothing on it changes an incident, rule or agent.</p>
+<h2 id="what-you-see">What you see</h2>
+<p><strong>Header.</strong> <strong>Print report</strong> and <strong>Refresh</strong>.</p>
+<p><strong>Window bar.</strong> The <strong>Metrics window</strong> control (<strong>7d</strong>, <strong>30d</strong>, <strong>90d</strong>), a source line, and <strong>Schedule this report</strong>. If more incidents exist than the page reads, the source line says &quot;sample capped at 5,000 incidents&quot;.</p>
+<p><strong>Key measurements.</strong> Eight tiles: <strong>MTTD</strong>, <strong>MTTA</strong>, <strong>MTTR</strong>, <strong>SLA compliance</strong>, <strong>True-positive rate</strong>, <strong>False-positive rate</strong>, <strong>Escalation rate</strong> and <strong>Open backlog</strong>. Each shows the value, the change from the previous window where it can be compared, and how many records it was measured from (for example &quot;12 / 40 incidents&quot;). Hover the information icon for the definition. Open backlog lists open incidents by severity and the age of the oldest.</p>
+<p><strong>Alert &amp; incident volume.</strong> Incidents created per day, split by severity, from Sentinel. Alerts are not counted.</p>
+<p><strong>SLA by severity.</strong> For high, medium and low: the time-to-resolve target, the median, how many closures met the target, and the percentage. Reopened incidents cannot be detected because Sentinel keeps no reopen flag. Closures with no valid close time count as unmeasured, not as met.</p>
+<p><strong>Detection efficacy.</strong> Your noisiest deployed rules, with true positives, false positives and precision. Marien uses the noisiest rules as tuning candidates.</p>
+<p><strong>MITRE ATT&amp;CK coverage.</strong> Deployed detections per tactic and how many tactics are covered. Rules that are only in the library, not deployed, do not count.</p>
+<p><strong>QA review · Dax and Demitry.</strong> <strong>Agreement</strong>, <strong>Override rate</strong>, <strong>Override direction</strong> and <strong>Avg confidence</strong>, from Demitry's latest QA decision per incident. Agent agreement is not human-verified accuracy.</p>
+<p><strong>Who handled the work.</strong> Closed incidents split into <strong>Agents (policy-allowed)</strong>, <strong>Agent-assisted analyst</strong>, <strong>Analyst only</strong> and, when it applies, <strong>Owner not recorded</strong>.</p>
+<p><strong>Needs attention.</strong> The five most severe recent incidents (from up to 50 incidents created in the last 7 days), with status and the latest Dax or Demitry verdict. <strong>All incidents</strong> opens the Incidents page.</p>
+<p><strong>Agent issues.</strong> Problems agents reported in their latest 200 events from the last 24 hours (up to six shown). Only failures an agent recorded are listed, so an empty list is not proof of health.</p>
+<p><strong>Platform health.</strong> Three cards, checked every minute:</p>
+<ul><li><strong>Database connectivity</strong>: whether the console's readiness check reached its database.</li><li><strong>Tenant worker heartbeat</strong>: whether the agent worker that runs scheduled work has reported in the last 2 minutes. A heartbeat only proves the process was alive.</li><li><strong>Resolution SLA sample</strong>: median time to resolve over the last 30 days, from up to 1,000 incidents.</li></ul>
+<p><strong>More telemetry.</strong> A collapsed section with agent issue rates, recorded agent operations, Sentinel incident activity, incident distributions, incident title groups and QA details. It uses the page window, but the Sentinel activity panels read at most 30 days, so with <strong>90d</strong> selected they show 30 days and say so.</p>
+<h2 id="what-you-can-do">What you can do</h2>
+<ul><li><strong>Change the window.</strong> <strong>7d</strong>, <strong>30d</strong> or <strong>90d</strong> changes every panel and the More telemetry section. Changes are compared with the previous window of the same length.</li><li><strong>Open the incidents behind a number.</strong> Select a key measurement tile to open Incidents with a matching filter (for example Open backlog opens new and active incidents; MTTR, SLA and TP/FP rates open closed incidents). For 7d and 30d the time range carries over; Incidents has no 90-day range, so for 90d it does not.</li><li><strong>Open an incident.</strong> Select a row in Needs attention to open its investigation.</li><li><strong>Open an agent.</strong> Select a row in Agent issues to go to that agent on the Agents page.</li><li><strong>Print report.</strong> Opens your browser's print dialog for the page.</li><li><strong>Refresh.</strong> Re-reads every source. The page also refreshes on its own every few minutes.</li></ul>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li><strong>SLA targets.</strong> SLA compliance needs a target. If none is set, the tile says &quot;no SLA target set&quot;. There is no screen in the console to set SLA targets; ask the Overwatch team.</li><li><strong>Metrics come from Sentinel and the agent audit record.</strong> If Sentinel cannot be reached, the panels show the error instead of a number.</li><li><strong>Planned: scheduled reports.</strong> <strong>Schedule this report</strong> only opens the Actions page. Scheduled or emailed metrics reports are not available.</li><li>The panels and tiles cannot be rearranged or customized.</li><li>MTTA and Escalation rate depend on agent records. If the agent audit record is unavailable, they show as unavailable.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/incidents/">Incidents</a></li><li><a href="/docs/features/agents/">Agents</a></li><li><a href="/docs/features/audit-trail/">Audit Trail</a></li><li><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a></li><li><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-05</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-see">What you see</a><a href="#what-you-can-do">What you can do</a><a href="#good-to-know">Good to know</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>
