@@ -1,7 +1,7 @@
 ---
 title: Data connectors
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Data connectors
@@ -71,7 +71,8 @@ Volumes are billed bytes from the workspace's usage records over a 7-day window.
 - **Gaps depend on your library.** They compare the tables your library detections read against what the workspace receives. With no saved KQL in the library you see "No library detection has saved KQL to check".
 - **Partial checks.** If workspace health cannot be read but the table list can, only tables proven absent are listed; tables that stopped sending are not checked until health is readable.
 - **Health monitoring coverage.** Microsoft reports health only for some connectors. For the rest, the KQL check is the proof that data arrives.
-- **Unavailable states.** "Unavailable · connector health could not be read", "No table ingested data in the last 7 days", "Dismissals unavailable" (dismissed suggestions may show as open) and "Unavailable · coverage gaps cannot be computed".
+- **Not connected.** If Microsoft Sentinel is not connected for your organization yet, the page shows "Not connected · Microsoft Sentinel setup is incomplete" and says which details are missing (the Azure app registration or the workspace details). Admins get an **Open setup wizard** button; others are asked to have an administrator complete the setup wizard (Settings > Setup wizard).
+- **Unavailable states.** "Unavailable · connector health could not be read", "No table ingested data in the last 7 days", "Dismissals unavailable" (dismissed suggestions may show as open) and "Unavailable · coverage gaps cannot be computed". Error messages never show internal IDs.
 
 ## Related
 

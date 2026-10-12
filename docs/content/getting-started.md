@@ -1,7 +1,7 @@
 ---
 title: Getting started
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Getting started with Overwatch Console
@@ -10,7 +10,7 @@ Overwatch Console is a security operations console for Microsoft Sentinel. A tea
 
 ## Getting access
 
-Today, access is arranged with the Overwatch team. They create your organization and your user accounts, and set each person's role (viewer, analyst or admin). See [Roles and permissions](concepts/roles-and-permissions.md).
+Today, the Overwatch team creates your organization and its first admin account. After that, an admin invites the rest of the team from **Settings > Team**, choosing each person's role (viewer, analyst or admin). The invited person gets an email link, sets their own password and signs in. Invitations need account email to be set up for your deployment; if it is not, ask the Overwatch team to create the accounts. See [Invite a teammate](how-to/invite-a-teammate.md) and [Roles and permissions](concepts/roles-and-permissions.md).
 
 **Planned: self-service signup is not open yet.** The sign-in page links to **Start a 14-day Sentinel trial**. That page currently shows "Trial enrollment is not open yet" and offers **Sign in to an existing account** and **Check again**. When enrollment opens, you will request a verification link with your organization name and work email, set a password from the emailed link, then sign in and connect Sentinel.
 
@@ -20,7 +20,16 @@ Today, access is arranged with the Overwatch team. They create your organization
 2. Enter your **Username** (your email address) and **Password**.
 3. Select **Sign In**.
 
-If the details are wrong you see "Invalid credentials". After five attempts in a minute from the same network, sign-in is paused for 60 seconds.
+If the details are wrong you see "Invalid credentials".
+
+Sign-in is protected against password guessing:
+
+- After ten failed sign-ins for one account within 15 minutes, that account is locked for 15 minutes, from any network. While it is locked, even the right password shows "Invalid credentials". Wait 15 minutes, or reset your password: a successful reset clears the lock.
+- More than five sign-in attempts in a minute from the same network are refused, and you see "Unable to reach the sign-in service. Please try again." Wait a minute and try again.
+
+**Forgot your password?** on the sign-in page lets you request a reset link by email. The link works once and expires after 1 hour. See [Invite a teammate](how-to/invite-a-teammate.md#help-someone-reset-their-password) for the steps. Password resets need account email to be set up for your deployment.
+
+The sign-in page also links to the **Terms of service** and **Privacy policy**. Both pages are currently marked "Draft for review. This text is not yet in effect."
 
 Your sign-in lasts up to 8 hours. If your account or organization is deactivated, or your role changes, the change applies on your next request.
 
@@ -97,7 +106,7 @@ Press **Ctrl+K** (or **⌘K** on a Mac) or select the search box. Type to find:
 - agents, which open that agent on the Agents page (Atlas opens the Atlas panel),
 - pages ("Go to Approvals").
 
-It also has run commands: **Run Dax (Analyst)**, **Run Demitry (Senior QA)**, **Run Orion (Threat Hunter)**, **Run Caleb (Malware Analyst)** and **Force Intel Sync**. Running an agent needs the analyst role (Caleb needs admin). Follow progress in [Agent Audit](features/agent-audit.md). **Run Marien (Tuning)** is listed but does not currently start a run; use Marien's workspace on the [Agents](features/agents.md) page instead.
+It also has run commands: **Run Dax (Analyst)**, **Run Demitry (Senior QA)**, **Run Orion (Threat Hunter)**, **Run Marien (Tuning)**, **Force Intel Sync** and **Run Caleb (Malware Analyst)**. Running an agent needs the analyst role. You see "Agent request accepted. Follow its progress in Agent Audit." when the request is taken; follow progress in [Agent Audit](features/agent-audit.md).
 
 The palette shows up to 50 matches.
 
@@ -122,7 +131,7 @@ The "g" shortcuts do not work while you are typing in a field or while a dialog 
 
 ### Activity indicator
 
-A thin bar under the top bar shrinks over 30 minutes without mouse, keyboard, scroll or touch activity, and changes when 5 minutes are left. It is only an indicator: it does not sign you out.
+A thin bar under the top bar shrinks over 30 minutes without mouse, keyboard, scroll or touch activity, and changes when 5 minutes are left. When it runs out, you are signed out and returned to the sign-in page. Any activity in the console resets it.
 
 ## First-time setup wizard (admins)
 
@@ -131,11 +140,11 @@ When an admin signs in to an organization that is not configured yet, the setup 
 1. **Tenant Settings**: tenant name and Azure tenant ID.
 2. **Azure Config**: choose **I already have Sentinel** and enter the subscription, resource group and workspace name.
 3. **Service Principals**: copy the generated Cloud Shell setup script, run it in Azure, and enter the client IDs and secrets it creates.
-4. **Connection Test**: **Test All Connections** saves the credentials and checks them.
+4. **Connection Test**: **Test All Connections** saves the credentials and checks each of the three service principals: that it can sign in and read Sentinel rules, that it has every permission its role needs on the workspace (any missing permission is named), and, for roles that query logs, that a one-row test query succeeds. A note says when a missing optional permission means a feature will not work.
 5. **Rule Pack**: choose Baseline, TI Mapping or Full Suite.
 6. **Provisioning**: validates the credentials, then deploys the chosen rule pack to your Sentinel workspace.
 
-Rule pack deployment from the wizard runs straight away when the admin reaches the last step. It does not go through Approvals.
+Deploying a rule pack writes rules to your Sentinel workspace, so it needs an approval. The first time you reach the last step, the wizard stops with "Rule pack deployment is waiting for approval. Approve it under Approvals, then deploy again." An admin approves the request in [Approvals](features/approvals.md). Then select **Close**, reopen the wizard from **Setup** in the account menu and go through to the last step again: this time the rule pack deploys. Each approval covers one deployment.
 
 **Planned:** the **Deploy Sentinel for me** option in step 2 (create a new workspace) is shown but cannot complete yet. Use an existing workspace.
 

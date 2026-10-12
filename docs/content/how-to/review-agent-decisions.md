@@ -1,7 +1,7 @@
 ---
 title: How to review agent decisions
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # How to review agent decisions
@@ -13,8 +13,14 @@ Check what an agent decided and why, and record whether you found it helpful or 
 - Any role can read agent decisions.
 - Recording **Helpful** or **Needs review** needs the **Analyst** or **Admin** role.
 - Your feedback is an opinion. It is stored with the record and does not change the agent's verdict, close or reopen anything, or retrain an agent.
+- Your decisions in Approvals are different: approving or denying Demitry's close requests is what the **Agent accuracy** scorecard counts. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 
 ## Steps
+
+### Read why Dax and Demitry reached a verdict on an incident
+
+1. Open **Incidents** and click the incident.
+2. In the incident blade, read the **Investigation chain**. Each query shows why the agent ran it, what came back and the KQL. Demitry's verdict shows whether it agreed with Dax, the confidence, the reasoning and the closure note.
 
 ### Review one decision in Agent Audit
 
@@ -34,6 +40,15 @@ Check what an agent decided and why, and record whether you found it helpful or 
 3. Select a review and read Demitry's reasoning and the two agents' decisions.
 4. Click **Mark helpful** or **Needs review**.
 
+### Decide on Demitry's close requests (admin)
+
+1. Open **Approvals**. A close request reads "Close incident #N … as …".
+2. Read the evidence and Demitry's reasoning on the card.
+3. To approve, click **Approve**. If the verdict is right but the report is thin, switch on **Right verdict, thin report** before confirming; it counts against Demitry's accuracy score.
+4. To deny, click **Deny** and pick a reason. A denial counts as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
+
+See [How to approve or deny an action](approve-or-deny-an-action.md) for the full steps.
+
 ### Work through an agent's outputs
 
 1. Open the agent's workspace and click the **Outputs** tab.
@@ -44,7 +59,8 @@ Check what an agent decided and why, and record whether you found it helpful or 
 
 - Your feedback appears under the event in Agent Audit, with your user and the time.
 - Read state on the Outputs tab is yours only. Reading approves nothing.
-- If a decision is wrong, act on the incident yourself from the Incidents page, for example re-analyze or close it. See [How to close an incident](close-an-incident.md).
+- An approved close is carried out at the start of Demitry's next run. Your decision is counted on the **Agent accuracy** card on the Approvals page.
+- If a decision is wrong, act on the incident yourself from the Incidents page, for example re-analyze or close it. See [How to close an incident](close-an-incident.md). Reopening an incident that auto mode closed counts as a reversal and turns auto mode off.
 - Response actions that Demitry requested wait in [Approvals](../features/approvals.md) for an admin.
 
 ## If something goes wrong
@@ -60,5 +76,6 @@ Check what an agent decided and why, and record whether you found it helpful or 
 - [Agent Audit](../features/agent-audit.md)
 - [Agents](../features/agents.md)
 - [How to triage an incident](triage-an-incident.md)
+- [How to approve or deny an action](approve-or-deny-an-action.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)
 - [Audit Trail](../features/audit-trail.md)

@@ -1,7 +1,7 @@
 ---
 title: How to run an agent
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # How to run an agent
@@ -11,8 +11,9 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 ## Before you start
 
 - You need the **Analyst** or **Admin** role. Viewers see the buttons disabled.
-- Caleb's detonation lab, and sending an Orion hunt to Renzo, need the **Admin** role.
+- Caleb's detonation lab needs the **Admin** role.
 - Dax and Demitry read your Sentinel incidents, so your tenant's Sentinel connection must be set up.
+- Dax and Demitry skip incidents a person owns. To have an agent look at one, unassign it first.
 
 ## Steps
 
@@ -20,7 +21,7 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 2. Click the agent's card to open its workspace.
 3. Click the agent's main button in the summary row, or use the workspace controls:
    - **Dax**: pick an incident in the **Analyze an incident** panel and click **Analyze**, or click **Analyze all queued** to let the server pick every eligible queued incident. In the **Triage runs** list, an unassessed incident also has **Analyze now**.
-   - **Demitry**: click **Run QA now**. Demitry reviews one incident per run.
+   - **Demitry**: click **Run QA now**. Demitry first carries out closes people approved, then reviews one incident Dax has finished.
    - **Marien**: click **Refresh recommendations**. This reloads proposals and asks Marien for a new tuning poll.
    - **Orion**: click **Run proactive hunt**. To run a saved proposal or a failed hunt, select it in **Recorded threat hunts** and click **Execute hunt** or **Retry hunt**. To save a proposal from an article, paste the URL and click **Ingest intel**.
    - **Renzo**: paste an article URL and click **Generate proposal**, or click **Run research cycle**.
@@ -34,21 +35,24 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 
 - The server accepts the request and the agent works in the background. Acceptance is not completion; results appear when the agent records them.
 - Every run is recorded in [Agent Audit](../features/agent-audit.md) and shows on the agent's roster card and **Outputs** tab.
-- Dax adds its assessment as a comment on the Sentinel incident. At autonomy level 1 or higher it also hands the incident to Demitry for QA.
-- Demitry may close a confirmed false or benign positive if your policy rules allow it, escalate to a human, or file response requests in [Approvals](../features/approvals.md).
-- Marien, Renzo and Orion produce proposals, drafts and hunt records. Nothing is deployed by these runs, except that Marien deploys tuning on its own when tuning auto-approve is on.
-- Maxwell's review records whether the rule may be deployed. Deploying is a separate admin step: **Approve & deploy**.
+- Dax adds its assessment as a comment on the Sentinel incident. When Dax's schedule switch is on, it also hands the incident to Demitry for QA. If a person claims the incident during the run, Dax only adds the comment.
+- Demitry files a close request in [Approvals](../features/approvals.md) for a confirmed false or benign positive, escalates to a human, or files response requests. The close happens on Demitry's next run after a person approves it (or after earned auto mode approves it, when your tenant uses it).
+- Orion records the hunt and its verdict on the results. A malicious or suspicious finding opens a new Sentinel incident for Dax to triage.
+- Marien and Renzo produce proposals and drafts. Nothing is deployed by these runs. Renzo may finish a research cycle without a new conclusion; then nothing is saved.
+- Maxwell's review records whether the rule may be deployed. Deploying is a separate admin step: **Approve & deploy**, within an hour of the passed review.
 
 ## If something goes wrong
 
 - **The button is disabled with "Analysts and administrators can run …"**: your role is Viewer. Ask an admin.
 - **"Your role cannot run this action."**: the server refused the request for your role.
-- **"Can't review yet: no QA evidence or passing backtest is recorded for this rule."** (Maxwell): send the rule to QA from Renzo's workspace first.
+- **"This rule has no KQL query, so there is nothing to review."** (Maxwell): draft the rule again from Renzo's workspace.
+- **"The review did not pass: …"** (Maxwell): fix what the review names, then click **Review again**.
 - **"Load a writable tenant workspace before generating detections."** (Renzo, Orion): the detection library did not load. Refresh the page.
 - **"No detection was drafted."** (Renzo): the article did not support a behavioral detection.
-- **Orion reports the daily hunt limit**: Orion runs at most 10 scheduled and 20 requested hunts per day.
+- **"Renzo did not draft a detection: …"** (Orion): the hunt did not support a specific attacker behavior.
+- **"Orion has reached today's limit of … hunts. Try again tomorrow."**: Orion runs at most 10 scheduled and 20 requested hunts per day, failed hunts included.
 - **Renzo refuses a research cycle**: the daily allowance shown under the panel is used up for today (UTC).
-- **"Latest run reported a problem."** on the workspace: open **Outputs** or Agent Audit to read the failure.
+- **"Latest run reported a problem."** on the workspace: open **Outputs** or Agent Audit to read the failure. If the AI service is refusing requests, the run stops and the refusal is recorded at most once an hour; retry once your provider access is restored.
 
 ## Related
 

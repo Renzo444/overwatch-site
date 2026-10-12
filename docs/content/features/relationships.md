@@ -1,7 +1,7 @@
 ---
 title: Relationships
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Relationships
@@ -18,9 +18,9 @@ Relationships shows how your incidents, the entities in them, Orion's hunts and 
 
 | Role | What you can do here |
 |------|----------------------|
-| Viewer | All three views, all filters, open records, read the saved brief. |
-| Analyst | Everything a viewer can, plus **Ask Atlas**. Analysts can start **Generate brief**, but the server only saves a brief for admins (see "Good to know"). |
-| Admin | Everything an analyst can. The generated brief is saved for the tenant. |
+| Viewer | All three views, all filters, open records, read the saved brief. **Generate brief** is disabled. |
+| Analyst | Everything a viewer can, plus **Generate brief** / **Regenerate** and **Ask Atlas**. The generated brief is saved for the tenant. |
+| Admin | Same as analyst. |
 
 ## What you see
 
@@ -60,7 +60,7 @@ A collapsed **Library references and examples** section at the bottom lists exac
 
 ## What you can do
 
-- **Generate brief** or **Regenerate** creates a new brief from the saved library. It needs at least one library detection and a saved, current library.
+- **Generate brief** or **Regenerate** (analyst or admin) creates a new brief from the saved library. It needs at least one library detection and a saved, current library. Otherwise the panel says "Generation requires a saved, current library and analyst or administrator access."
 - **Send brief** opens a channel picker and **Send**. Brief delivery is Planned: nothing is sent, and the panel says so.
 - **Ask Atlas** (analyst or admin) opens Atlas with a question about the selected node.
 - **Open hunt** / **Hunt with Orion** opens Orion's workspace on the Agents page.
@@ -71,7 +71,7 @@ Nothing on this page takes a response action. Containment is requested through A
 ## Good to know
 
 - **The brief is generated.** It is marked as generated and summarizes library content; shared mentions do not prove a common actor or an active campaign.
-- **Saving the brief is admin-only on the server.** The brief is stored in the shared tenant workspace, which only admins can save. An analyst can start generation, but the brief is not saved and the console can show "Dashboard changes could not be saved." Citations are checked only once a brief is saved.
+- **Saving the brief.** The brief is stored in the shared tenant workspace for everyone in your organization. If the save fails, the console shows "Dashboard changes could not be saved." Citations are checked only once a brief is saved.
 - **Limits.** The brief reads up to 250 library records (120,000 characters), 50 recent hunts and 40 articles. A larger library returns an error asking for a scoped brief.
 - **Generation failures** keep the previous brief.
 - **Empty states.** "Nothing to connect in this window" (try a longer window), "No clusters in this window" and "No brief generated yet".

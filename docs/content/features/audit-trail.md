@@ -1,7 +1,7 @@
 ---
 title: Audit Trail
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Audit Trail
@@ -59,7 +59,9 @@ A random sample of records an agent closed as benign in the last 30 days (newest
 
 ### Configuration changes
 
-Agent configuration, policy, permission, credential, branding and notification changes from the last 90 days (newest 100), each with who made it, when, and the before and after values. Secrets show only their last four characters.
+Agent configuration (including operating mode and staffed hours, shown as for example "switched the operating mode to scheduled"), auto mode, policy, tool permission, credential, intel feed, branding, notification and default appearance changes from the last 90 days (newest 100), each with who made it, when, and the before and after values. Secrets show only their last four characters.
+
+Team changes made in **Settings > Team** (invitations, accepted invitations, password resets and role changes, with the old and new role) are in the **Activity ledger**, not this tab.
 
 ### Export & retention
 

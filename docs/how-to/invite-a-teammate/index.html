@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invite a teammate | Overwatch Console docs</title>
+    <meta name="description" content="Give a colleague their own Overwatch Console account with the right role, change a teammate's role later, and help someone who has forgotten their password.">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/invite-a-teammate/">
+    <meta property="og:title" content="Invite a teammate | Overwatch Console docs">
+    <meta property="og:description" content="Give a colleague their own Overwatch Console account with the right role, change a teammate's role later, and help someone who has forgotten their password.">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/invite-a-teammate/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/add-an-intel-feed/">Add an intel feed</a><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/invite-a-teammate/" aria-current="page">Invite a teammate</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy and the operating mode</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to invite a teammate</h1>
+<p>Give a colleague their own Overwatch Console account with the right role, change a teammate's role later, and help someone who has forgotten their password.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>admin</strong> role. Other roles see &quot;Only organization administrators can manage the team.&quot; on the Team tab.</li><li>Decide the person's role: <strong>Viewer</strong>, <strong>Analyst</strong> or <strong>Administrator</strong>. See <a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a>.</li><li>Invitations are sent by email. Account email must be set up for your Overwatch Console deployment. If it is not, the Team tab shows &quot;Invitations need account email&quot; with &quot;Account email is not set up for this console yet, so invitations cannot be sent.&quot; instead of the invite form. Ask the Overwatch team to set up account email, or to create the account for you. Role changes and deactivation still work without email.</li></ul>
+<h2 id="steps">Steps</h2>
+<h3 id="invite-a-person">Invite a person</h3>
+<ol><li>Go to <strong>Settings</strong> and select the <strong>Team</strong> tab.</li><li>Under <strong>Invite a person</strong>, enter the person's <strong>Email</strong>.</li><li>Optional: enter a <strong>Name (optional)</strong>. If you leave it empty, the part of the email before the @ is used.</li><li>Choose a <strong>Role</strong>. It starts on <strong>Viewer</strong>.</li><li>Select <strong>Send invitation</strong>.</li></ol>
+<p>You see &quot;Invitation sent to &lt;email&gt;. The link works once and expires in 72 hours.&quot; The person appears under <strong>People</strong> with the status <strong>Invited</strong> and when they were invited.</p>
+<h3 id="what-the-invited-person-does">What the invited person does</h3>
+<ol><li>They open the email &quot;You have been invited to Overwatch Console&quot; and follow the link.</li><li>On the <strong>Join your team</strong> page, they enter a <strong>New password</strong> and <strong>Confirm password</strong>. The password must have at least 15 characters and no more than 72 bytes.</li><li>They select <strong>Activate account</strong>.</li><li>They see &quot;Your account is active.&quot; and select <strong>Sign in</strong> to sign in with their email and the new password.</li></ol>
+<p>Until they do this, the account cannot sign in. Nobody else ever sees or sets their password.</p>
+<h3 id="change-a-teammates-role">Change a teammate's role</h3>
+<ol><li>On the <strong>Team</strong> tab, find the person under <strong>People</strong>.</li><li>Choose the new role in the role list next to their name.</li></ol>
+<p>The change saves as soon as you choose it; there is no separate save button or confirmation. It applies on the person's next request: they do not need to sign out.</p>
+<h3 id="deactivate-or-reactivate-someone">Deactivate or reactivate someone</h3>
+<ol><li>On the <strong>Team</strong> tab, find the person under <strong>People</strong>.</li><li>Select <strong>Deactivate</strong> (or <strong>Reactivate</strong> for a deactivated account).</li></ol>
+<p>A deactivated person cannot sign in, and a session they already have stops working on their next request. People with the status <strong>Invited</strong> have no Deactivate button.</p>
+<h3 id="help-someone-reset-their-password">Help someone reset their password</h3>
+<p>Admins cannot reset another person's password. The person does it themselves:</p>
+<ol><li>On the sign-in page, they select <strong>Forgot your password?</strong>.</li><li>They enter their <strong>Email address</strong> and select <strong>Send reset link</strong>.</li><li>They follow the link in the email &quot;Reset your Overwatch Console password&quot;, enter a <strong>New password</strong> and <strong>Confirm password</strong>, and select <strong>Change password</strong>.</li><li>They see &quot;Your password is changed.&quot; and sign in with the new password.</li></ol>
+<h2 id="what-happens-next">What happens next</h2>
+<ul><li>An invitation link works once and expires after 72 hours. A password reset link works once and expires after 1 hour.</li><li>Activating an account or resetting a password also clears any sign-in lockout on that account.</li><li>The <a href="/docs/features/audit-trail/">Audit Trail</a> <strong>Activity ledger</strong> records each invitation, each accepted invitation, each password reset request and reset, and each role change with who made it and the old and new role.</li><li>None of this goes through Approvals. Team changes are made directly by the admin.</li></ul>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<p><strong>When inviting:</strong></p>
+<ul><li><strong>&quot;A user with this email already exists&quot;</strong>: the address already has an account, in your organization or another one. To send a fresh link to someone still marked <strong>Invited</strong>, invite the same email again: this replaces the earlier link.</li><li><strong>&quot;Enter a valid email address&quot;</strong>: check the address.</li><li><strong>&quot;The invitation was saved but the email could not be sent (...). Resend it to try again.&quot;</strong>: the person is listed as <strong>Invited</strong>, but no email went out. Invite the same email again.</li><li><strong>&quot;Account email is not set up yet, so invitations cannot be sent&quot;</strong> or the <strong>Invitations need account email</strong> card: see Before you start.</li><li><strong>&quot;Invitations unavailable&quot;</strong> or <strong>&quot;Users unavailable&quot;</strong>: the team list could not be read. Select <strong>Refresh</strong> at the top of Settings.</li><li><strong>&quot;Rate limit exceeded. Please slow down.&quot;</strong>: you sent more than ten invitations in a minute. Wait a minute and try again.</li></ul>
+<p><strong>When changing roles or deactivating:</strong></p>
+<ul><li><strong>&quot;This is the organization's only active administrator. Make someone else an administrator first.&quot;</strong>: the organization must always keep one active admin. Promote someone else first.</li><li><strong>&quot;You cannot change your own role. Ask another administrator to change it.&quot;</strong> and <strong>&quot;You cannot deactivate your own account.&quot;</strong>: ask another admin. Your own row has no role list or Deactivate button for this reason.</li><li><strong>&quot;Another change to the team happened at the same time. Try again.&quot;</strong>: another admin changed the team at the same moment. Try again.</li></ul>
+<p><strong>For the invited person or the person resetting:</strong></p>
+<ul><li><strong>&quot;This link is invalid, expired or already used.&quot;</strong>: invitation links last 72 hours and reset links 1 hour, and each works once. Only the newest link works. Ask the admin to invite you again, or request a new reset link.</li><li><strong>&quot;Open the invitation link from your email.&quot;</strong>: the page was opened without the link from the email.</li><li><strong>&quot;The passwords do not match.&quot;</strong> or the 15-character rule: re-enter the password.</li><li><strong>No reset email arrives.</strong> The page always says &quot;If that address belongs to an active account, a reset link is on its way.&quot; whether or not an email was sent, so it does not reveal which addresses have accounts. No email is sent when the address has no active account (including an invitation not yet accepted), when a reset link was already sent to that account in the last minute, or when account email is not set up for your deployment. Wait a minute and try again, or ask an admin.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a></li><li><a href="/docs/getting-started/">Getting started</a></li><li><a href="/docs/features/audit-trail/">Audit Trail</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-12</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-goes-wrong">If something goes wrong</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

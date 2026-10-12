@@ -1,7 +1,7 @@
 ---
 title: Set up branding
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # How to set up branding
@@ -10,7 +10,7 @@ Record your organization's name and logo in Overwatch Console.
 
 ## Before you start
 
-- You need the **admin** role. Analysts and viewers cannot use the Branding tab.
+- You need the **admin** role. Analysts and viewers see "Only organization administrators can change branding." on the Branding tab instead of the form.
 - If you want a logo, host the image at an HTTPS address that anyone signed in can load, without a username or password in the URL.
 - Know what changes today: the organization name appears in the account menu and on the trial pages. The logo and accent choices are saved and shown in the preview only; the rest of the console does not use them yet (Planned).
 
@@ -41,7 +41,8 @@ The **Save branding** button stays disabled and a message explains why:
 Other cases:
 
 - **The preview shows a letter instead of your logo.** The image could not be loaded from that address. Check the URL opens in your browser and is served over HTTPS.
-- **"Branding unavailable"** with **Retry**: the branding record could not be read. Retry. Analysts and viewers currently always see this message, because the tab loads only for admins.
+- **"Branding unavailable"** with **Retry**: the branding record could not be read. Retry.
+- **"Only organization administrators can change branding."**: you are not an admin. Ask one to make the change.
 - **"Branding was not confirmed. Reload before retrying."** The save outcome is unknown. Select **Refresh** at the top of Settings and check the values before saving again.
 
 ## Related

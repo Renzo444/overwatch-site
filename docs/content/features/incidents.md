@@ -1,7 +1,7 @@
 ---
 title: Incidents
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Incidents
@@ -21,10 +21,8 @@ The Incidents page lists incidents from your Microsoft Sentinel workspace next t
 | Role | What you can do here |
 |------|----------------------|
 | Viewer | Read the table and the incident panel, filter, sort, search, export CSV, open the full workspace and the audit trail. |
-| Analyst | Everything a viewer can do, plus ask Dax to analyze, assign or unassign incidents, rate an assessment **Helpful** or **Needs review**, request tuning for a false positive, and ask Atlas about the incident. |
-| Admin | Everything an analyst can do, plus close incidents in Sentinel and approve or deny a pending request shown in the incident panel. |
-
-Closing an incident is limited to administrators by the server. The **Close incident** button is also shown to analysts, but the request is refused for them with an "administrator privileges" error.
+| Analyst | Everything a viewer can do, plus ask Dax to analyze, assign or unassign incidents, rate an assessment **Helpful** or **Needs review**, request tuning for a false positive, ask Atlas about the incident and close incidents in Sentinel. |
+| Admin | Everything an analyst can do, plus approve or deny a pending request shown in the incident panel. |
 
 ## What you see
 
@@ -51,13 +49,11 @@ A line under the filters says when the list was read from Sentinel and reminds y
 - Two tiles: **Dax verdict** and **Demitry QA**.
 - **Awaiting your approval**, when a pending request is linked to this incident, with **Approve** and **Deny**.
 - **Similar past cases**: closed Sentinel incidents from the last 90 days that share the rule, entities or techniques. Each case shows a match score, what it matched on, the classification it was closed with, the closing comment, time to resolve and who closed it. A summary line describes the mix of past dispositions; it is built from the stored classifications, not generated. Any reviewer feedback stored for similar cases or for this incident is shown here too. **Open historical case** shows a read-only view of the closed case with a link to open it in Sentinel.
-- **Investigation chain**: the agent steps recorded for this incident (up to the latest 40), with the KQL each query step ran. Expand **Recorded assessment and full trail** for Dax's reasoning, recorded disposition, confidence explanation and the full step-by-step trail.
+- **Investigation chain**: the agent steps recorded for this incident (up to the latest 40), from Dax, Demitry and any other agent that worked on it. Every query step reads the same way: why the agent ran it (or "Ran a query (no reason recorded)"), a **Result** line (for example "3 rows returned", "No rows returned" or "Query failed: …") and the KQL itself. A verdict step shows the verdict with its **Confidence** and **Why**. Demitry's QA verdict also shows **Versus Dax** (what Dax concluded and whether Demitry agrees or disagrees) and, when he recommends a close, the **Closure note**. A step an agent's tool permissions blocked reads "Blocked from using … by its tool permissions". Expand **Recorded assessment and full trail** for Dax's reasoning, recorded disposition, confidence explanation and the full step-by-step trail.
 - **Case notes**: Atlas answers that someone pinned to this incident. Each note is labelled as generated and shows who pinned it. The section is hidden when there are no notes.
 - **Entities**: accounts, hosts, IPs, URLs, files and other entities Sentinel mapped to the incident.
 - **Sentinel description**, collapsed, when Sentinel has one.
 - The action buttons described below.
-
-**More.** A collapsed section at the bottom of the page with the earlier incident workspace (board view, Swarm accuracy, Dax and Demitry panels, incident data grid). It only loads when you open it.
 
 ## What you can do
 
@@ -76,7 +72,7 @@ A line under the filters says when the list was read from Sentinel and reminds y
 | **Audit trail** | Opens the forensic audit trail for this incident: the tool calls and queries the agents ran. | Any role | No |
 | **Open full workspace** | Opens the full-screen investigation workspace for this incident. | Any role | No |
 | **Approve** / **Deny** | Votes on the pending request linked to this incident, using the same dialogs as the Approvals page. | Admin | This is the approval |
-| **Close incident** | Opens the close dialog. You choose a Sentinel classification and add a comment; both are written to the incident in Sentinel. | Admin | No, it is a direct human action |
+| **Close incident** | Opens the close dialog. You choose a Sentinel classification and add a comment; both are written to the incident in Sentinel. | Analyst, Admin | No, it is a direct human action |
 
 See [How to close an incident](../how-to/close-an-incident.md) for the close dialog.
 
@@ -87,7 +83,9 @@ See [How to close an incident](../how-to/close-an-incident.md) for the close dia
 - Verdicts and QA reviews come from what the agents recorded. "No assessment recorded" only means Dax has not written evidence for that incident; it does not mean nobody looked at it.
 - If the list cannot be refreshed, the page keeps the last list it read and says it may be stale, with a **Retry** link.
 - Dax only picks up incidents that are unassigned or owned by Dax. Assigning an incident to a person takes it out of his automatic queue.
-- Depending on your tenant's agent policy, Demitry can close an incident he confirms as a false or benign positive. When policy withholds that, he escalates it for human review instead. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
+- A person's claim and a person's close are final for the agents. Demitry does not review an incident a person owns; if someone claims it while he is reviewing, he leaves his verdict as a comment and changes nothing else. No agent reopens or reclassifies an incident a person closed.
+- When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically through Agent accuracy on the Approvals page. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
+- When Demitry escalates an incident for human review, the console also sends a "Needs a person" notification through the channels your administrator set up. See [How to configure notifications](../how-to/configure-notifications.md).
 - **Not similar?** on a similar case marks it in your current view only. It is not saved.
 - Response actions (isolating a host, disabling an account) are never run from this page. They go through [Approvals](approvals.md).
 - Agent names shown on this page follow your Settings > Agent appearance choices, so they may differ from the default names used here.

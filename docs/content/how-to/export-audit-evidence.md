@@ -1,7 +1,7 @@
 ---
 title: Export audit evidence
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # How to export audit evidence

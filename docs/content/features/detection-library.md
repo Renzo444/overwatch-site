@@ -1,7 +1,7 @@
 ---
 title: Detection Library
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Detection Library
@@ -21,8 +21,8 @@ The Detection Library holds every detection rule your tenant has drafted, and sh
 | Role | What you can do here |
 |------|----------------------|
 | Viewer | Browse, filter and search rules, switch to the ATT&CK matrix, open full records, see backtest results and version history, export. |
-| Analyst | Everything a viewer can, plus **Run backtest**, **Send to QA**, **Ask Orion to hunt**, **Ask Marien to review**, **Refine with Atlas**. |
-| Admin | Everything an analyst can, plus **Edit query**, **Apply & re-run**, **Deploy**, **Deploy anyway**, **Recall**, and **Delete** in the full record. |
+| Analyst | Everything a viewer can, plus **Run backtest**, **Send to QA**, **Ask Orion to hunt**, **Ask Marien to review**, **Refine with Atlas**, and **Delete** in the full record. |
+| Admin | Everything an analyst can, plus **Edit query**, **Apply & re-run**, **Deploy**, **Deploy anyway** and **Recall**. |
 
 ## What you see
 
@@ -33,7 +33,7 @@ The Detection Library holds every detection rule your tenant has drafted, and sh
   - an Orion hunt card (for example "Orion hasn't hunted T1059", "Hunted · 2 hits", "Hunt proposed") with **View hunt** or **Ask Orion to hunt**;
   - four tiles: **Author**, **QA evidence**, **Backtest** and **Confidence**;
   - **Why Renzo built this**, when the rule has a recorded rationale (marked as generated);
-  - the deployment bar with **Send to QA**, **Deploy** or **Recall**, and **Full record**;
+  - the deployment bar with **Send to QA**, **Deploy** or **Recall**, and **Full record**. For a deployed rule that Maxwell rolled back, a note says "Rolled back to v…": the query shown is the restored one and the QA evidence belongs to the version it replaced;
   - the **Backtest** panel;
   - the **Query** with its version history (for example "Original · Renzo", "Marien · tuning proposal", "You · manual edit") and a short query hash.
 - **MITRE ATT&CK matrix.** Every tactic as a column, with a cell per technique showing how many rules cover it, how many are deployed and its hunt state. Empty tactics show **Gap · no detections**. Rules with no tactic appear under **Unmapped**. Clicking a cell filters the list to that technique.
@@ -57,7 +57,7 @@ The Detection Library holds every detection rule your tenant has drafted, and sh
   - **NO MATCHES**: zero matches. The panel lists what zero can mean, such as the source table receiving no data.
   - **MISSES POSITIVES**: it missed known-attack events someone attested.
 
-  Backtest results are stored for the tenant. A result from an earlier version of the query is flagged so you can re-run it.
+  Backtest results are stored for the tenant. A result from an earlier version of the query is flagged so you can re-run it. If the query limits itself to a shorter time span than the window you chose, the result names the span it really covered, ending in "(the query's own window)", and the per-day rate is worked out over that span.
 - After a backtest, follow-up options appear:
   - **Refine with Atlas** opens Atlas with the rule, the result and the query.
   - **Edit query** (admin, undeployed rules only) opens an editor. **Save & re-run backtest** saves a new version and tests it.
@@ -67,18 +67,19 @@ The Detection Library holds every detection rule your tenant has drafted, and sh
 - **Tuning suggestions from Marien** appear under a non-passing backtest when Marien has a pending proposal for the rule. For a draft, **Apply & re-run** (admin) saves the proposal as a new version and re-runs the backtest. For a deployed rule, **Review in Marien's workspace** opens the tuning review.
 - **Send to QA** (analyst or admin) asks Demitry to review the rule. Reviews are limited to 3 per minute. A passed review expires after one hour and is lost if you reload the page, so deploy soon after it passes.
 - **Deploy** (admin) appears once a current QA review has passed, and needs a passing backtest. You confirm in a dialog. Maxwell then deploys that exact reviewed query to Sentinel as a scheduled rule that creates incidents. The server re-checks the review and query hash, and rejects a different query.
-- **Recall** (admin) deletes a deployed rule from Sentinel after you confirm.
-- **Full record** or **Record** opens the detection record with the tabs **Overview** (AI assessment, ATT&CK coverage, Pyramid of Pain), **Provenance & QA** and **Detections**. It has **Export JSON** and **Delete**.
+- **Recall** (admin) deletes a deployed rule from Sentinel after you confirm. Only rules Overwatch Console deployed for your organization can be recalled. The full rule is saved to the audit log before it is deleted, and the deletion is checked by reading Sentinel again. If the rule is already gone from Sentinel, you are told so and nothing is deleted.
+- **Full record** or **Record** opens the detection record with the tabs **Overview** (AI assessment, ATT&CK coverage, Pyramid of Pain), **Provenance & QA** and **Detections**. Under **Detections**, **Validation Notes** show the check Renzo ran when drafting the rule, for example "Backtest: … matching rows in the last 14 days", or why it failed. The record has **Export JSON** and **Delete**.
 - **Bulk actions** (tick rules first): **Send to QA** (drafts only, up to 3 at a time), **Backtest selected**, **Ask Orion to hunt**, **Export** (CSV) and **Clear**.
 - **Refresh** reloads stored backtests, Marien's suggestions and version history.
 
-Deploy and recall from this page are direct admin actions with a confirmation dialog. They do not create a request on the Approvals page. See [How to deploy or recall a rule](../how-to/deploy-or-recall-a-rule.md).
+Deploy and recall from this page are direct admin actions with a confirmation dialog. They do not create a request on the Approvals page. Maxwell refuses to deploy a rule whose query returns no entity columns (such as account, host, IP, URL, process or file) or that has no severity. See [How to deploy or recall a rule](../how-to/deploy-or-recall-a-rule.md).
 
 ## Good to know
 
-- **Deployed rules are not edited here.** To change a deployed rule's query, use Marien's tuning review, or recall the rule and edit the draft.
-- **Library changes are saved by admins only.** New entries, edits, deploy results and deletions are saved to the shared tenant library, and the server only accepts those saves from admins. Backtests, QA reviews, version history and hunt requests are stored separately and work for analysts.
-- **Delete** in the full record removes the entry from the library with no confirmation. It does not remove a deployed rule from Sentinel. Recall the rule first.
+- **Deployed rules are not edited here.** To change a deployed rule's query, use Marien's tuning review, roll it back to an earlier version in Maxwell's workspace, or recall the rule and edit the draft.
+- **Who saves what.** New entries and deletions are saved to the shared tenant library for analysts and admins. Saving a new query version (**Edit query**, **Apply & re-run**) is admin-only. Viewers' changes are never saved. Backtests, QA reviews, version history and hunt requests are stored separately.
+- **Delete** in the full record asks you to confirm ("Remove this detection from the library? This cannot be undone."). It is disabled for a rule that is deployed in Sentinel: recall the rule first, then delete it.
+- **New rules are watched.** For 48 hours after Maxwell deploys a rule, the scheduled upkeep counts its alerts over the last 24 hours. If a new rule raises 50 or more, Maxwell files a high-risk request on the Approvals page to disable it. The rule is only disabled after an admin approves that request; denying keeps it running.
 - **Confidence** is Renzo's 0 to 100 score from the article evaluation. Rules made with **Generate detection** show **Not scored**.
 - **No attested positives** are linked to library rules yet, so a passing backtest does not confirm the rule catches a real attack.
 - **Empty states.** "No detections in the library yet. Generate detections from threat intelligence in Live Feed." and "No detections match."
