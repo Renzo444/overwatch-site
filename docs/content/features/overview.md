@@ -1,7 +1,7 @@
 ---
 title: Overview
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Overview
@@ -36,7 +36,7 @@ The page header reads "Know what needs you." Every count on the page shows where
 - **Recorded dispositions**: agent events that recorded a disposition, from the latest 200 agent events in the agent window. Opens Agent Audit.
 - **Issue reports**: agent events that report a failure or blocked work, from the same 200 events. Opens Agent Audit.
 
-**Needs your decision.** The highest-risk pending approval in the queue (high, then medium, then low). It shows the requested action, who asked for it, the linked incident number, the risk and how many approvals it has (for example "0 of 1 approvals"). Below that, two tiles quote the recorded analysis from Dax and the QA review from Demitry for that incident, or say that none was recorded. If the queue is empty you see "No requests are waiting for you."
+**Needs your decision.** The highest-risk pending approval in the queue (high, then medium, then low). It can be any kind of request, for example a containment response, the undo of one, or a close that Demitry recommends. It shows the requested action, who asked for it, the linked incident number, the risk and how many approvals it has (for example "0 of 1 approvals"). Below that, two tiles quote the recorded analysis from Dax and the QA review from Demitry for that incident, or say that none was recorded. If the queue is empty you see "No requests are waiting for you."
 
 **Swarm activity.** One row per agent with its latest output from the last 7 days, newest first. Agents with nothing recorded still appear, marked "No recorded output in this snapshot". When the console tracks what you have read, each row shows your unread count. Clicking a row opens that agent on the Agents page; **All agents** opens the Agents page.
 
@@ -63,7 +63,7 @@ The page header reads "Know what needs you." Every count on the page shows where
 - **Overview layout**: switch between **Analyst** and **SOC lead**. Any role. The choice is saved in this browser only.
 - **Article window**: **24h**, **7d**, **14d** or **30d**. Sets the window for Adversary operations, Techniques in reporting, Actor watch and the SOC lead tally. Any role.
 - **Previous article** / **Next article** arrows and the dots under the carousel: move through the articles. Clicking an article title opens it on the Live Feed page. **Live Feed** opens the Live Feed page.
-- **Approve** on the decision card (admin only). Opens the approval dialog described in [Approvals](approvals.md). When the request is a containment response the button reads **Approve isolation** or **Approve account disable**. Your vote is held for 10 seconds with an **Undo** button before it is recorded. Approving never runs a response by itself.
+- **Approve** on the decision card (admin only). Opens the approval dialog described in [Approvals](approvals.md). The button names the response when there is one: **Approve isolation** or **Approve account disable** for a containment, and **Approve isolation release** or **Approve account re-enable** for the undo of one. Your vote is held for 10 seconds with an **Undo** button before it is recorded. Approving never runs a response by itself.
 - **Choose a response** (shown instead of Approve when Demitry confirmed a threat but did not name a target): opens the Approvals page, where an admin selects the response.
 - **Deny** on the decision card (admin only). Opens the deny dialog, where you pick a reason and can add a note for the agents.
 - **Review evidence**: opens the full investigation workspace for the linked incident. Any role.

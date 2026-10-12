@@ -1,12 +1,12 @@
 ---
 title: Agents
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Agents
 
-The Agents page lists the eight Overwatch Console agents and opens a workspace for each one. Use it to run an agent on request, read what each agent recorded, and (as an administrator) switch an agent's scheduled work on or off.
+The Agents page lists the eight Overwatch Console agents and opens a workspace for each one. Use it to run an agent on request, read what each agent recorded, review and deploy what the agents propose, and (as an administrator) switch an agent's scheduled work on or off.
 
 ## Where to find it
 
@@ -21,9 +21,9 @@ If an administrator renamed the agents under Settings > Agent appearance, the pa
 
 | Role | What you can do here |
 |------|----------------------|
-| Viewer | See the roster, each workspace, recorded outputs and permissions. Mark outputs read or unread for yourself. Open SLA & health and Autonomy readiness. Run buttons are disabled. |
-| Analyst | Everything a viewer can, plus run agents on request (Dax, Demitry, Marien, Orion, Renzo), record Helpful or Needs review feedback on QA decisions, ingest articles, execute or discard hunts, and send rules to QA or deployment review. |
-| Admin | Everything an analyst can, plus change autonomy switches and Dax's autonomy level, set the tenant industry, approve and deploy tuning or rules, reject tuning proposals, recall rules, clear a tuning circuit breaker, use Caleb's detonation lab, edit tool permissions, and send a hunt to Renzo as a detection. |
+| Viewer | See the roster, each workspace, recorded outputs and permissions. Mark outputs read or unread for yourself. Open SLA & health and Autonomy readiness. Check Sentinel for deployed rules. Run buttons are disabled. |
+| Analyst | Everything a viewer can, plus run agents on request (Dax, Demitry, Marien, Orion, Renzo), record Helpful or Needs review feedback on QA decisions, ingest articles, execute or discard hunts, send a hunt to Renzo, run Marien's backtests, and send rules to QA or deployment review. |
+| Admin | Everything an analyst can, plus switch agents' schedules, set the tenant industry, attest known-positive cases, approve and deploy tuning or rules, reject or dismiss tuning proposals, roll back and recall rules, clear a tuning circuit breaker, use Caleb's detonation lab and edit tool permissions. |
 
 The server checks every action. If your role is not allowed, the button is disabled or the action fails with a permission message. See [Roles and permissions](../concepts/roles-and-permissions.md).
 
@@ -46,7 +46,7 @@ A recorded output shows that the agent did something. The roster does not show w
 ### Header buttons (roster)
 
 - **SLA & health**: opens a section with platform checks, the tenant worker heartbeat, a resolution SLA sample and up to 100 recorded agent events from the last 24 hours.
-- **Autonomy readiness**: opens a section that lists each agent's scheduled setting (Enabled, Disabled or a Dax level), a QA agreement comparison, and links: **Review investigation settings** (opens Dax's level picker for admins), **Review approvals** and **Open Agent Audit**. It states that shadow execution is not implemented.
+- **Autonomy readiness**: opens a section that lists the operating mode (and which mode is in force now), each agent's scheduled setting (Enabled or Disabled), a QA agreement comparison, and links: **Review investigation settings** (opens Dax's workspace), **Review approvals** and **Open Agent Audit**. It states that shadow execution is not implemented.
 - Notification history (bell button): the messages this page showed you in this browser session, newest first, up to 50, with **Clear all**.
 - **Refresh**: reloads outputs, configuration, policies and tool permissions.
 
@@ -56,13 +56,13 @@ Opening an agent shows a breadcrumb (**Agents** / agent name), a summary row and
 
 The summary row has:
 
-- An autonomy control. For Dax it reads "Autonomy ON" or "Autonomy OFF" with the level name. For Demitry, Marien, Orion, Renzo and Caleb it is an on/off switch. Maxwell and Atlas show "On demand". The small line under it shows the tenant level and the name of the custom policy that applies, if any.
+- An autonomy switch for Dax, Demitry, Marien, Orion, Renzo and Caleb. It reads "Autonomy ON" or "Autonomy OFF" and turns that agent's scheduled work on or off. Maxwell and Atlas show "On demand". The small line under it shows the tenant's operating mode in force now ("Approval mode" or "Full auto mode") and the name of the custom policy that applies, if any.
 - The agent's main button: **Analyze incident** (Dax), **Open QA review** (Demitry), **Refresh recommendations** (Marien), **Run proactive hunt** (Orion), **Ingest intel article** (Renzo), **Review deployments** (Maxwell), **Provision sandbox** (Caleb), **Open copilot** (Atlas).
 - "Latest run reported a problem." with the message, when the newest output was a failure.
 
 Tabs:
 
-- **Workspace**: the agent's own tools (described below), and a collapsed **Operations** section that keeps earlier dashboards for that agent.
+- **Workspace**: the agent's own tools (described below).
 - **Outputs**: the agent's recorded outputs from the last 7 days. Filter with **All**, **Unread**, **Review & failures** and **Read**, or search ("Find a report or incident…"). Up to 50 matching outputs show at a time. Open one to see the recorded outcome, model confidence, review status, linked incident, the generated summary and the raw evidence. Buttons: **Open investigation**, **Agent Audit**, **Mark read** / **Mark unread**. At the bottom: **Mark visible read** and **Open in Agent Audit →**. Read state is yours alone; reading approves nothing.
 - **Permissions**: what the agent is designed to do (**Can**) and not do (**Cannot**), plus the tools the tenant policy currently allows or denies. Admins also see **Edit tool permissions**.
 
@@ -70,12 +70,12 @@ Tabs:
 
 Every workspace has a record list on the left (filter chips, search, a time window of Any time, Last 24 hours, Last 7 days or Last 30 days) and the selected record's evidence on the right. Most records have **Open in Agent Audit**.
 
-- **Dax**: an **Analyze an incident** panel with an incident picker, **Analyze** and **Analyze all queued**. The **Triage runs** list shows loaded Sentinel incidents (up to 50, using the current queue filters) with chips **All**, **Assessed**, **No assessment**, **Review & failures**. The detail shows Verdict, Confidence, QA and either the autonomy level, the review state or a pending response approval, plus the investigation steps. Buttons: **Open incident**, **Analyze now** (unassessed incidents), and **Review approval** when a response request is pending, otherwise **Open in Agent Audit**.
-- **Demitry**: a **QA review** panel with **Run QA now**, four tiles for the last 7 days (Agreement, Override rate, Override direction, Avg confidence) and a **QA reviews** list with chips **All**, **Agreements**, **Overrides**. The detail shows Demitry's reasoning, both agents' decisions and **Human-verified: Unavailable**. Buttons: **Open incident**, **Mark helpful**, **Needs review**, **Open in Agent Audit**. Agreement is Demitry's own decision code, not measured accuracy.
-- **Marien**: a **Tuning proposals** list with chips **All**, **Needs replay**, **Queued for review**, **Blocked**. A proposal shows Marien's reasoning, the recorded false-positive count, attribution, confidence and a query diff (with **Show word-level changes**), then three steps: **Attest** known-positive cases, **Run again** (read-only backtest) and **Approve & deploy**. Also **Reject proposal**. A blocked rule (circuit breaker after repeated tuning failures) offers **Clear circuit breaker**.
-- **Orion**: a **Proactive OSINT ingestion** panel (paste a URL, **Ingest intel**) and a **Recorded threat hunts** list with chips **All**, **Has hits**, **Verified zero hits**, **Proposed**, **Failed**, plus a tactic filter. Depending on the hunt: **Execute hunt**, **Discard**, **Retry hunt**, **Review provider access**, **Open result**, **Send to Renzo as detection**, **Copy KQL**.
-- **Renzo**: a **Detection from threat intel** panel (paste a URL, an **Industry** selector, **Generate proposal**, and **Run research cycle**). The note shows the daily allowance used. The **Generated detections** list (undeployed library entries) has chips **All**, **In QA**, **Draft**. Buttons: **Send to QA**, **Open in Detection Library**, **Copy KQL**.
-- **Maxwell**: a **Table inventory** panel (**Refresh inventory**; reviews are limited to 3 per minute) and a **Deployment queue** with chips **All**, **Pending**, **Deployed**. Pending rules offer **Review for deployment** or, after a passed review, **Approve & deploy**. Deployed rules offer **Recall rule** and **Check Sentinel**.
+- **Dax**: an **Analyze an incident** panel with an incident picker, **Analyze** and **Analyze all queued**, and a note saying whether Dax triages new incidents on schedule or only when someone asks. The **Triage runs** list shows loaded Sentinel incidents (up to 50, using the current queue filters) with chips **All**, **Assessed**, **No assessment**, **Review & failures**. The detail shows Verdict, Confidence, QA and either the review state, a pending response approval, or (for an unassessed incident) whether triage is Scheduled or On request, plus the investigation steps. Buttons: **Open incident**, **Analyze now** (unassessed incidents), and **Review approval** when a response request is pending, otherwise **Open in Agent Audit**.
+- **Demitry**: a **QA review** panel with **Run QA now**, four tiles for the last 7 days (Agreement, Override rate, Override direction, Avg confidence) and a **QA reviews** list with chips **All**, **Agreements**, **Overrides**. The detail shows Demitry's reasoning, both agents' decisions and **Human-verified: Unavailable**. Buttons: **Open incident**, **Mark helpful**, **Needs review**, **Open in Agent Audit**. Agreement is Demitry's own decision code, not measured accuracy. For measured accuracy from your team's decisions, see **Agent accuracy** on the [Approvals](approvals.md) page.
+- **Marien**: a **Tuning proposals** list with chips **All**, **Needs replay**, **Queued for review**, **Detection changes**, **Blocked**. A proposal shows Marien's reasoning, the recorded false-positive count, attribution, confidence, estimated alerts suppressed and a query diff (with **Show word-level changes**). A detection change instead explains the coverage gap it closes and the rule's false-positive budget. Below that, **Backtest before deployment** walks the steps: **1. Known-positive case** (pick a reviewed case or **Attest a case**), **2. Run read-only backtest** (**Run backtest**), for a detection change **3. Run 30-day volume backtest** (**Run volume backtest**), then **Approve & deploy**. Every step's button stays visible; a step that cannot run yet is disabled and says why. Also **Reject proposal**. A blocked rule (circuit breaker after repeated tuning failures) offers **Clear circuit breaker**. A **Held for a person** section lists proposals Marien held back, with **Dismiss** and **Send back for review**.
+- **Orion**: a **Proactive OSINT ingestion** panel (paste a URL, **Ingest intel**) and a **Recorded threat hunts** list with chips **All**, **Has hits**, **Verified zero hits**, **Proposed**, **Failed**, plus a tactic filter. A hunt with results shows Orion's reasoning, its **Verdict** on the rows (with confidence and the rows it cited), and the **Incident** it opened in Sentinel for a finding. Depending on the hunt: **Execute hunt**, **Discard**, **Retry hunt**, **Review provider access**, **Open result**, **Send to Renzo as detection** (marked "(recommended)" for a finding), **Copy KQL**.
+- **Renzo**: a **Detection from threat intel** panel (paste a URL, an **Industry** selector, **Generate proposal**, and **Run research cycle**). The note shows the daily allowance used. The **Generated detections** list (undeployed library entries) has chips **All**, **In QA**, **Draft**. The detail shows the backtest Renzo ran when drafting, when recorded. Buttons: **Send to QA**, **Open in Detection Library**, **Copy KQL**.
+- **Maxwell**: a **Table inventory** panel (**Refresh inventory**; reviews are limited to 3 per minute) and a **Deployment queue** with chips **All**, **Pending**, **Deployed**. Pending rules say what they are waiting on and offer **Review for deployment** (or **Review again**) or, after a passed review, **Approve & deploy**. A passed review is valid for one hour. Deployed rules offer **Recall rule**, **Check Sentinel** and, for admins, **Roll back** to an earlier saved version.
 - **Caleb**: a **Detonation lab** (select a sample, **Analysis mode** Automated or Interactive, **VM image**, **Launch sandbox**, **Request cleanup**) with console output, and a **Saved investigations & sessions** list with chips **All**, **Investigations**, **Sandbox sessions**. Sessions offer **Check Azure**, **Delete resources** (after a check) and **Load into lab**. The lab and the saved lists are for administrators only.
 - **Atlas**: an **Ask Atlas** panel with **Open copilot**, and a **Copilot sessions** list (completed and failed Atlas answers from the last 7 days) with chips **All**, **Completed**, **Failed**.
 
@@ -83,46 +83,50 @@ Every workspace has a record list on the left (filter chips, search, a time wind
 
 | Action | Who | What happens | Approval? |
 |--------|-----|--------------|-----------|
-| **Analyze**, **Analyze all queued**, **Analyze now** (Dax) | Analyst, Admin | Dax investigates the incident (or every eligible queued incident) and records its assessment. | No. Dax cannot close incidents or run response actions. |
-| **Run QA now** (Demitry) | Analyst, Admin | Demitry reviews one incident waiting for QA. It may close a confirmed false or benign positive (if policy allows), escalate to a human, or file response requests in Approvals. | Response actions always need approval. Closure follows your [policy rules](../concepts/autonomy-and-approvals.md). |
+| **Analyze**, **Analyze all queued**, **Analyze now** (Dax) | Analyst, Admin | Dax investigates the incident (or every eligible queued incident) and records its assessment. With Dax's schedule switch on, the incident is also handed to Demitry. | No. Dax cannot close incidents or run response actions. |
+| **Run QA now** (Demitry) | Analyst, Admin | Demitry first carries out closes people approved since its last run, then reviews one incident Dax finished. It may file a close request, escalate to a human, or file response requests in Approvals. | Closes and response actions wait in Approvals. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md). |
 | **Mark helpful** / **Needs review** (Demitry) | Analyst, Admin | Records your opinion. Does not change the verdict. | No |
-| **Refresh recommendations** (Marien) | Analyst, Admin | Reloads proposals and asks Marien to run a tuning poll. | No, unless tuning auto-approve is on (see Good to know). |
-| **Attest** known positives (Marien) | Admin | Records event IDs a correct rule must still match. | No |
-| Run the read-only backtest (Marien) | Admin | Replays the proposal against attested cases. | No |
-| **Approve & deploy** (Marien) | Admin | After a confirmation, deploys the tuned query to Sentinel and records your approval. Needs a recorded replay. | Your confirmation is the approval. It does not go through the Approvals page. |
-| **Reject proposal** (Marien) | Admin | Stores your reason (and optional note) with the tuning record. | No |
+| **Refresh recommendations** (Marien) | Analyst, Admin | Reloads proposals and asks Marien to run a tuning poll. | No. Nothing is deployed. |
+| **Attest a case** (Marien) | Admin | Records closed true-positive incidents of this rule and the event IDs a correct rule must still match. The server checks the incidents against Sentinel. | No |
+| **Run backtest**, **Run volume backtest** (Marien) | Analyst, Admin | Read-only replays of the proposal: against the attested case, and for a detection change, alert counts per day over 30 days against the false-positive budget. | No |
+| **Approve & deploy** (Marien) | Admin | After a confirmation, deploys the tuned query to Sentinel and records your approval. Needs a passing backtest from the last 24 hours; a detection change also needs a fresh volume backtest, and a written reason when it is over budget. | Your confirmation is the approval. It does not go through the Approvals page. |
+| **Reject proposal** (Marien) | Admin | Stores your reason (and optional note) with the tuning record. Marien cites it on later proposals for the rule when you leave "Apply to similar future cases" on. | No |
+| **Dismiss**, **Send back for review** (Marien, held proposals) | Admin | Dismiss records your name and the time. Send back puts the proposal in the review list, where it still needs a backtest and approval. | No |
 | **Clear circuit breaker** (Marien) | Admin | Resets the failure count so Marien can propose again next cycle. | No |
-| **Run proactive hunt**, **Execute hunt**, **Retry hunt**, **Discard**, **Ingest intel** (Orion) | Analyst, Admin | Starts a read-only hunt, or saves or discards a hunt proposal. | No |
-| **Send to Renzo as detection** (Orion) | Admin | Renzo drafts a detection from the hunt. The draft is added to the library and still needs QA and deployment approval. | No |
+| **Run proactive hunt**, **Execute hunt**, **Retry hunt**, **Discard**, **Ingest intel** (Orion) | Analyst, Admin | Starts a read-only hunt, or saves or discards a hunt proposal. A finding opens a Sentinel incident. | No |
+| **Send to Renzo as detection** (Orion) | Analyst, Admin | Renzo drafts a detection from the hunt, or says why it did not. The draft is added to the library and still needs QA and deployment approval. | No |
 | **Generate proposal**, **Run research cycle** (Renzo) | Analyst, Admin | Renzo drafts detections. Nothing is deployed. Research cycles count against a daily allowance. | No |
 | **Industry** (Renzo) | Admin | Sets the tenant industry used by Renzo's scheduled research. | No |
-| **Send to QA** (Renzo), **Review for deployment** (Maxwell) | Analyst, Admin | Runs the deployment QA review. Limited to 3 reviews per minute. | No |
+| **Send to QA** (Renzo), **Review for deployment** (Maxwell) | Analyst, Admin | Runs the deployment review. Limited to 3 reviews per minute. | No |
 | **Approve & deploy** (Maxwell) | Admin | After a confirmation, deploys the rule to Sentinel. The server re-checks the passed review and the query hash. | Your confirmation is the approval. It does not go through the Approvals page. |
-| **Recall rule** (Maxwell) | Admin | After a confirmation, deletes the rule from Sentinel. | Your confirmation only. Not through Approvals. |
+| **Roll back** (Maxwell) | Admin | Shows the saved versions and the query change, then restores the version you pick after **Roll back to vN**. If the live rule was edited outside Overwatch Console, it shows the live query and asks again. | Your confirmation only. Not through Approvals. |
+| **Recall rule** (Maxwell) | Admin | After a confirmation, deletes the rule from Sentinel. Only rules Overwatch Console deployed can be recalled. | Your confirmation only. Not through Approvals. |
 | **Check Sentinel** (Maxwell) | All roles | Reads the rule inventory from Sentinel. | No |
 | Detonation lab actions (Caleb) | Admin | Provisions a sandbox in Azure, uploads a sample, runs analysis and requests cleanup. | No |
-| Autonomy switch or level | Admin | Saves the agent's scheduled setting for the whole tenant. Dax level 2 or 3, and returning to Manual, ask for confirmation. | No. See [Set agent autonomy](../how-to/set-agent-autonomy.md). |
+| Autonomy switch | Admin | Saves the agent's scheduled setting for the whole tenant. | No. See [Set agent autonomy](../how-to/set-agent-autonomy.md). |
 | **Edit tool permissions** | Admin | Allows or denies individual agent tools for this tenant after a review step. | No |
 | **Mark read**, **Mark visible read** | All roles | Changes your own read state. | No |
 
 ## Good to know
 
-- Agents with scheduled work only run on a schedule when their switch (or Dax's level) is on and the background agent worker is running. The autonomy control shows configuration, not that a worker is running.
+- Agents run on a schedule only when **Run agents on a schedule for this workspace** is on (Settings > Agent Policies), the agent's own switch is on, and the background agent worker is running. The autonomy switch shows configuration, not that a worker is running.
 - Maxwell and Atlas never run on a schedule.
-- "Analyze all queued" lets the server choose: open incidents that are unassigned or owned by Dax and not already handed off or triaged.
+- What happens after a verdict depends on the tenant's operating mode and earned auto mode, not on Dax's switch. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
+- No agent takes over or closes an incident a person owns.
+- "Analyze all queued" lets the server choose: open incidents that are unassigned or owned by Dax and not already handed off, triaged or owned by a person.
 - When a run is accepted, results appear only after the agent records them. "Accepted" is not "completed".
-- When tuning auto-approve is turned on (Approvals page, admin), Marien deploys its tuning proposals without human review. It is off unless an admin turns it on.
-- Rule deploys and recalls from the Maxwell and Marien workspaces are direct admin actions with a confirmation dialog. Response actions (isolate an endpoint, disable an account) always go through [Approvals](approvals.md).
+- Marien's tuning proposals always wait for an admin. Tuning auto-approve can no longer be turned on.
+- Rule deploys, rollbacks and recalls from the Maxwell and Marien workspaces are direct admin actions with a confirmation dialog. Response actions (isolate an endpoint, disable an account) always go through [Approvals](approvals.md).
 - If a read fails, the page says so (for example "Recorded outputs unavailable" or "Records unavailable") with a **Retry** link, instead of showing an empty list.
 - Caleb's lists show "Saved investigations and sandbox sessions are visible to administrators only." for other roles. The FLARE VM image is listed but disabled ("image config required").
-- Notification history is kept for this browser session only.
+- Notification history is kept for this browser session only. Notifications to Slack, Teams or a webhook are set up under Settings > Notifications.
 
 ## Related
 
 - [The agents](../concepts/the-agents.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)
 - [How to run an agent](../how-to/run-an-agent.md)
-- [How to set agent autonomy](../how-to/set-agent-autonomy.md)
+- [How to set agent autonomy and the operating mode](../how-to/set-agent-autonomy.md)
 - [How to review agent decisions](../how-to/review-agent-decisions.md)
 - [Agent Audit](agent-audit.md)
 - [Atlas copilot](atlas-copilot.md)

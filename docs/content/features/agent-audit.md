@@ -1,7 +1,7 @@
 ---
 title: Agent Audit
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Agent Audit
@@ -14,6 +14,8 @@ Agent Audit lists every action the agents recorded for your tenant, with the inv
 - Keyboard: press **g** then **a**.
 - **Open in Agent Audit** and **Agent Audit** buttons on the Agents page open it filtered to that agent.
 - A "reported a problem" item in the top bar notifications opens it filtered to the agent concerned.
+- On the Overview, the **Recorded dispositions** and **Issue reports** stats and the **Agent Audit** button open it.
+- Settings > Notifications has an **Open Agent Audit** link, because notification delivery attempts are recorded here.
 
 ## Who can use it
 
@@ -36,6 +38,8 @@ Agent Audit lists every action the agents recorded for your tenant, with the inv
 ### Event list
 
 Up to 300 events for the chosen agent, disposition and time range, newest first. Each row shows the agent, the time, what it did, and the disposition and confidence when recorded. Reviewer feedback is not listed as a separate event; it appears under the event it is about.
+
+With **All agents**, the list also includes records written by the platform rather than an agent, such as notification delivery attempts and changes to auto mode.
 
 When you first open the page, the newest Dax event linked to an incident is selected.
 
@@ -74,6 +78,9 @@ Nothing on this page needs approval, and nothing here runs an agent.
 - If the list cannot be read you see "Agent activity unavailable" and the message "Nothing here means the records could not be read, not that nothing happened."
 - If no events match, you see "No agent activity matches these filters." Widen the time window or clear the search.
 - Requests that Atlas hands to another agent are recorded under that agent. In **Record as written**, the agent name ends with "(via Atlas)".
+- Each agent failure is recorded once. When the AI service refuses requests, the refusal is recorded at most once an hour rather than on every run.
+- Automatic closes made under earned auto mode are recorded under Demitry as closed "by auto mode". Closes a person approved are recorded as closed "after human approval".
+- The incident blade on the Incidents page shows the same chain in reading form, with why each query ran. See [How to review agent decisions](../how-to/review-agent-decisions.md).
 - For the tenant-wide tamper-evident ledger, exports and configuration changes, use [Audit Trail](audit-trail.md).
 
 ## Related

@@ -1,7 +1,7 @@
 ---
 title: How to triage an incident
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # How to triage an incident
@@ -10,7 +10,7 @@ Work one incident from the queue to a decision: read what Dax and Demitry record
 
 ## Before you start
 
-- You need the **analyst** or **admin** role to ask Dax to analyze, assign incidents and rate assessments. A viewer can read everything in these steps but cannot change anything.
+- You need the **analyst** or **admin** role to ask Dax to analyze, assign, rate assessments and close incidents. A viewer can read everything in these steps but cannot change anything. Deciding a pending request needs the **admin** role.
 - Your tenant must be connected to a Microsoft Sentinel workspace.
 
 ## Steps
@@ -22,7 +22,7 @@ Work one incident from the queue to a decision: read what Dax and Demitry record
 5. Read the **Dax verdict** and **Demitry QA** tiles at the top of the panel.
 6. If the panel says "No investigation chain recorded yet", click **Ask Dax to analyze**. To run a fresh analysis on an incident that already has one, click **Re-analyze**.
 7. Read **Similar past cases** to see how closed incidents with the same rule, entities or techniques were classified. Click **Open historical case** for the details of one.
-8. Read the **Investigation chain**. Expand **Recorded assessment and full trail** for Dax's full reasoning and the queries he ran.
+8. Read the **Investigation chain**. Each query step says why the agent ran it, what came back (the **Result** line) and the KQL. Demitry's verdict step shows whether he agrees with Dax (**Versus Dax**) and why. Expand **Recorded assessment and full trail** for Dax's full reasoning and the queries he ran.
 9. Check **Entities** for the accounts, hosts and addresses involved.
 10. Click **Assign to me** to take ownership, or **Assign to…** and enter a colleague's email, then click **Assign**.
 11. If you want to ask a question about the incident, click **Ask Atlas**. You can pin a useful answer to the incident's case notes from the Atlas drawer with **Pin to #… notes**.
@@ -37,8 +37,9 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 - After you ask for an analysis, a message confirms the request. Dax's steps appear in the investigation chain and in Agent Audit as they are recorded. Dax writes his assessment to the incident in Sentinel.
 - Demitry then reviews Dax's work. Workflow labels such as **Awaiting QA** and **Senior Verified** appear on the incident as this happens.
 - When Demitry confirms a true positive, he files a response request (for example isolating a host or disabling an account) in Approvals. Nothing is contained until an administrator approves it and then runs it.
-- Depending on your tenant's agent policy, Demitry can close an incident he confirms as a false or benign positive. Otherwise he escalates it for human review.
-- Assigning an incident to a person takes it out of Dax's automatic queue until it is unassigned.
+- When Demitry confirms a false or benign positive, he files a close request in Approvals. The incident closes on his next run after an administrator approves it. Your policy rules can send it to a person instead.
+- When Demitry escalates an incident for human review, the console sends a "Needs a person" notification through the channels your administrator set up.
+- Assigning an incident to a person takes it out of Dax's automatic queue until it is unassigned. Demitry also leaves a person-owned incident alone, and no agent reopens an incident a person closed.
 - **Helpful** and **Needs review** are recorded in Agent Audit as your opinion. They do not change the verdict or retrain anything.
 - **Flag FP & request tuning** saves a tuning proposal from Marien. It is reviewed before anything is deployed.
 
@@ -59,4 +60,5 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 - [How to approve or deny an action](approve-or-deny-an-action.md)
 - [How to ask Atlas](ask-atlas.md)
 - [How to tune a noisy rule](tune-a-noisy-rule.md)
+- [How to configure notifications](configure-notifications.md)
 - [The agents](../concepts/the-agents.md)

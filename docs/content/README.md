@@ -1,7 +1,7 @@
 ---
 title: Overwatch Console documentation
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 # Overwatch Console documentation
 
@@ -53,7 +53,7 @@ Pages are listed in the order they appear in the navigation.
 - [Run an agent](how-to/run-an-agent.md)
 - [Review agent decisions](how-to/review-agent-decisions.md)
 - [Ask Atlas](how-to/ask-atlas.md)
-- [Set agent autonomy](how-to/set-agent-autonomy.md)
+- [Set agent autonomy and the operating mode](how-to/set-agent-autonomy.md)
 
 **Detections and intelligence**
 - [Turn intel into a detection](how-to/turn-intel-into-a-detection.md)
@@ -61,8 +61,10 @@ Pages are listed in the order they appear in the navigation.
 - [Tune a noisy rule](how-to/tune-a-noisy-rule.md)
 - [Run a threat hunt](how-to/run-a-threat-hunt.md)
 - [Fix a coverage gap](how-to/fix-a-coverage-gap.md)
+- [Add an intel feed](how-to/add-an-intel-feed.md)
 
 **Administration**
+- [Invite a teammate](how-to/invite-a-teammate.md)
 - [Configure notifications](how-to/configure-notifications.md)
 - [Export audit evidence](how-to/export-audit-evidence.md)
 - [Set up branding](how-to/set-up-branding.md)

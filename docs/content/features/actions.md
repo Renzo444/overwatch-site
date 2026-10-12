@@ -1,7 +1,7 @@
 ---
 title: Actions
 status: current
-reviewed: 2026-10-05
+reviewed: 2026-10-12
 ---
 
 # Actions
@@ -23,7 +23,7 @@ Actions is a playbook builder. You draw how your team responds to an incident: a
 
 ## What you see
 
-The page header reads "Actions" with a **Refresh** button and a short notice: a published playbook documents the response, nothing runs playbooks automatically in this release, and every response still goes through Approvals with policy re-checked at dispatch. **Open Approvals** takes you there.
+The page header reads "Actions" with the line "Playbooks describe response steps, notifications and reports. There is no automatic runner yet: test them with a dry run, and destructive steps always pass a human approval." It has a **Refresh** button and a short notice: a published playbook documents the response, nothing runs playbooks automatically in this release, and every response still goes through Approvals with policy re-checked at dispatch. **Open Approvals** takes you there.
 
 **Playbook list.** One pill per playbook with its name, number of steps and state (draft, published), and a dot when it is enabled. Unsaved new playbooks are marked "unsaved". Administrators see **New playbook**. A line under the list shows how many playbooks your tenant has out of the limit.
 
