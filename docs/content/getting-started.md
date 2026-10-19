@@ -1,7 +1,7 @@
 ---
 title: Getting started
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Getting started with Overwatch Console
@@ -10,7 +10,7 @@ Overwatch Console is a security operations console for Microsoft Sentinel. A tea
 
 ## Getting access
 
-Today, the Overwatch team creates your organization and its first admin account. After that, an admin invites the rest of the team from **Settings > Team**, choosing each person's role (viewer, analyst or admin). The invited person gets an email link, sets their own password and signs in. Invitations need account email to be set up for your deployment; if it is not, ask the Overwatch team to create the accounts. See [Invite a teammate](how-to/invite-a-teammate.md) and [Roles and permissions](concepts/roles-and-permissions.md).
+Today, the Overwatch team creates your organization and its first admin account, and sends that admin a one-time invitation link. The link works once and expires after 72 hours; if it expires, ask the Overwatch team for a new one. The admin sets a password on the **Join your team** page and signs in, and the setup wizard opens to connect Microsoft Sentinel (see [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)). After that, an admin invites the rest of the team from **Settings > Team**, choosing each person's role (viewer, analyst or admin). The invited person gets an email link, sets their own password and signs in. Invitations need account email to be set up for your deployment; if it is not, ask the Overwatch team to create the accounts. See [Invite a teammate](how-to/invite-a-teammate.md) and [Roles and permissions](concepts/roles-and-permissions.md).
 
 **Planned: self-service signup is not open yet.** The sign-in page links to **Start a 14-day Sentinel trial**. That page currently shows "Trial enrollment is not open yet" and offers **Sign in to an existing account** and **Check again**. When enrollment opens, you will request a verification link with your organization name and work email, set a password from the emailed link, then sign in and connect Sentinel.
 
@@ -27,7 +27,7 @@ Sign-in is protected against password guessing:
 - After ten failed sign-ins for one account within 15 minutes, that account is locked for 15 minutes, from any network. While it is locked, even the right password shows "Invalid credentials". Wait 15 minutes, or reset your password: a successful reset clears the lock.
 - More than five sign-in attempts in a minute from the same network are refused, and you see "Unable to reach the sign-in service. Please try again." Wait a minute and try again.
 
-**Forgot your password?** on the sign-in page lets you request a reset link by email. The link works once and expires after 1 hour. See [Invite a teammate](how-to/invite-a-teammate.md#help-someone-reset-their-password) for the steps. Password resets need account email to be set up for your deployment.
+**Forgot your password?** on the sign-in page lets you request a reset link by email. The link works once and expires after 1 hour. See [Invite a teammate](how-to/invite-a-teammate.md#help-someone-reset-their-password) for the steps. Password resets need account email to be set up for your deployment. If it is not, the page says "Password reset email is not available yet. Contact Overwatch support to reset your password."
 
 The sign-in page also links to the **Terms of service** and **Privacy policy**. Both pages are currently marked "Draft for review. This text is not yet in effect."
 
@@ -47,12 +47,12 @@ Explore Demo is a separate, read-only demo access window for a signed-in account
 
 ### Connected trial
 
-The connected trial uses your own Sentinel workspace and isolated credentials. An organization admin sets it up on the "Your trial workspace" page (`/trial/setup`):
+The connected trial uses your own Sentinel workspace and isolated credentials. An organization admin sets it up on the "Your trial workspace" page (`/trial/setup`), under **Connect Microsoft Sentinel**. There are two ways:
 
-1. Under **Connect Microsoft Sentinel**, enter the **Azure directory (tenant) ID**, **Subscription ID**, **Resource group**, **Log Analytics workspace name**, **Application (client) ID** and **Client secret value** of an application with read access to the workspace.
-2. Select **Verify and start trial**.
+- **Start guided setup** (recommended) opens the setup wizard in the console. It gives you one script to paste into Azure Cloud Shell, which creates the Overwatch apps and permissions, sends the credentials back to the console and starts your trial on its own. See [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md).
+- **Or connect one read-only app yourself**: enter the **Azure directory (tenant) ID**, **Subscription ID**, **Resource group**, **Log Analytics workspace name**, **Application (client) ID** and **Client secret value** of an application with read access to the workspace, then select **Verify and start trial**.
 
-Overwatch Console checks the workspace identity, reads up to one incident without keeping it, and runs a zero-row SecurityAlert query. Only a successful check stores the reader credentials (encrypted) and starts the 14-day trial. Connecting does not deploy rules or create Azure resources. Viewers and analysts can read the trial status; only an admin can submit the connection.
+With the read-only app, Overwatch Console checks the workspace identity, reads up to one incident without keeping it, and runs a zero-row SecurityAlert query. Only a successful check stores the reader credentials (encrypted) and starts the 14-day trial. Connecting does not deploy rules or create Azure resources. Viewers and analysts can read the trial status; only an admin can submit the connection.
 
 The page then shows the plan, trial start and end dates, and today's AI request usage against any daily limit. When the trial expires, new agent requests are blocked but stored evidence stays readable. Select **Open console** to go to the main console.
 
@@ -135,16 +135,17 @@ A thin bar under the top bar shrinks over 30 minutes without mouse, keyboard, sc
 
 ## First-time setup wizard (admins)
 
-When an admin signs in to an organization that is not configured yet, the setup wizard opens. Admins can reopen it from **Setup** in the account menu or **Setup wizard** in Settings. It has six steps:
+When an admin signs in to an organization that is not configured yet, the setup wizard opens. Admins can reopen it from **Setup** in the account menu or **Setup wizard** in Settings. It has five steps:
 
 1. **Tenant Settings**: tenant name and Azure tenant ID.
 2. **Azure Config**: choose **I already have Sentinel** and enter the subscription, resource group and workspace name.
-3. **Service Principals**: copy the generated Cloud Shell setup script, run it in Azure, and enter the client IDs and secrets it creates.
-4. **Connection Test**: **Test All Connections** saves the credentials and checks each of the three service principals: that it can sign in and read Sentinel rules, that it has every permission its role needs on the workspace (any missing permission is named), and, for roles that query logs, that a one-row test query succeeds. A note says when a missing optional permission means a feature will not work.
-5. **Rule Pack**: choose Baseline, TI Mapping or Full Suite.
-6. **Provisioning**: validates the credentials, then deploys the chosen rule pack to your Sentinel workspace.
+3. **Service Principals**: copy the generated Cloud Shell setup script and run it in Azure. The script sends the credentials it creates, and their expiry date, straight back to the console. You can enter the credentials by hand instead.
+4. **Connection Test**: runs on its own when the script reports back (or select **Test All Connections**). It checks each of the three service principals: that it can sign in and read Sentinel rules, that it has every permission its role needs on the workspace (any missing permission is named), and, for roles that query logs, that a one-row test query succeeds. A note says when a missing optional permission means a feature will not work.
+5. **Provisioning**: final checks that Azure access is valid, that the agents' AI service is ready for your organization, and that the console now sees your organization as configured. Then select **Finish Setup**.
 
-Deploying a rule pack writes rules to your Sentinel workspace, so it needs an approval. The first time you reach the last step, the wizard stops with "Rule pack deployment is waiting for approval. Approve it under Approvals, then deploy again." An admin approves the request in [Approvals](features/approvals.md). Then select **Close**, reopen the wizard from **Setup** in the account menu and go through to the last step again: this time the rule pack deploys. Each approval covers one deployment.
+Setup does not deploy any rules to your workspace. See [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md) for the full steps and error messages.
+
+The Azure client secrets the script creates expire after one year. From 30 days before they expire, admins see a warning at the top of the console and on [Data connectors](features/data-connectors.md). Run the setup script again from the wizard to add new secrets without breaking the current ones.
 
 **Planned:** the **Deploy Sentinel for me** option in step 2 (create a new workspace) is shown but cannot complete yet. Use an existing workspace.
 

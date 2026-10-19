@@ -1,7 +1,7 @@
 ---
 title: Overwatch Console documentation
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 # Overwatch Console documentation
 
@@ -14,6 +14,7 @@ New here? Start with [Getting started](getting-started.md).
 - [The agents](concepts/the-agents.md): who Dax, Demitry, Marien, Renzo, Orion, Caleb, Maxwell and Atlas are and what each one does.
 - [Roles and permissions](concepts/roles-and-permissions.md): what viewers, analysts and admins can do.
 - [Autonomy and approvals](concepts/autonomy-and-approvals.md): how much the agents may do alone, and how approvals work.
+- [How your data is handled](concepts/data-handling.md): where data is stored, which companies process it, how long it is kept and how it is removed.
 
 ## Features
 
@@ -53,7 +54,7 @@ Pages are listed in the order they appear in the navigation.
 - [Run an agent](how-to/run-an-agent.md)
 - [Review agent decisions](how-to/review-agent-decisions.md)
 - [Ask Atlas](how-to/ask-atlas.md)
-- [Set agent autonomy and the operating mode](how-to/set-agent-autonomy.md)
+- [Set agent autonomy and what runs on its own](how-to/set-agent-autonomy.md)
 
 **Detections and intelligence**
 - [Turn intel into a detection](how-to/turn-intel-into-a-detection.md)
@@ -64,6 +65,7 @@ Pages are listed in the order they appear in the navigation.
 - [Add an intel feed](how-to/add-an-intel-feed.md)
 
 **Administration**
+- [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)
 - [Invite a teammate](how-to/invite-a-teammate.md)
 - [Configure notifications](how-to/configure-notifications.md)
 - [Export audit evidence](how-to/export-audit-evidence.md)

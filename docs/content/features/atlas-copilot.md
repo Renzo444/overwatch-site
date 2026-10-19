@@ -1,7 +1,7 @@
 ---
 title: Atlas copilot
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Atlas copilot
@@ -50,6 +50,7 @@ Atlas works only inside your tenant. It can:
 - List the newest Sentinel incidents (up to 25). When more incidents match, Atlas is told the list is only the newest ones and is instructed not to present its length as a total.
 - Read Dax's recorded investigation and Demitry's latest QA decision for one incident.
 - Search the Detection Library (Renzo), recent hunts (Orion), recent tuning (Marien) and sandbox jobs and reports (Caleb).
+- Look up what your workspace ingests, from the same summary the [Data connectors](data-connectors.md) page shows: each connector with its health and tables, and the sources you marked as kept elsewhere. Atlas uses it to tell you whether a table is connected, and whether zero rows may mean the data is missing rather than nothing happened.
 - Summarize recorded activity per agent over the last hours (up to 7 days).
 - For admins only, when you explicitly ask for a change: file a request in [Approvals](approvals.md) on behalf of Maxwell, Marien, Dax or Renzo. Approving that request records the decision. It does not run the action.
 

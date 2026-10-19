@@ -1,7 +1,7 @@
 ---
 title: How to triage an incident
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to triage an incident
@@ -37,7 +37,8 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 - After you ask for an analysis, a message confirms the request. Dax's steps appear in the investigation chain and in Agent Audit as they are recorded. Dax writes his assessment to the incident in Sentinel.
 - Demitry then reviews Dax's work. Workflow labels such as **Awaiting QA** and **Senior Verified** appear on the incident as this happens.
 - When Demitry confirms a true positive, he files a response request (for example isolating a host or disabling an account) in Approvals. Nothing is contained until an administrator approves it and then runs it.
-- When Demitry confirms a false or benign positive, he files a close request in Approvals. The incident closes on his next run after an administrator approves it. Your policy rules can send it to a person instead.
+- When Demitry confirms a false or benign positive, he files a close request in Approvals. The incident closes on his next run after an administrator approves it, or automatically if an administrator set Demitry's closes to Full auto in Settings. Your policy rules can send it to a person instead.
+- When Demitry disagrees with Dax's true positive and finds the incident benign, his close request carries the classification he chose (Benign Positive or False Positive) and always waits for a person. On a high-risk incident (for example credential access, privilege escalation, persistence or exfiltration) he escalates it to a person instead, and the incident stays open.
 - When Demitry escalates an incident for human review, the console sends a "Needs a person" notification through the channels your administrator set up.
 - Assigning an incident to a person takes it out of Dax's automatic queue until it is unassigned. Demitry also leaves a person-owned incident alone, and no agent reopens an incident a person closed.
 - **Helpful** and **Needs review** are recorded in Agent Audit as your opinion. They do not change the verdict or retrain anything.

@@ -1,7 +1,7 @@
 ---
 title: Roles and permissions
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Roles and permissions
@@ -34,16 +34,16 @@ The server enforces every rule on this page. If a button is visible but your rol
 | [Relationships](../features/relationships.md) | Read | Generate the strategic brief, ask Atlas | All |
 | [Metrics & Health](../features/metrics-and-health.md) | Read | Read | Read |
 | [Audit Trail](../features/audit-trail.md) | Read the ledger, draft the report, export | Verify the chain, record benign spot-checks | All |
-| [Settings](../features/settings.md) | Own agent appearance; view agent policies | Same as viewer | Notifications, Branding, Threat Intel and intel feeds, Agent Policies and operating mode, Team, tenant default appearance, setup wizard |
+| [Settings](../features/settings.md) | Own agent appearance; view agent policies | Same as viewer | Notifications, Branding, Threat Intel and intel feeds, Agent Policies (including what runs on its own), Team, tenant default appearance, setup wizard and Azure connection |
 | [Atlas copilot](../features/atlas-copilot.md) | Not available ("Atlas needs analyst access") | Ask Atlas | Ask Atlas |
 
 Results analysts produce (Live Feed evaluations, generated detections, the strategic brief) are saved to the shared workspace for everyone to see.
 
 ## Approvals are separate from roles
 
-Having the admin role does not let anything skip the approval gate. Response actions an agent proposes, such as containment, create a request in [Approvals](../features/approvals.md), and an admin must approve it. Running an approved response is its own step. Rule deployments, tuning changes, Demitry's incident closes and the setup wizard's rule pack also wait for an admin decision.
+Having the admin role does not let anything skip the approval gate. Response actions an agent proposes, such as containment, create a request in [Approvals](../features/approvals.md), and an admin must approve it. Running an approved response is its own step. Rule deployments, tuning changes and Demitry's incident closes also wait for an admin decision.
 
-An admin can choose the organization's operating mode in **Settings > Agent Policies**. In **Full auto** (or outside staffed hours in **Scheduled** mode), only actions that have earned auto mode and that an admin turned on under Approvals run without a person. Containment always waits for a person. See [Autonomy and approvals](autonomy-and-approvals.md) and [Set agent autonomy](../how-to/set-agent-autonomy.md).
+An admin chooses, action by action, what runs on its own in **Settings > Agent Policies** under **What runs on its own**: **Approval**, **Full auto** or **Scheduled** (full auto outside staffed hours). Today only two actions can run without a person: Demitry closing a false positive, and Maxwell deploying a Renzo detection that passed every review check, up to a daily limit the admin sets. Even then, each action runs only when its own checks pass. Rule tunes, Demitry's overrides of Dax and containment always wait for a person. See [Autonomy and approvals](autonomy-and-approvals.md) and [Set agent autonomy](../how-to/set-agent-autonomy.md).
 
 Some actions run straight away because the person is the one deciding: for example an analyst or admin closing an incident, or an admin deploying or recalling a rule from the Detection Library. These are recorded in the [Audit Trail](../features/audit-trail.md).
 
@@ -51,6 +51,7 @@ Some actions run straight away because the person is the one deciding: for examp
 
 Admins manage people in **Settings > Team**. From there an admin invites a person by email with a role, changes another person's role, and deactivates or reactivates an account. See [Invite a teammate](../how-to/invite-a-teammate.md).
 
+- Your organization's first admin is created by the Overwatch team, who send that person a one-time invitation link.
 - You cannot change your own role or deactivate yourself. Ask another admin.
 - The organization always keeps at least one active admin. To demote or deactivate the last one, make someone else an admin first.
 - Every role change is recorded in the [Audit Trail](../features/audit-trail.md) with who made it and the old and new role.

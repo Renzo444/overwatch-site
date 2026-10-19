@@ -1,7 +1,7 @@
 ---
 title: Approvals
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Approvals
@@ -22,7 +22,7 @@ Approvals is where agents ask and people decide. Each consequential request wait
 |------|----------------------|
 | Viewer | Read pending and resolved requests, their evidence and comments, Decision memory, and the status of uncertain tuning rollbacks. |
 | Analyst | Everything a viewer can do, plus add comments to pending requests, verify uncertain tuning rollbacks and read Agent accuracy. |
-| Admin | Everything above, plus **Approve** and **Deny**, select a response for a confirmed threat, run an approved response, request its undo, check provider state, reconcile uncertain tuning deployments, configure and check response providers, turn tuning auto-approve off and turn auto mode on or off under Agent accuracy. |
+| Admin | Everything above, plus **Approve** and **Deny**, select a response for a confirmed threat, run an approved response, request its undo, check provider state, reconcile uncertain tuning deployments, configure and check response providers, turn tuning auto-approve off and turn auto mode on or off under Agent accuracy. Which actions run on their own is set in Settings, not here. |
 
 Approve and Deny are shown to every role but only work for administrators. Decisions are recorded with your identity.
 
@@ -53,6 +53,7 @@ A footer under the pending list reminds you that requests expire 24 hours after 
 | **Select a response for confirmed threat** | Demitry, when he confirmed a threat but no target he proposed was backed by his queries | Nothing until an administrator selects a response, which creates a new request. A note on the card says why no target was accepted. |
 | **Re-enable account** or **Release endpoint from isolation** with a target ID | An administrator, with **Request undo** on a containment that ran | Authorizes the undo. An administrator then runs it like any other response. |
 | Close incident #… "…" as … | Demitry, when he confirms a false or benign positive on an open incident | Demitry closes the incident with that classification on his next run. If someone already closed it, it stays as they closed it. |
+| Deploy detection '…' to Sentinel (unattended) | Maxwell, when **Maxwell deploys a Renzo detection** is in Full auto in Settings | Approved automatically after the draft passed every review check, then deployed. You see these in History, not in Pending. |
 | Disable new rule '…': N alerts in the last 24 hours | Maxwell, when a rule he deployed in the last 48 hours raises 50 or more alerts in 24 hours | The rule is disabled in Sentinel at the next scheduled check. Denying keeps it running. |
 | Deploy the "…" rule pack | A rule pack deployment during onboarding | The next deployment request for that pack goes ahead. Each approval is used once. |
 | Requested via Atlas for … | An administrator, through Atlas | Records the decision for the agent that owns the work. It does not run anything. |
@@ -85,7 +86,7 @@ Each row shows how often your team accepted the proposal unchanged over the last
 - **Verify Sentinel state** (admin), under Uncertain tuning deployments: checks Sentinel against the saved intent. Only a matching rule resolves the attempt; nothing is redeployed.
 - **Verify rollback state** (analyst, admin), under Uncertain tuning rollbacks: checks the saved rollback target against Sentinel. Nothing is rolled back again.
 - **Save response credentials**, **Check permissions** and **Remove response credentials** (admin), under Response provider configuration: set the **Application client ID** and **New application secret** for Microsoft Entra ID or Microsoft Defender for Endpoint. Existing secrets are never displayed. **Check permissions** reads the permissions granted to the saved application and either says "Permissions verified. No action was taken in the provider." or names the missing permissions to grant with admin consent. Removing credentials blocks future responses through that provider; it does not undo actions already sent.
-- **Turn on auto mode…** and **Turn off auto mode** (admin), under Agent accuracy. Turning on is only possible when the row meets the bar. It opens a dialog with the disclaimer; turn on "I have read this and accept it for my organization" and click **Turn on auto mode**. Your name and the time are recorded in the audit log.
+- **Turn on auto mode…** and **Turn off auto mode** (admin), under Agent accuracy. This only matters for the older organization-wide mode (see Good to know). Turning on is only possible when the row meets the bar. It opens a dialog with the disclaimer; turn on "I have read this and accept it for my organization" and click **Turn on auto mode**. Your name and the time are recorded in the audit log.
 - **Refresh**: re-reads the queue, history, Decision memory and policy. The pending list also refreshes about every 15 seconds.
 
 ## Good to know
@@ -98,8 +99,10 @@ Each row shows how often your team accepted the proposal unchanged over the last
 - Disabling an account does not revoke the user's existing sessions. Revoke them separately if needed.
 - The console can only run a response for a tenant that has response provider credentials configured.
 - Approving a request with no bound response (for example one filed through Atlas) records the decision for the agent that owns the work. It does not run the action.
-- **Auto mode** is off by default. It unlocks at 95% agreement over the last 50 decisions with no dangerous misses or reversals, and only at confidence levels with 20 or more proven decisions. Even when it is on, it only acts while your operating mode in [Settings](settings.md) is full auto, or outside staffed hours on a schedule. About 1 in 10 closes still goes to a person as a spot check. It never applies to High or Critical incidents, to a close where Demitry overrode Dax, to an escalated incident or to a close your policy rules require approval for. Closes it approves appear in History as approved.
-- Auto mode turns itself off when accuracy falls below the bar or when someone reopens an automatic close, or reclassifies it as a true positive, within 14 days. It never closes an incident a person owns; the owner gets the recommendation as a comment instead.
+- **Which of Demitry's closes are approved automatically** is decided in [Settings](settings.md) > Agent Policies > **What runs on its own**, on the **Demitry closes a false positive** row. When an admin sets it to Full auto (or Scheduled, outside staffed hours), eligible closes are approved without a person and the accuracy bar is not required. About 1 in 10 closes still goes to a person as a spot check. Automatic approval never applies to High or Critical incidents, to a close where Demitry overrode Dax, to an escalated incident or to a close your policy rules require approval for. Closes approved this way appear in History as approved.
+- **Auto mode** under Agent accuracy only matters for an organization still on the older organization-wide mode, where it is also needed before Demitry's closes run on their own. It is off by default and unlocks at 95% agreement over the last 50 decisions with no dangerous misses or reversals, and only at confidence levels with 20 or more proven decisions. It turns itself off when accuracy falls below the bar.
+- If someone reopens an automatic close, or reclassifies it as a true positive, within 14 days, auto mode turns off and the **Demitry closes a false positive** row goes back to Approval. Automatic approval never closes an incident a person owns; the owner gets the recommendation as a comment instead.
+- When Demitry finds an incident benign that Dax called a true positive, his close request carries the classification he chose (Benign Positive or False Positive) and always waits for a person. On a high-risk incident (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact) he files no close request: he escalates the incident to a person instead.
 - Your decisions on Demitry's close requests feed Agent accuracy. A denied close counts as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
 - If a request changed while you were deciding, the console says "This approval changed while you were deciding. Reload it before voting again." If it expired, was already decided, or you already voted, the console says so and your vote is not recorded.
 - A decision you just made stays on the Pending tab, with its undo countdown or outcome, until you click **Dismiss**. If you close the page during the 10-second undo window, the browser warns you first.

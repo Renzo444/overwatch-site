@@ -1,7 +1,7 @@
 ---
 title: Settings
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Settings
@@ -72,7 +72,7 @@ Threat-intelligence providers and your own advisory feeds.
 How much the agents may do on their own, and the rules they must follow.
 
 - **Scheduled operations**: **Dax triages new incidents automatically**, **Run agents on a schedule for this workspace**, **Automatic threat-intelligence ingestion** (Renzo scores each new relevant article; articles scoring 80 or higher become Auto-ingested drafts in the Detection Library) and **Caleb scheduled hash lookups**. Each shows On or Off.
-- **Operating mode**: **Approval** (every close, tune and deployment waits for a person), **Full auto** (only actions that have earned auto mode and been turned on run without waiting) or **Scheduled** (approval during your staffed hours, full auto outside them). Containment always waits for a person. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
+- **What runs on its own**: one row per agent action, each set to **Approval** (a person approves every time), **Full auto** (runs on its own once its checks pass, with spot checks) or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Today only **Demitry closes a false positive** and **Maxwell deploys a Renzo detection** can be set to Full auto or Scheduled; Maxwell's row also has a **Daily limit** (1 to 20). **Marien applies a rule tune**, **Demitry overrides Dax and closes** and **Containment (isolate a host, disable an account)** always wait for a person. Rows set to Scheduled share one set of **Staffed hours**. Each row explains its checks and shows which mode is in force now. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
 - **Enforced boundaries**: what the policy engine enforces today.
 - **Custom rules**: rules per agent that **Allow**, **Deny** or **Require Approval** based on severity, classification, entity count, confidence score or action type. **Add rule** opens the rule builder. Each policy can be switched on or off, expanded, and deleted with **Delete policy**.
 - **More policy controls**: ready-made **Policy templates** to apply.
@@ -107,13 +107,13 @@ Step by step: [Invite a teammate](../how-to/invite-a-teammate.md).
 | Connect, rotate or remove the VirusTotal key | Admin | Immediately; lookups already running may still finish |
 | Add or remove your own intel feeds | Admin | New items are fetched every 30 minutes |
 | Switch scheduled operations | Admin | For new agent-worker requests; work in progress is not cancelled |
-| Change the operating mode or staffed hours | Admin | Immediately, for the whole organization |
+| Change what runs on its own, Maxwell's daily limit or staffed hours | Admin | Immediately, for the whole organization |
 | Add, switch, delete or apply policy rules | Admin | Immediately |
 | Change your own agent appearance | Everyone | Immediately, for you only |
 | Change the tenant default appearance | Admin | Immediately, for everyone without their own choice |
 | Invite a person, change a role, deactivate or reactivate | Admin | On the person's next request |
 
-Tenant setting changes (notifications, branding, credentials, intel feeds, agent configuration including the operating mode, policies, the tenant default appearance) are recorded in the [Audit Trail](audit-trail.md) under **Configuration changes**, with before and after values. Invitations and role changes are recorded in the Audit Trail's **Activity ledger**. None of these changes go through Approvals; they are made directly by the admin.
+Tenant setting changes (notifications, branding, credentials, intel feeds, agent configuration including what runs on its own, policies, the tenant default appearance) are recorded in the [Audit Trail](audit-trail.md) under **Configuration changes**, with before and after values. Invitations and role changes are recorded in the Audit Trail's **Activity ledger**. None of these changes go through Approvals; they are made directly by the admin.
 
 ## Good to know
 
@@ -122,6 +122,7 @@ Tenant setting changes (notifications, branding, credentials, intel feeds, agent
 - **Team invitations need account email.** If account email is not set up for your deployment, the Team tab shows "Invitations need account email" instead of the invite form. You can still change roles and deactivate people.
 - **Team guards.** You cannot change your own role or deactivate yourself, and the organization always keeps at least one active admin.
 - **Conflicting edits.** If another admin changed notifications or policies since you loaded them, you see "Settings changed elsewhere. Reload before saving." (or "Policies changed elsewhere. Refresh before saving."). Select **Refresh** and try again.
+- A reversed automatic close switches **Demitry closes a false positive** back to Approval by itself. The row says so, and the change is in the Audit Trail.
 - Scheduled operations need an active agent worker. Check **Tenant worker heartbeat** on [Metrics & Health](metrics-and-health.md).
 - There is no SLA target or retention screen in Settings. Ask the Overwatch team for these.
 

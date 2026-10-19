@@ -1,7 +1,7 @@
 ---
 title: Detection Library
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Detection Library
@@ -72,13 +72,14 @@ The Detection Library holds every detection rule your tenant has drafted, and sh
 - **Bulk actions** (tick rules first): **Send to QA** (drafts only, up to 3 at a time), **Backtest selected**, **Ask Orion to hunt**, **Export** (CSV) and **Clear**.
 - **Refresh** reloads stored backtests, Marien's suggestions and version history.
 
-Deploy and recall from this page are direct admin actions with a confirmation dialog. They do not create a request on the Approvals page. Maxwell refuses to deploy a rule whose query returns no entity columns (such as account, host, IP, URL, process or file) or that has no severity. See [How to deploy or recall a rule](../how-to/deploy-or-recall-a-rule.md).
+Deploy and recall from this page are direct admin actions with a confirmation dialog. They do not create a request on the Approvals page. The deployed rule's ATT&CK mapping in Sentinel lists parent techniques only. Maxwell refuses to deploy a rule whose query returns no entity columns (such as account, host, IP, URL, process or file) or that has no severity. See [How to deploy or recall a rule](../how-to/deploy-or-recall-a-rule.md).
 
 ## Good to know
 
 - **Deployed rules are not edited here.** To change a deployed rule's query, use Marien's tuning review, roll it back to an earlier version in Maxwell's workspace, or recall the rule and edit the draft.
 - **Who saves what.** New entries and deletions are saved to the shared tenant library for analysts and admins. Saving a new query version (**Edit query**, **Apply & re-run**) is admin-only. Viewers' changes are never saved. Backtests, QA reviews, version history and hunt requests are stored separately.
 - **Delete** in the full record asks you to confirm ("Remove this detection from the library? This cannot be undone."). It is disabled for a rule that is deployed in Sentinel: recall the rule first, then delete it.
+- **Automatic deploys.** By default only an admin deploys. If an admin sets **Maxwell deploys a Renzo detection** to Full auto (or Scheduled) in Settings > Agent Policies, Maxwell also reviews Renzo's drafts on his own and deploys those that pass every review check, up to a daily limit. Those rules show as **Deployed** here like any other. Recall stays an admin action. See [How to deploy or recall a rule](../how-to/deploy-or-recall-a-rule.md).
 - **New rules are watched.** For 48 hours after Maxwell deploys a rule, the scheduled upkeep counts its alerts over the last 24 hours. If a new rule raises 50 or more, Maxwell files a high-risk request on the Approvals page to disable it. The rule is only disabled after an admin approves that request; denying keeps it running.
 - **Confidence** is Renzo's 0 to 100 score from the article evaluation. Rules made with **Generate detection** show **Not scored**.
 - **No attested positives** are linked to library rules yet, so a passing backtest does not confirm the rule catches a real attack.
