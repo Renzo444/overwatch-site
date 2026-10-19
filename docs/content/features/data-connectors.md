@@ -1,7 +1,7 @@
 ---
 title: Data connectors
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Data connectors
@@ -27,6 +27,7 @@ Connectors themselves are set up in Microsoft Sentinel, not here. Nothing on thi
 
 - **Summary tiles.** **Connected** (sources sending data), **Daily volume** (last 24 hours), **Healthy** (receiving data), **Needs attention** (degraded or stale) and **Open suggestions** (with the number dismissed). When the workspace cannot be read, tiles say **Unavailable**, never 0.
 - **Connector health note.** What Microsoft's own health monitoring reports: how many connectors report and how many fail. If health monitoring is off in your workspace, the note tells you where to turn it on in Microsoft Sentinel (**Settings → Auditing and health monitoring**).
+- **Azure secret expiry (admins only).** When the Azure client secrets Overwatch Console uses will expire. Within 30 days of the date, after it, or when no date is recorded, the note is a warning with **Open setup**, which opens the setup wizard so you can run the setup script again. See [Connect Microsoft Sentinel](../how-to/connect-microsoft-sentinel.md#keep-the-secrets-from-expiring).
 - **Data flow.** A diagram of your top 10 connectors by volume feeding Microsoft Sentinel, and what uses the data: Orion's hunts and library detections are counted; use by Dax, Demitry, Caleb and the strategic brief is shown as "not tracked".
 - **Data connectors list.** Category buttons (**All**, **Endpoint**, **Identity**, **Network**, **Email**, **SaaS**, **Cloud**) and one row per connector with its tables, volume and status.
 - **Connector detail** for the selected connector:
@@ -70,6 +71,7 @@ Volumes are billed bytes from the workspace's usage records over a 7-day window.
 - **Suggestions only name connectors Microsoft Sentinel offers.** Overwatch Console does not install or configure connectors.
 - **Gaps depend on your library.** They compare the tables your library detections read against what the workspace receives. With no saved KQL in the library you see "No library detection has saved KQL to check".
 - **Partial checks.** If workspace health cannot be read but the table list can, only tables proven absent are listed; tables that stopped sending are not checked until health is readable.
+- **The agents read the same summary.** Dax, Demitry, Marien, Renzo, Orion and Atlas see which tables your workspace ingests, their status, and the suggestions you dismissed as **Already covered elsewhere**. A stale or missing source tells them that an empty query result may be a visibility gap, not proof that nothing happened.
 - **Health monitoring coverage.** Microsoft reports health only for some connectors. For the rest, the KQL check is the proof that data arrives.
 - **Not connected.** If Microsoft Sentinel is not connected for your organization yet, the page shows "Not connected · Microsoft Sentinel setup is incomplete" and says which details are missing (the Azure app registration or the workspace details). Admins get an **Open setup wizard** button; others are asked to have an administrator complete the setup wizard (Settings > Setup wizard).
 - **Unavailable states.** "Unavailable · connector health could not be read", "No table ingested data in the last 7 days", "Dismissals unavailable" (dismissed suggestions may show as open) and "Unavailable · coverage gaps cannot be computed". Error messages never show internal IDs.
@@ -79,4 +81,5 @@ Volumes are billed bytes from the workspace's usage records over a 7-day window.
 - [How to fix a coverage gap](../how-to/fix-a-coverage-gap.md)
 - [Detection Library](detection-library.md)
 - [Metrics & Health](metrics-and-health.md)
+- [Connect Microsoft Sentinel](../how-to/connect-microsoft-sentinel.md)
 - [Roles and permissions](../concepts/roles-and-permissions.md)

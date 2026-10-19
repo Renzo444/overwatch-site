@@ -1,7 +1,7 @@
 ---
 title: Invite a teammate
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to invite a teammate
@@ -34,6 +34,8 @@ You see "Invitation sent to <email>. The link works once and expires in 72 hours
 4. They see "Your account is active." and select **Sign in** to sign in with their email and the new password.
 
 Until they do this, the account cannot sign in. Nobody else ever sees or sets their password.
+
+Your organization's first admin follows the same steps, but gets the link from the Overwatch team directly rather than by email. After signing in, the setup wizard opens: see [Connect Microsoft Sentinel](connect-microsoft-sentinel.md).
 
 ### Change a teammate's role
 
@@ -87,7 +89,8 @@ Admins cannot reset another person's password. The person does it themselves:
 - **"This link is invalid, expired or already used."**: invitation links last 72 hours and reset links 1 hour, and each works once. Only the newest link works. Ask the admin to invite you again, or request a new reset link.
 - **"Open the invitation link from your email."**: the page was opened without the link from the email.
 - **"The passwords do not match."** or the 15-character rule: re-enter the password.
-- **No reset email arrives.** The page always says "If that address belongs to an active account, a reset link is on its way." whether or not an email was sent, so it does not reveal which addresses have accounts. No email is sent when the address has no active account (including an invitation not yet accepted), when a reset link was already sent to that account in the last minute, or when account email is not set up for your deployment. Wait a minute and try again, or ask an admin.
+- **"Password reset email is not available yet. Contact Overwatch support to reset your password."**: account email is not set up for your deployment, so no reset link can be sent. Contact Overwatch support.
+- **No reset email arrives.** The page says "If that address belongs to an active account, a reset link is on its way." whether or not an email was sent, so it does not reveal which addresses have accounts. No email is sent when the address has no active account (including an invitation not yet accepted) or when a reset link was already sent to that account in the last minute. Wait a minute and try again, or ask an admin.
 
 ## Related
 

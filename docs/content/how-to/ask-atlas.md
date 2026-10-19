@@ -1,7 +1,7 @@
 ---
 title: How to ask Atlas
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to ask Atlas
@@ -30,6 +30,7 @@ Good questions:
 - "Show me failed logins in the last 24 hours".
 - "What have the agents been doing today?"
 - "What does this page do?"
+- "Which log sources do we have?" or "Why can't Orion see firewall traffic?"
 
 ## What happens next
 
@@ -43,6 +44,7 @@ Good questions:
 
 - **The question box or the dock says "Atlas needs analyst access"**: your role is Viewer.
 - **"Atlas could not complete this response. Check Agent Audit before retrying."**: the answer failed. Check the Atlas entry in Agent Audit, then ask again.
+- **A query returns zero rows**: Atlas is instructed to say so and suggest why. Ask whether the table is connected; Atlas can check your log sources.
 - **A line like "Dax · query failed"**: the query failed in your workspace. Atlas is instructed to correct the KQL and retry once, then explain the error and show the query.
 - **Atlas says no agent can take the request**: the query tool is revoked for Dax, Demitry or Orion. An admin can restore it in the agent tool permissions (Agents page > Permissions > **Edit tool permissions**).
 - **"Only read-only queries within this tenant workspace are supported"** when you click **Execute**: the query uses a command that is not allowed. Use a single read-only query.

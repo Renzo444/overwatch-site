@@ -1,7 +1,7 @@
 ---
 title: How to fix a coverage gap
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to fix a coverage gap
@@ -41,7 +41,7 @@ To fix a gap in technique coverage rather than data: open the **Detection Librar
 
 - **Check failed.** The message under the result says why the query could not run.
 - **"Not connected · Microsoft Sentinel setup is incomplete"** Microsoft Sentinel is not connected for your organization yet. An admin clicks **Open setup wizard** and adds the missing Azure app registration or workspace details.
-- **"Unavailable · connector health could not be read" The workspace could not be queried. Only tables proven absent are listed until health can be read.
+- **"Unavailable · connector health could not be read"** The workspace could not be queried. Only tables proven absent are listed until health can be read.
 - **"Unavailable · coverage gaps cannot be computed"** Neither workspace health nor the table list could be read.
 - **"No library detection has saved KQL to check"** Add detections with queries to the library first.
 - **A table no connector writes.** Tables listed under "Tables your detections read that no Microsoft Sentinel connector in the catalog writes" are custom or platform tables. Check your own data collection rule or partner connector, or the table name in the detection.

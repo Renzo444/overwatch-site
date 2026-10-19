@@ -1,7 +1,7 @@
 ---
 title: Incidents
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # Incidents
@@ -84,7 +84,9 @@ See [How to close an incident](../how-to/close-an-incident.md) for the close dia
 - If the list cannot be refreshed, the page keeps the last list it read and says it may be stale, with a **Retry** link.
 - Dax only picks up incidents that are unassigned or owned by Dax. Assigning an incident to a person takes it out of his automatic queue.
 - A person's claim and a person's close are final for the agents. Demitry does not review an incident a person owns; if someone claims it while he is reviewing, he leaves his verdict as a comment and changes nothing else. No agent reopens or reclassifies an incident a person closed.
-- When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically through Agent accuracy on the Approvals page. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
+- When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically under Settings > Agent Policies > **What runs on its own**. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
+- When Dax called an incident a true positive and Demitry finds it benign, Demitry chooses whether the close should be Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). His comment on the incident says which, and the close request always waits for a person. On a high-risk incident (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact) he does not propose a close: he escalates the incident to a person and it stays open.
+- Dax, Demitry and the other agents know which log sources your workspace ingests (the same summary as the [Data connectors](data-connectors.md) page). When evidence is missing because a source is stale or not connected, they treat it as missing data, not as proof the activity did not happen.
 - When Demitry escalates an incident for human review, the console also sends a "Needs a person" notification through the channels your administrator set up. See [How to configure notifications](../how-to/configure-notifications.md).
 - **Not similar?** on a similar case marks it in your current view only. It is not saved.
 - Response actions (isolating a host, disabling an account) are never run from this page. They go through [Approvals](approvals.md).

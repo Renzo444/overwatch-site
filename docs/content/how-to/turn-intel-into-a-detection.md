@@ -1,7 +1,7 @@
 ---
 title: How to turn intel into a detection
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to turn intel into a detection
@@ -35,8 +35,8 @@ You can also draft from any article address: open **Agents**, open Renzo, paste 
 
 ## What happens next
 
-- The entry starts at **Draft** and moves through **In QA**, **QA approved** and **Backtest passed** to **Deployed**. Nothing is deployed until an admin clicks **Deploy** and confirms.
-- If an admin has turned on **Automatic threat-intelligence ingestion** (Settings > Agent Policies), new relevant articles are scored automatically and those scoring 80 or higher arrive as drafts marked **Auto-ingested**. They still need QA and an admin's deployment.
+- The entry starts at **Draft** and moves through **In QA**, **QA approved** and **Backtest passed** to **Deployed**. By default nothing is deployed until an admin clicks **Deploy** and confirms. If an admin has set **Maxwell deploys a Renzo detection** to Full auto (or Scheduled) in Settings > Agent Policies, Maxwell also reviews drafts on his own and deploys those that pass every review check, up to a daily limit. See [How to deploy or recall a rule](deploy-or-recall-a-rule.md).
+- If an admin has turned on **Automatic threat-intelligence ingestion** (Settings > Agent Policies), new relevant articles are scored automatically and those scoring 80 or higher arrive as drafts marked **Auto-ingested**. They still need a passed review and a deployment, by an admin or by Maxwell under Full auto. When Renzo's switch is on, his scheduled research cycles work from these articles and may draft a tested detection from one.
 - The article's score and outcome show on its Live Feed row and in its **Evaluation** section.
 
 ## If something goes wrong

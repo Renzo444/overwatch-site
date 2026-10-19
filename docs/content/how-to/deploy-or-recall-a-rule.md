@@ -1,7 +1,7 @@
 ---
 title: How to deploy or recall a rule
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-19
 ---
 
 # How to deploy or recall a rule
@@ -35,6 +35,15 @@ To deploy against a backtest that did not pass: in the **Backtest** panel click 
 3. Click **Review for deployment** (analyst or admin). Demitry checks the query, repairs it if he can and runs it against your workspace. This can take a few minutes. Nothing needs to be recorded beforehand.
 4. When the review passes, click **Approve & deploy** (admin) and confirm. If it did not pass, read the reason, fix what it names and click **Review again**.
 
+### Let Maxwell deploy Renzo's drafts on his own
+
+1. Open **Settings > Agent Policies** (admin).
+2. Under **What runs on its own**, find **Maxwell deploys a Renzo detection** and click **Full auto**, or **Scheduled** to keep approval during your staffed hours.
+3. Read the confirmation and click **Switch mode**.
+4. Pick a **Daily limit** (1 to 20 deploys a day; 3 unless you change it).
+
+Maxwell's automatic deploys run on the agent worker, so **Run agents on a schedule for this workspace** must be on, and Renzo's switch must be on: switching Renzo off also pauses them. To stop them, click **Approval** in the same row. See [How to set agent autonomy](set-agent-autonomy.md).
+
 ### Roll back a deployed rule
 
 1. In Maxwell's **Deployment queue**, pick **Deployed** and select the rule.
@@ -51,11 +60,12 @@ To deploy against a backtest that did not pass: in the **Backtest** panel click 
 
 ## What happens next
 
-- **Deploy.** The server re-checks the QA review and the query hash and rejects any other query. Maxwell creates the rule in Sentinel and reads it back. The rule's schedule follows the time span in its query, alerts that share all their entities within 5 hours are grouped into one incident, and the incidents go to Dax to triage. The library shows the rule as **Deployed**, and the result is listed under **Export and deployment history** for this session.
+- **Deploy.** The server re-checks the QA review and the query hash and rejects any other query. Maxwell creates the rule in Sentinel and reads it back. The rule's schedule follows the time span in its query, alerts that share all their entities within 5 hours are grouped into one incident, and the incidents go to Dax to triage. The rule's ATT&CK mapping in Sentinel lists parent techniques only (T1059.001 is sent as T1059). The library shows the rule as **Deployed**, and the result is listed under **Export and deployment history** for this session.
+- **Automatic deploys.** With Full auto set, the worker runs Maxwell about every 10 minutes. He takes Renzo's undeployed drafts, those your workspace can best observe first and the newest first among equals, and runs the same deployment review a person would request (at most five reviews a run). Only a draft that passes every check is deployed, through the same deploy path and checks as an admin's deploy, until the daily limit is reached. A draft whose review fails is not reviewed again until its query changes; the reviewer's reasons are kept with the draft so Renzo can redraft it once. A deploy that fails after a passed review, or a review the reviewer itself could not finish, is tried again with a fresh review after 6 hours, up to three times. An admin can still review and deploy any of these drafts by hand.
 - **New rule volume watch.** For 48 hours after a deploy, the scheduled upkeep counts the rule's alerts over the last 24 hours. If it raises 50 or more, Maxwell files a high-risk request on the Approvals page to disable it ("Disable new rule '…': … alerts in the last 24 hours"). Nothing is disabled unless an admin approves; the rule is then disabled on the next upkeep. Denying keeps it running.
 - **Roll back.** Only this rule changes in Sentinel. The restored query is saved as a new version, and the library entry shows the restored query with a "Rolled back to v…" note. Whether the rule is on or off does not change. The rollback is recorded in Agent Audit under Maxwell.
 - **Recall.** Only rules Overwatch Console deployed for your organization can be recalled. The full rule is saved to the audit log before it is deleted, and Maxwell reads Sentinel again to confirm it is gone. The event is recorded in Agent Audit under Maxwell.
-- **Approvals.** Deploy, roll back and recall are direct admin actions confirmed in a dialog. They do not create a request on the Approvals page. Only the storm-disable request above goes through Approvals.
+- **Approvals.** Deploy, roll back and recall are direct admin actions confirmed in a dialog. They do not create a request on the Approvals page. An automatic deploy files a high-risk request that the system approves itself, so it appears under **History** on the Approvals page and in Agent Audit under Maxwell. The storm-disable request above is the one that waits for a person.
 - **Checking Sentinel.** In Maxwell's workspace, **Check Sentinel** reads the live rule state into the **Read-back** field.
 
 ## If something goes wrong
