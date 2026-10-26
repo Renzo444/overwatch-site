@@ -1,7 +1,7 @@
 ---
 title: How to triage an incident
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to triage an incident
@@ -35,7 +35,7 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 ## What happens next
 
 - After you ask for an analysis, a message confirms the request. Dax's steps appear in the investigation chain and in Agent Audit as they are recorded. Dax writes his assessment to the incident in Sentinel.
-- Demitry then reviews Dax's work. Workflow labels such as **Awaiting QA** and **Senior Verified** appear on the incident as this happens.
+- Demitry then reviews Dax's work. Workflow labels such as **Awaiting QA** and **Senior Verified** appear on the incident as this happens. He gives a full review to benign calls on high-risk incidents, low-confidence verdicts, flagged incidents and High or Critical incidents; other verdicts he passes on without a review (**Demitry QA** reads "passed without review"). A benign verdict passed this way becomes a close request that waits for a person. An attack verdict passed this way gets no response request: decide the response yourself.
 - When Demitry confirms a true positive, he files a response request (for example isolating a host or disabling an account) in Approvals. Nothing is contained until an administrator approves it and then runs it.
 - When Demitry confirms a false or benign positive, he files a close request in Approvals. The incident closes on his next run after an administrator approves it, or automatically if an administrator set Demitry's closes to Full auto in Settings. Your policy rules can send it to a person instead.
 - When Demitry disagrees with Dax's true positive and finds the incident benign, his close request carries the classification he chose (Benign Positive or False Positive) and always waits for a person. On a high-risk incident (for example credential access, privilege escalation, persistence or exfiltration) he escalates it to a person instead, and the incident stays open.

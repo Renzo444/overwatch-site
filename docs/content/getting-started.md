@@ -1,7 +1,7 @@
 ---
 title: Getting started
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Getting started with Overwatch Console

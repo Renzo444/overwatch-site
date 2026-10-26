@@ -1,7 +1,7 @@
 ---
 title: Agent Audit
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-26
 ---
 
 # Agent Audit

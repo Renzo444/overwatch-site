@@ -1,7 +1,7 @@
 ---
 title: How to ask Atlas
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to ask Atlas
@@ -31,10 +31,11 @@ Good questions:
 - "What have the agents been doing today?"
 - "What does this page do?"
 - "Which log sources do we have?" or "Why can't Orion see firewall traffic?"
+- "What is our ATT&CK coverage?", "Where are our gaps in Credential Access?", "Are we covered for T1003?" or "What should we connect?"
 
 ## What happens next
 
-- Atlas hands data questions to Dax, Demitry or Orion, who run a read-only query (up to 50 rows, over a window that covers the query's own lookback up to 30 days). It reads library, hunt, tuning and sandbox records from the agent that owns them.
+- Atlas hands data questions to Dax, Demitry or Orion, who run a read-only query (up to 50 rows, over a window that covers the query's own lookback up to 30 days). It reads library, hunt, tuning and sandbox records, and Renzo's coverage map, from the agent that owns them.
 - If more rows or incidents matched than came back, Atlas is instructed to say the result is partial rather than give its length as a total. Ask for a count if you need one.
 - Each question is recorded under Atlas in [Agent Audit](../features/agent-audit.md).
 - A pinned answer is stored in case notes as generated text. The incident itself is not changed.

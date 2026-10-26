@@ -1,7 +1,7 @@
 ---
 title: How to deploy or recall a rule
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to deploy or recall a rule
@@ -41,6 +41,7 @@ To deploy against a backtest that did not pass: in the **Backtest** panel click 
 2. Under **What runs on its own**, find **Maxwell deploys a Renzo detection** and click **Full auto**, or **Scheduled** to keep approval during your staffed hours.
 3. Read the confirmation and click **Switch mode**.
 4. Pick a **Daily limit** (1 to 20 deploys a day; 3 unless you change it).
+5. Pick **Rules Maxwell may keep**: the most rules his automatic deploys may have in Sentinel at once (50 unless you change it).
 
 Maxwell's automatic deploys run on the agent worker, so **Run agents on a schedule for this workspace** must be on, and Renzo's switch must be on: switching Renzo off also pauses them. To stop them, click **Approval** in the same row. See [How to set agent autonomy](set-agent-autonomy.md).
 
@@ -62,10 +63,14 @@ Maxwell's automatic deploys run on the agent worker, so **Run agents on a schedu
 
 - **Deploy.** The server re-checks the QA review and the query hash and rejects any other query. Maxwell creates the rule in Sentinel and reads it back. The rule's schedule follows the time span in its query, alerts that share all their entities within 5 hours are grouped into one incident, and the incidents go to Dax to triage. The rule's ATT&CK mapping in Sentinel lists parent techniques only (T1059.001 is sent as T1059). The library shows the rule as **Deployed**, and the result is listed under **Export and deployment history** for this session.
 - **Automatic deploys.** With Full auto set, the worker runs Maxwell about every 10 minutes. He takes Renzo's undeployed drafts, those your workspace can best observe first and the newest first among equals, and runs the same deployment review a person would request (at most five reviews a run). Only a draft that passes every check is deployed, through the same deploy path and checks as an admin's deploy, until the daily limit is reached. A draft whose review fails is not reviewed again until its query changes; the reviewer's reasons are kept with the draft so Renzo can redraft it once. A deploy that fails after a passed review, or a review the reviewer itself could not finish, is tried again with a fresh review after 6 hours, up to three times. An admin can still review and deploy any of these drafts by hand.
+- **Room in Sentinel.** Sentinel allows 512 analytics rules per workspace. Before each run Maxwell reads the live rule count and stops automatic deploys while fewer than 50 slots are left, so your own rules always have room. If the count cannot be read, he deploys nothing that run.
+- **Repeats and overlaps.** Before reviewing a draft, Maxwell compares it with every live rule. A draft that repeats a live rule is declined for good, with the reason written on the draft. A draft that overlaps a live rule waits for a person: Maxwell files a medium-risk request on the Approvals page ("Deploy detection '…' although it overlaps a live rule"). Approving lets him review and deploy it on a later run; denying it, or leaving it until it expires after a day, keeps it out of Sentinel. Renzo also drops a draft that repeats a live rule before saving it.
+- **Rule budget.** When Maxwell's automatic deploys already have as many rules in Sentinel as **Rules Maxwell may keep** allows, he deploys nothing and files one request on the Approvals page to retire his lowest-value rule ("Retire Maxwell's rule '…' to make room for new detections"). He picks a rule that overlaps another live rule first, then one that raised more alerts in 30 days than its severity's budget, then the one from the lowest-scored intel. A rule is never retired for being quiet. Approving deletes the rule on Maxwell's next run through the same checks as a recall (ownership check, full backup in the audit log, verified delete). Denying keeps it, and he will not propose that rule again. Nothing is retired without a person.
+- **AI service outages.** If the reviewer cannot answer because the AI service is unavailable, Maxwell stops the run, records one outage line in Agent Audit and declines nothing. The drafts stay eligible for the next run.
 - **New rule volume watch.** For 48 hours after a deploy, the scheduled upkeep counts the rule's alerts over the last 24 hours. If it raises 50 or more, Maxwell files a high-risk request on the Approvals page to disable it ("Disable new rule '…': … alerts in the last 24 hours"). Nothing is disabled unless an admin approves; the rule is then disabled on the next upkeep. Denying keeps it running.
 - **Roll back.** Only this rule changes in Sentinel. The restored query is saved as a new version, and the library entry shows the restored query with a "Rolled back to v…" note. Whether the rule is on or off does not change. The rollback is recorded in Agent Audit under Maxwell.
 - **Recall.** Only rules Overwatch Console deployed for your organization can be recalled. The full rule is saved to the audit log before it is deleted, and Maxwell reads Sentinel again to confirm it is gone. The event is recorded in Agent Audit under Maxwell.
-- **Approvals.** Deploy, roll back and recall are direct admin actions confirmed in a dialog. They do not create a request on the Approvals page. An automatic deploy files a high-risk request that the system approves itself, so it appears under **History** on the Approvals page and in Agent Audit under Maxwell. The storm-disable request above is the one that waits for a person.
+- **Approvals.** Deploy, roll back and recall are direct admin actions confirmed in a dialog. They do not create a request on the Approvals page. An automatic deploy files a high-risk request that the system approves itself, so it appears under **History** on the Approvals page and in Agent Audit under Maxwell. The overlap, retire and storm-disable requests above wait for a person.
 - **Checking Sentinel.** In Maxwell's workspace, **Check Sentinel** reads the live rule state into the **Read-back** field.
 
 ## If something goes wrong
@@ -74,6 +79,7 @@ Maxwell's automatic deploys run on the agent worker, so **Run agents on a schedu
 - **"Review expired. Run review again."** or **"Detection changed since review. Run review again."** Review the rule again before you deploy.
 - **"Select up to 3 detections per review batch. Reviews are limited to 3 per minute."** Wait a minute and send the rest.
 - **"A deployment or rollback is actively executing for this rule."** Wait for the other action to finish.
+- **QA did not pass because the rule matches only indicators**, or because live rules already cover its technique. Rewrite the rule to detect the attacker's behaviour, or to catch something the existing rules miss. An admin can allow indicator-only rules with **Renzo may write indicator-only rules** in Settings > Agent Policies.
 - **"This detection returns no entity columns …"** or **"This detection has no severity …"** Revise the query or set a severity, then review it again.
 - **"Deploy failed for …"** The message gives the server's reason. Run QA again before you retry.
 - **"This rule is already gone from Azure Sentinel. Nothing was deleted."** Someone removed it outside Overwatch Console. The recorded deployment is kept.

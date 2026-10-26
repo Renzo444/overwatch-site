@@ -1,7 +1,7 @@
 ---
 title: Autonomy and approvals
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Autonomy and approvals
@@ -55,7 +55,7 @@ Full auto is still a ceiling: an action runs without a person only when its own 
 | Row | Can be set to Full auto? | What its checks are |
 |-----|--------------------------|---------------------|
 | **Demitry closes a false positive** | Yes | Closes only when Demitry confirms Dax's benign verdict. Never High or Critical incidents, escalated incidents or incidents a policy rule holds. About 1 in 10 still goes to a person as a spot check. A reversed automatic close switches the row back to Approval. |
-| **Maxwell deploys a Renzo detection** | Yes | Deploys only Renzo drafts that pass every review check (live validation, replay and an independent review), up to a **Daily limit** you choose (1 to 20, default 3), while Renzo's switch is on. |
+| **Maxwell deploys a Renzo detection** | Yes | Deploys only Renzo drafts that pass every review check (live validation, replay and an independent review), up to a **Daily limit** you choose (1 to 20, default 3), while Renzo's switch is on. Keeps at most the number of rules you set under **Rules Maxwell may keep** (default 50) and always leaves room for your own rules under Sentinel's 512-rule limit. |
 | **Marien applies a rule tune** | No, always Approval | Always waits for a person today. Planned: it needs a measured false-positive drop and a replay check first. |
 | **Demitry overrides Dax and closes** | No, always Approval | Always waits for a person today. |
 | **Containment (isolate a host, disable an account)** | No, always Approval | Always waits for an administrator today. |
@@ -64,7 +64,13 @@ Setting Demitry's closes to Full auto or Scheduled here is your administrator's 
 
 ### Maxwell under Full auto
 
-When **Maxwell deploys a Renzo detection** is in Full auto (or Scheduled, outside staffed hours), Renzo's switch is on and **Run agents on a schedule for this workspace** is on, the agent worker asks Maxwell about every 10 minutes to deploy Renzo's draft detections on his own. Maxwell takes drafts with the highest intel priority first, newest first among equals, and runs the same deployment review a person would request. Only a draft whose review passed every check is deployed, up to the daily limit per UTC day. Each one is recorded in Approvals History as an approved "Deploy detection '…' to Sentinel (unattended)" request. A draft whose review fails is not reviewed again until its query changes. A deploy that fails for another reason, or a review that could not finish, is tried again later a limited number of times. You can still review and deploy any draft yourself.
+When **Maxwell deploys a Renzo detection** is in Full auto (or Scheduled, outside staffed hours), Renzo's switch is on and **Run agents on a schedule for this workspace** is on, the agent worker asks Maxwell about every 10 minutes to deploy Renzo's draft detections on his own. Maxwell takes drafts with the highest intel priority first, newest first among equals, and runs the same deployment review a person would request. Only a draft whose review passed every check is deployed, up to the daily limit per UTC day. Each one is recorded in Approvals History as an approved "Deploy detection '…' to Sentinel (unattended)" request. A draft whose review fails is not reviewed again until its query changes. A deploy that fails for another reason, or a review that could not finish, is tried again later a limited number of times. If the reviewing AI service is unavailable, Maxwell stops the run without holding it against any draft, and the drafts are tried on the next run. You can still review and deploy any draft yourself.
+
+Maxwell also checks room in Sentinel and against your rules before he deploys:
+
+- **Sentinel's rule limit.** Sentinel allows 512 analytics rules per workspace. Maxwell always leaves 50 of them free for your own rules, and stops deploying on his own while fewer remain. If he cannot read how many rules are live, he deploys nothing that run.
+- **Rules Maxwell may keep.** On the Maxwell row you choose how many of his own deployed rules may be live at once (10 to 200, default 50). When he reaches it, he files one request in Approvals to retire his lowest-value rule ("Retire Maxwell's rule '…' to make room for new detections") and deploys nothing more until a slot frees up. A rule is retired only after a person approves; a denied rule is never proposed again.
+- **Duplicates and overlaps.** Each draft is compared with every live rule first. A draft that repeats a live rule is declined, with the reason written on the draft. A draft that overlaps a live rule waits for a person: Maxwell files "Deploy detection '…' although it overlaps a live rule" in Approvals, and reviews and deploys it only after a person approves.
 
 ### The older organization-wide mode
 
@@ -93,6 +99,7 @@ Two actions are scored today:
 Even when Demitry's closes may run on their own, a close still goes to a person when:
 
 - Demitry overrode Dax rather than confirming Dax's benign verdict.
+- Demitry passed Dax's verdict on without a senior review (see below).
 - The incident is High or Critical severity.
 - The incident was escalated to a person.
 - A policy rule requires approval for it.
@@ -107,10 +114,12 @@ In every mode:
 
 - Dax never closes an incident and never runs a response action. Disruptive tools are blocked and the incident is routed to senior QA and human review.
 - Demitry never closes an open incident on its own decision. It files a close request in Approvals; the close happens after a person approves it (or, when Demitry's closes may run on their own, after it is approved automatically). An incident Dax had already closed is only re-labelled as verified, never reopened.
+- Demitry reviews by risk. He gives a full senior review to Dax's benign calls on high-risk incidents, to verdicts below 70% confidence or without a verdict or confidence, to incidents Dax flagged for review and to every High or Critical incident. Other verdicts he passes on without a review, noted on the incident as "Passed without a senior review" with the reason. A benign verdict passed this way becomes a close request that always waits for a person. An attack verdict passed this way stays open for a person to decide the response; no response request is filed. There is no setting for this in the console.
 - When Dax called an incident a true positive and Demitry finds it benign, Demitry files a close request with the classification he chose: Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). This kind of close always waits for a person. If the incident's tactics or techniques are high risk (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact), Demitry does not propose a close at all: he escalates the incident to a person instead.
 - On a confirmed true positive, Demitry files response requests in Approvals. Nothing runs until an admin approves and then runs the response.
 - Marien's tuning proposals always wait for an admin's **Approve & deploy** in Marien's workspace.
-- Renzo only drafts detections. Deployment needs a passed review and an admin's **Approve & deploy** in Maxwell's workspace, unless **Maxwell deploys a Renzo detection** is in Full auto (see above).
+- If the AI service Dax relies on is unavailable during an investigation, Dax hands the incident back to his queue instead of escalating it to a person, and tries it again later.
+- Renzo only drafts detections. By default he writes rules for the attacker's technique and discards rules that match only a report's hashes, IP addresses, domains or URLs; an admin can allow those under Settings > Agent Policies > **Detection engineering**. Deployment needs a passed review and an admin's **Approve & deploy** in Maxwell's workspace, unless **Maxwell deploys a Renzo detection** is in Full auto (see above).
 - Orion opens a new Sentinel incident on its own when a hunt finding is malicious or suspicious, so that Dax triages it. If the same pattern turns up again within a week while that incident is open, Orion adds a comment to it instead. It never changes or closes other incidents.
 - After Maxwell deploys a rule, the worker watches its alert volume for 48 hours. More than 50 alerts in 24 hours raises a high-risk request in Approvals to disable the rule; it is disabled only after a person approves.
 
@@ -156,7 +165,7 @@ Under **More policy controls** > **Policy templates**, admins can apply one of t
 
 ## Approvals
 
-The [Approvals](../features/approvals.md) page holds requests for consequential actions: Demitry's close requests, response actions on confirmed true positives, requests to disable a noisy new rule, requests Atlas files when an admin asks, and others.
+The [Approvals](../features/approvals.md) page holds requests for consequential actions: Demitry's close requests, response actions on confirmed true positives, requests to disable a noisy new rule, Maxwell's requests to deploy an overlapping detection or retire one of his rules, requests Atlas files when an admin asks, and others.
 
 - **Who decides**: only admins can vote **Approve** or **Deny**. Analysts and admins can add comments, which never change the outcome.
 - **Quorum**: each request states how many approvals it needs (1 unless set otherwise, up to 10). Each person votes once. The request is approved when enough different admins approve. A single Deny resolves it as denied.
@@ -164,7 +173,7 @@ The [Approvals](../features/approvals.md) page holds requests for consequential 
 - **Expiry**: a request expires 24 hours after it was created if it was not decided. Expired requests move to History and can no longer be approved.
 - **Approval is not execution**: approving records the decision. An approved Demitry close is carried out at the start of Demitry's next run (scheduled, or when someone clicks **Run QA now**). A response action runs only when an admin uses **Run the approved response** on the approved request, and approval, expiry, target and policy are checked again at that moment. Requests filed by Atlas never run on approval.
 
-Rule deploys, tuning deploys, rollbacks and recalls from the Maxwell and Marien workspaces are not Approvals requests. They are direct admin actions protected by a confirmation dialog and server checks. The exception is Maxwell's own deploys under Full auto, which appear in Approvals History as approved automatically.
+Rule deploys, tuning deploys, rollbacks and recalls from the Maxwell and Marien workspaces are not Approvals requests. They are direct admin actions protected by a confirmation dialog and server checks. The exception is Maxwell's own work under Full auto: his deploys appear in Approvals History as approved automatically, and his overlap and retire requests wait in Approvals for a person.
 
 When notifications are set up, people are told when a request is waiting, when an agent escalates an incident to a person, and when an agent keeps failing. See [How to configure notifications](../how-to/configure-notifications.md).
 

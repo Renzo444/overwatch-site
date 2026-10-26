@@ -1,7 +1,7 @@
 ---
 title: Connect Microsoft Sentinel
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to connect Microsoft Sentinel
@@ -34,9 +34,9 @@ A trial organization does not have this option. Its wizard offers **Connect with
 
 ## What happens next
 
-- The script creates the three custom roles and app registrations, scoped to your workspace. It does not change your workspace or other resources. It is safe to run again: it reuses the roles and apps it made before and adds new secrets next to the existing ones.
+- The script creates the three custom roles and app registrations, scoped to your workspace. It does not change your workspace or other resources. It is safe to run again: it reuses the apps it made before, updates its custom roles to the permissions the current version needs, and adds new secrets next to the existing ones.
 - Each secret the script creates expires after one year. The console encrypts the secrets it receives and records the expiry date.
-- The connection test checks each principal: that it can sign in and read Sentinel rules, that it has the permissions its role needs, and, for roles that query logs, that a test query succeeds.
+- The connection test checks each principal: that it can sign in and read Sentinel rules, that it has the permissions its role needs (for roles that query logs, both running queries and reading the workspace's tables), and, for roles that query logs, that a test query succeeds.
 - For a trial organization, the connection test also starts your 14-day trial. Azure can take a few minutes to apply new role assignments, so the test retries a few times before it gives up.
 - No rules are deployed during setup. Rule deployments happen later, through [Approvals](../features/approvals.md).
 - Sending credentials from the script and recording a secret expiry date by hand are recorded in the [Audit Trail](../features/audit-trail.md) Activity ledger.
@@ -58,7 +58,8 @@ Admins also see the expiry date on [Data connectors](../features/data-connectors
   You can also type the printed credentials into the wizard by hand.
 - **The script says jq is not installed**: it prints the credentials instead of sending them. Enter them by hand in the wizard.
 - **Connection test failures**: each principal shows **PASS** or **FAIL** with the reason. "Some connections failed. Review the errors above and update credentials." or "All connections failed. Check your Azure Tenant ID and credentials." Fix the problem and select **🔌 Test All Connections** again.
-- **Trial connection messages**: "Azure has not finished applying the new role assignments yet. Wait a few minutes and run the test again.", "The console has not received the credentials from the setup script yet. Run the script, then try again." or "Too many connection attempts this hour. Try again later."
+- **"Missing permissions on the workspace: ..."**: the principal's Azure role lacks the permissions listed. If you ran a setup script from an earlier version, the roles it made may not include everything the console now checks, such as reading the workspace's tables. Go back to **Azure Config**, select **Continue →** for a fresh script, run it again (it updates the roles in place), wait a few minutes for Azure to apply the change, and test again.
+- **Trial connection messages**: "Azure has not finished applying the new role assignments yet. Wait a few minutes and run the test again.", "The console has not received the credentials from the setup script yet. Run the script, then try again.", "Too many connection attempts this hour. Try again later." or "Your signed-in account changed. Refresh and confirm your organization before continuing." (the trial only starts for the organization you are signed in to; refresh the page and check you are signed in to the right account)
 - **Final checks**: "Azure access validation failed; review the connection checks and retry", "The agents cannot run yet: ... Contact Overwatch support." (the platform's AI service is not ready for your organization) or "The console does not show this organization as fully configured yet; retry setup." Select **Retry** to run the final checks again.
 - **Planned:** **Deploy Sentinel for me** in **Azure Config** (create a new workspace) is shown but cannot be selected yet. Use an existing workspace.
 

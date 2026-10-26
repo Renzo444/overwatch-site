@@ -1,7 +1,7 @@
 ---
 title: How to run a threat hunt
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to run a threat hunt
