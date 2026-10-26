@@ -1,7 +1,7 @@
 ---
 title: How to close an incident
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to close an incident
@@ -37,7 +37,7 @@ Close an incident in your Sentinel workspace from Overwatch Console, with the cl
 - The incident list refreshes once Sentinel confirms. If your status filter does not include **Closed**, the incident leaves the list.
 - Your close is final for the agents. Dax and Demitry never reopen or reclassify an incident a person closed, and a close you make while an agent is working on the incident stands.
 
-Closing an incident yourself does not go through Approvals; it is a direct action recorded with your name. When Demitry wants to close an incident, he files a close request in [Approvals](../features/approvals.md) instead, and an administrator decides it (unless an administrator set Demitry's closes to Full auto in Settings > Agent Policies > **What runs on its own**). If a close request from Demitry is waiting for an incident you have already closed, the incident stays closed with your classification.
+Closing an incident yourself does not go through Approvals; it is a direct action recorded with your name. When Demitry wants to close an incident, he files a close request in [Approvals](../features/approvals.md) instead, and an administrator decides it (unless an administrator set Demitry's closes to Full auto in Settings > Agent Policies > **What runs on its own**; a close Demitry passed on without a senior review always waits for a person). If a close request from Demitry is waiting for an incident you have already closed, the incident stays closed with your classification.
 
 ## If something goes wrong
 

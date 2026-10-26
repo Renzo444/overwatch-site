@@ -1,7 +1,7 @@
 ---
 title: How to review agent decisions
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-26
 ---
 
 # How to review agent decisions
@@ -62,6 +62,7 @@ See [How to approve or deny an action](approve-or-deny-an-action.md) for the ful
 - An approved close is carried out at the start of Demitry's next run. Your decision is counted on the **Agent accuracy** card on the Approvals page.
 - If a decision is wrong, act on the incident yourself from the Incidents page, for example re-analyze or close it. See [How to close an incident](close-an-incident.md). Reopening an incident that auto mode closed counts as a reversal and turns auto mode off.
 - Response actions that Demitry requested wait in [Approvals](../features/approvals.md) for an admin.
+- Not every verdict gets a senior review. Where Demitry passed Dax's verdict on without one, the incident's **Demitry QA** reads "passed without review" and the close request's reasoning starts "Passed without a senior review" with the reason. Those closes rest on Dax's work alone, so check it before you approve.
 
 ## If something goes wrong
 

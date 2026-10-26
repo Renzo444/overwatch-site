@@ -1,7 +1,7 @@
 ---
 title: Agents
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Agents
@@ -84,7 +84,7 @@ Every workspace has a record list on the left (filter chips, search, a time wind
 | Action | Who | What happens | Approval? |
 |--------|-----|--------------|-----------|
 | **Analyze**, **Analyze all queued**, **Analyze now** (Dax) | Analyst, Admin | Dax investigates the incident (or every eligible queued incident) and records its assessment. With Dax's schedule switch on, the incident is also handed to Demitry. | No. Dax cannot close incidents or run response actions. |
-| **Run QA now** (Demitry) | Analyst, Admin | Demitry first carries out closes people approved since its last run, then reviews one incident Dax finished. It may file a close request, escalate to a human, or file response requests in Approvals. On a high-risk incident Dax called a true positive, Demitry escalates to a person rather than proposing a close. | Closes and response actions wait in Approvals. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md). |
+| **Run QA now** (Demitry) | Analyst, Admin | Demitry first carries out closes people approved since its last run, then reviews one incident Dax finished. It may file a close request, escalate to a human, or file response requests in Approvals. A verdict that does not need a senior review (see [Autonomy and approvals](../concepts/autonomy-and-approvals.md)) is passed on without one: a benign call still becomes a close request for a person. On a high-risk incident Dax called a true positive, Demitry escalates to a person rather than proposing a close. | Closes and response actions wait in Approvals. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md). |
 | **Mark helpful** / **Needs review** (Demitry) | Analyst, Admin | Records your opinion. Does not change the verdict. | No |
 | **Refresh recommendations** (Marien) | Analyst, Admin | Reloads proposals and asks Marien to run a tuning poll. | No. Nothing is deployed. |
 | **Attest a case** (Marien) | Admin | Records closed true-positive incidents of this rule and the event IDs a correct rule must still match. The server checks the incidents against Sentinel. | No |
@@ -110,9 +110,10 @@ Every workspace has a record list on the left (filter chips, search, a time wind
 ## Good to know
 
 - Agents run on a schedule only when **Run agents on a schedule for this workspace** is on (Settings > Agent Policies), the agent's own switch is on, and the background agent worker is running. The autonomy switch shows configuration, not that a worker is running.
-- Atlas never runs on a schedule. Maxwell has no switch, but when **Maxwell deploys a Renzo detection** is in Full auto (Settings > Agent Policies > **What runs on its own**) and Renzo's switch is on, the worker has Maxwell deploy Renzo drafts that pass every review check, up to the daily limit.
+- Atlas never runs on a schedule. Maxwell has no switch, but when **Maxwell deploys a Renzo detection** is in Full auto (Settings > Agent Policies > **What runs on its own**) and Renzo's switch is on, the worker has Maxwell deploy Renzo drafts that pass every review check, up to the daily limit. He keeps room for your own rules under Sentinel's 512-rule limit, stays within **Rules Maxwell may keep**, and asks in Approvals before deploying a draft that overlaps a live rule or retiring one of his rules.
 - What happens after a verdict depends on what runs on its own (Settings > Agent Policies), not on Dax's switch. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 - No agent takes over or closes an incident a person owns.
+- If the AI service is unavailable while Dax investigates, the incident goes back to his queue instead of to a person. When he picks it up again he notes on the incident that the earlier run was stopped for that reason.
 - "Analyze all queued" lets the server choose: open incidents that are unassigned or owned by Dax and not already handed off, triaged or owned by a person.
 - When a run is accepted, results appear only after the agent records them. "Accepted" is not "completed".
 - Marien's tuning proposals always wait for an admin. Tuning auto-approve can no longer be turned on.

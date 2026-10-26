@@ -1,7 +1,7 @@
 ---
 title: Settings
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Settings
@@ -72,7 +72,8 @@ Threat-intelligence providers and your own advisory feeds.
 How much the agents may do on their own, and the rules they must follow.
 
 - **Scheduled operations**: **Dax triages new incidents automatically**, **Run agents on a schedule for this workspace**, **Automatic threat-intelligence ingestion** (Renzo scores each new relevant article; articles scoring 80 or higher become Auto-ingested drafts in the Detection Library) and **Caleb scheduled hash lookups**. Each shows On or Off.
-- **What runs on its own**: one row per agent action, each set to **Approval** (a person approves every time), **Full auto** (runs on its own once its checks pass, with spot checks) or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Today only **Demitry closes a false positive** and **Maxwell deploys a Renzo detection** can be set to Full auto or Scheduled; Maxwell's row also has a **Daily limit** (1 to 20). **Marien applies a rule tune**, **Demitry overrides Dax and closes** and **Containment (isolate a host, disable an account)** always wait for a person. Rows set to Scheduled share one set of **Staffed hours**. Each row explains its checks and shows which mode is in force now. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
+- **What runs on its own**: one row per agent action, each set to **Approval** (a person approves every time), **Full auto** (runs on its own once its checks pass, with spot checks) or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Today only **Demitry closes a false positive** and **Maxwell deploys a Renzo detection** can be set to Full auto or Scheduled; Maxwell's row also has a **Daily limit** (1 to 20) and **Rules Maxwell may keep** (10 to 200, default 50), with the note that Sentinel allows 512 rules per workspace, Maxwell always leaves 50 free for your own rules, skips rules that repeat a live one, and asks you before deploying one that overlaps. **Marien applies a rule tune**, **Demitry overrides Dax and closes** and **Containment (isolate a host, disable an account)** always wait for a person. Rows set to Scheduled share one set of **Staffed hours**. Each row explains its checks and shows which mode is in force now. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
+- **Detection engineering** (admin only): how Renzo writes new detections. **Renzo may write indicator-only rules** (Off by default) allows rules that match only a threat report's hashes, IP addresses, domains or URLs. While it is off, Renzo writes rules for the attacker's technique and indicator-only rules are discarded before review. A change applies to drafts written from then on.
 - **Enforced boundaries**: what the policy engine enforces today.
 - **Custom rules**: rules per agent that **Allow**, **Deny** or **Require Approval** based on severity, classification, entity count, confidence score or action type. **Add rule** opens the rule builder. Each policy can be switched on or off, expanded, and deleted with **Delete policy**.
 - **More policy controls**: ready-made **Policy templates** to apply.
@@ -107,7 +108,8 @@ Step by step: [Invite a teammate](../how-to/invite-a-teammate.md).
 | Connect, rotate or remove the VirusTotal key | Admin | Immediately; lookups already running may still finish |
 | Add or remove your own intel feeds | Admin | New items are fetched every 30 minutes |
 | Switch scheduled operations | Admin | For new agent-worker requests; work in progress is not cancelled |
-| Change what runs on its own, Maxwell's daily limit or staffed hours | Admin | Immediately, for the whole organization |
+| Change what runs on its own, Maxwell's daily limit or rule limit, or staffed hours | Admin | Immediately, for the whole organization |
+| Switch **Renzo may write indicator-only rules** | Admin | For drafts written from then on |
 | Add, switch, delete or apply policy rules | Admin | Immediately |
 | Change your own agent appearance | Everyone | Immediately, for you only |
 | Change the tenant default appearance | Admin | Immediately, for everyone without their own choice |

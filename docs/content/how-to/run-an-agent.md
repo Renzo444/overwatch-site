@@ -1,7 +1,7 @@
 ---
 title: How to run an agent
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to run an agent
@@ -21,7 +21,7 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 2. Click the agent's card to open its workspace.
 3. Click the agent's main button in the summary row, or use the workspace controls:
    - **Dax**: pick an incident in the **Analyze an incident** panel and click **Analyze**, or click **Analyze all queued** to let the server pick every eligible queued incident. In the **Triage runs** list, an unassessed incident also has **Analyze now**.
-   - **Demitry**: click **Run QA now**. Demitry first carries out closes people approved, then reviews one incident Dax has finished.
+   - **Demitry**: click **Run QA now**. Demitry first carries out closes people approved, then takes one incident Dax has finished. He reviews it in full only when it needs it (for example High or Critical severity, low confidence, flagged by Dax, or a benign call on a high-risk incident); otherwise he passes Dax's verdict on, labelled `QA-Passed-Unreviewed`.
    - **Marien**: click **Refresh recommendations**. This reloads proposals and asks Marien for a new tuning poll.
    - **Orion**: click **Run proactive hunt**. To run a saved proposal or a failed hunt, select it in **Recorded threat hunts** and click **Execute hunt** or **Retry hunt**. To save a proposal from an article, paste the URL and click **Ingest intel**.
    - **Renzo**: paste an article URL and click **Generate proposal**, or click **Run research cycle**.
@@ -36,9 +36,10 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 - The server accepts the request and the agent works in the background. Acceptance is not completion; results appear when the agent records them.
 - Every run is recorded in [Agent Audit](../features/agent-audit.md) and shows on the agent's roster card and **Outputs** tab.
 - Dax adds its assessment as a comment on the Sentinel incident. When Dax's schedule switch is on, it also hands the incident to Demitry for QA. If a person claims the incident during the run, Dax only adds the comment.
-- Demitry files a close request in [Approvals](../features/approvals.md) for a confirmed false or benign positive, escalates to a human, or files response requests. The close happens on Demitry's next run after a person approves it, or without a person when an admin has set **Demitry closes a false positive** to Full auto in Settings > Agent Policies. On a high-risk incident Dax called a true positive, Demitry escalates to a person instead of overturning it.
+- Demitry files a close request in [Approvals](../features/approvals.md) for a confirmed false or benign positive, escalates to a human, or files response requests. The close happens on Demitry's next run after a person approves it, or without a person when an admin has set **Demitry closes a false positive** to Full auto in Settings > Agent Policies. On a high-risk incident Dax called a true positive, Demitry escalates to a person instead of overturning it. A verdict he passed without a full review never closes without a person, and files no response requests.
 - Orion records the hunt and its verdict on the results. A malicious or suspicious finding opens a new Sentinel incident for Dax to triage. If your workspace has no data in any table that would record the behaviour, the hunt is recorded as "Not run · log source missing" and names the source to connect.
 - Marien and Renzo produce proposals and drafts. Nothing is deployed by these runs. Renzo may finish a research cycle without a new conclusion; then nothing is saved.
+- Renzo writes rules for the attacker's technique; a rule matching only a report's indicators is discarded unless an admin allows them in Settings > Agent Policies.
 - Maxwell's review records whether the rule may be deployed. Deploying is a separate admin step: **Approve & deploy**, within an hour of the passed review. If an admin has set Maxwell's deploys to Full auto, Maxwell also reviews and deploys Renzo's drafts on his schedule. See [How to deploy or recall a rule](deploy-or-recall-a-rule.md).
 
 ## If something goes wrong
@@ -53,6 +54,7 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 - **"Orion has reached today's limit of … hunts. Try again tomorrow."**: Orion runs at most 10 scheduled and 20 requested hunts per day, failed hunts included.
 - **Renzo refuses a research cycle**: the daily allowance shown under the panel is used up for today (UTC).
 - **"Investigation paused for a server restart; the incident goes back to the queue."** (Dax, in Agent Audit): the service restarted during the run. Dax releases the incident and picks it up again on a later run, or you can start it again.
+- **"Investigation … paused: the AI provider was unavailable, so the incident goes back to the queue."** (Dax, in Agent Audit): the AI service failed, not the investigation. Dax picks the incident up again on a later run. A failure notification goes to your notification destinations at most once an hour.
 - **"Latest run reported a problem."** on the workspace: open **Outputs** or Agent Audit to read the failure. If the AI service is refusing requests, the run stops and the refusal is recorded at most once an hour; retry once your provider access is restored.
 
 ## Related

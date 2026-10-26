@@ -1,7 +1,7 @@
 ---
 title: Atlas copilot
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Atlas copilot
@@ -51,6 +51,7 @@ Atlas works only inside your tenant. It can:
 - Read Dax's recorded investigation and Demitry's latest QA decision for one incident.
 - Search the Detection Library (Renzo), recent hunts (Orion), recent tuning (Marien) and sandbox jobs and reports (Caleb).
 - Look up what your workspace ingests, from the same summary the [Data connectors](data-connectors.md) page shows: each connector with its health and tables, and the sources you marked as kept elsewhere. Atlas uses it to tell you whether a table is connected, and whether zero rows may mean the data is missing rather than nothing happened.
+- Ask Renzo for your workspace's detection coverage against MITRE ATT&CK or MITRE ATLAS, the same map as **Workspace coverage** in the [Detection Library](detection-library.md): the covered share overall and per tactic, the top gaps (optionally for one tactic), connectors that would make more visible, enabled rules whose tables have no data, or one technique's status, covering rules and how it is detected. Atlas is instructed to call a technique covered only when an enabled rule reads live data for it, and to say that percentages are of the techniques your workspace can observe.
 - Summarize recorded activity per agent over the last hours (up to 7 days).
 - For admins only, when you explicitly ask for a change: file a request in [Approvals](approvals.md) on behalf of Maxwell, Marien, Dax or Renzo. Approving that request records the decision. It does not run the action.
 

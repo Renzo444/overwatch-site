@@ -1,7 +1,7 @@
 ---
 title: Overwatch Console documentation
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 # Overwatch Console documentation
 

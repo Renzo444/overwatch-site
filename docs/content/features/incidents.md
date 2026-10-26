@@ -1,7 +1,7 @@
 ---
 title: Incidents
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Incidents
@@ -40,7 +40,7 @@ A line under the filters says when the list was read from Sentinel and reminds y
 
 **Incidents table.** Columns: **Sev**, **Incident** (title, number, owner, workflow labels and a "N similar" hint when similar closed cases were already found), **Status**, **Dax verdict**, **Demitry QA**, **Entities** and **Created**. The Sev, Incident, Status, Dax verdict and Created headers sort the rows; click again to reverse. The newest incidents are first by default.
 - **Dax verdict** shows the recorded conclusion (for example True positive, False positive, Benign positive) with confidence and time, "Assessment not finalized" when Dax recorded steps but no conclusion, or "No assessment recorded".
-- **Demitry QA** shows Demitry's latest decision and whether it agrees with or overrides Dax, or a dash when there is no review.
+- **Demitry QA** shows Demitry's latest decision and whether it agrees with or overrides Dax, "passed without review" when he passed Dax's verdict on without a senior review, or a dash when there is no review.
 - **Entities** shows a dash until you open the incident, then the number of entities Sentinel mapped.
 - Workflow labels written by the agents appear as small markers: **Senior Verified**, **Awaiting QA** and **SOAR Executed**.
 
@@ -86,6 +86,8 @@ See [How to close an incident](../how-to/close-an-incident.md) for the close dia
 - A person's claim and a person's close are final for the agents. Demitry does not review an incident a person owns; if someone claims it while he is reviewing, he leaves his verdict as a comment and changes nothing else. No agent reopens or reclassifies an incident a person closed.
 - When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically under Settings > Agent Policies > **What runs on its own**. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 - When Dax called an incident a true positive and Demitry finds it benign, Demitry chooses whether the close should be Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). His comment on the incident says which, and the close request always waits for a person. On a high-risk incident (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact) he does not propose a close: he escalates the incident to a person and it stays open.
+- Demitry reviews by risk. Dax's benign calls on high-risk incidents, verdicts below 70% confidence, incidents Dax flagged and every High or Critical incident get a full senior review. Other verdicts are passed on without one, with a comment starting "Passed without a senior review". A benign verdict passed this way still becomes a close request that waits for a person. An attack verdict passed this way stays open for you to decide the response; Demitry files no response request for it.
+- If the AI service is unavailable while Dax investigates, the incident goes back to his queue instead of being escalated, and Dax comments on it when he investigates it again.
 - Dax, Demitry and the other agents know which log sources your workspace ingests (the same summary as the [Data connectors](data-connectors.md) page). When evidence is missing because a source is stale or not connected, they treat it as missing data, not as proof the activity did not happen.
 - When Demitry escalates an incident for human review, the console also sends a "Needs a person" notification through the channels your administrator set up. See [How to configure notifications](../how-to/configure-notifications.md).
 - **Not similar?** on a similar case marks it in your current view only. It is not saved.

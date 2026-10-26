@@ -1,7 +1,7 @@
 ---
 title: How to tune a noisy rule
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to tune a noisy rule
@@ -38,8 +38,8 @@ Proposals Marien held back are listed under **Held for a person**, with the reas
 - Every tuned rule needs a person's approval. The **tuning auto-approve** line on the Approvals page can only be turned off, and **Marien applies a rule tune** under Settings > Agent Policies can only be set to Approval.
 - The previous version of the rule is kept, so a deployed change can be rolled back. See [How to deploy or recall a rule](deploy-or-recall-a-rule.md).
 - A rejection reason is stored with the tuning record. With **Apply to similar future cases** on, Marien cites your note on later proposals for the same rule.
-- After each outcome, Marien waits before looking at the same rule again, for example 72 hours after deciding no change is needed, 48 hours after a proposal and 2 hours after a failure. When her latest proposal for a rule expired unanswered or was rejected, she proposes that rule again only after a new false or benign positive is raised for it, so the same proposal does not keep coming back.
-- Marien's false-positive evidence includes closed false and benign positives, and open incidents whose benign close Dax and Demitry agreed on while the close waits for a person. Denying that close removes the incident from her evidence. When Demitry confirms an attack, no tuning request is sent for the rule that caught it.
+- After each outcome, Marien waits before looking at the same rule again, for example 72 hours after deciding no change is needed, 48 hours after a proposal and 2 hours after a failure. When her latest proposal for a rule expired unanswered or was rejected, she proposes that rule again only after a new false or benign positive is raised for it, or a new benign verdict is given on an existing incident, so the same proposal does not keep coming back.
+- Marien's false-positive evidence includes closed false and benign positives, and open incidents whose benign close waits for a person, whether Demitry confirmed Dax's benign call or passed it on without a full review. Denying that close removes the incident from her evidence. When Demitry confirms an attack, no tuning request is sent for the rule that caught it.
 - Rules that fail tuning repeatedly appear under **Blocked**. Marien stops retrying them until an admin clicks **Clear circuit breaker**. Clearing does not change the rule.
 - Tuning deployments that ended in an uncertain state are listed on the Approvals page under **Uncertain tuning deployments** and **Uncertain tuning rollbacks**.
 - All of this is recorded in Agent Audit under Marien. The full replay tool is also available in Agent Audit.

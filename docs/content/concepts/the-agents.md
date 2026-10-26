@@ -1,7 +1,7 @@
 ---
 title: The agents
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # The agents
@@ -37,11 +37,11 @@ Once a person owns an incident, no agent takes it over or closes it. Dax and Dem
 
 These go to the destinations set under Settings > Notifications, if any. See [How to configure notifications](../how-to/configure-notifications.md).
 
-Each failure is recorded once. When the AI service refuses requests (for example because credits ran out), the agents stop that run instead of retrying, and the refusal is recorded at most once an hour.
+Each failure is recorded once. When the AI service refuses requests (for example because credits ran out), the agents stop that run instead of retrying, and the refusal is recorded at most once an hour. An incident Dax was investigating when the AI service failed goes back to his queue without failure labels; it is not escalated to a person for that reason.
 
 ## Dax: incident triage
 
-**What it does.** Dax investigates open Microsoft Sentinel incidents. It starts from the incident's own alert evidence, chooses each read-only KQL query to test the explanations still open (looking back up to 30 days), records why it ran each one, and records a verdict (true positive, false positive, benign positive or needs investigation), a confidence score and a written analysis. It can ask Caleb to look at a suspicious file or hash, which pauses the incident with a sandbox label; if nobody picks that up within 6 hours, Dax takes the incident back.
+**What it does.** Dax investigates open Microsoft Sentinel incidents. It starts from the incident's own alert evidence and keeps the investigation on that signal: evidence counts only when it is tied to the incident's own entities and time window. It chooses each read-only KQL query to test the explanations still open (looking back up to 30 days), records why it ran each one, and records a verdict (true positive, false positive, benign positive or needs investigation), a confidence score and a written analysis. It can ask Caleb to look at a suspicious file or hash, which pauses the incident with a sandbox label; if nobody picks that up within 6 hours, Dax takes the incident back.
 
 **What starts it.**
 - On request: **Analyze**, **Analyze all queued** or **Analyze now** in Dax's workspace, or **Analyze unassessed** on the Incidents page.
@@ -53,7 +53,7 @@ Each failure is recorded once. When the AI service refuses requests (for example
 
 ## Demitry: quality review
 
-**What it does.** Demitry re-checks Dax's finished work, and only that: open incidents Dax labelled for QA, and recently closed incidents Dax closed itself. It never reviews an incident a person closed, an escalated incident, or one a person owns. It picks one incident per run, runs its own queries (recording why it ran each one), and records one of: confirm true positive, confirm false positive, override to true positive, override to false positive, or escalate to a human. Whether a decision is a confirmation or an override is measured against Dax's recorded verdict.
+**What it does.** Demitry re-checks Dax's finished work, and only that: open incidents Dax labelled for QA, and recently closed incidents Dax closed itself. It never reviews an incident a person closed, an escalated incident, or one a person owns. It picks one incident per run. Demitry gives a full review only where it matters most: incidents Dax flagged for review, High or Critical incidents, incidents already closed, verdicts with no confidence or confidence below 70%, and benign calls on high-risk incidents. Other verdicts are passed on without a review: the incident gets the label `QA-Passed-Unreviewed` and a comment saying why. A passed benign call still files a close request that always waits for a person, and a passed true positive stays open for a person to choose the response, with no response requests filed. For a full review, Demitry runs its own queries (recording why it ran each one), and records one of: confirm true positive, confirm false positive, override to true positive, override to false positive, or escalate to a human. Whether a decision is a confirmation or an override is measured against Dax's recorded verdict.
 
 **What starts it.**
 - On request: **Run QA now** in Demitry's workspace.
@@ -74,7 +74,8 @@ Each failure is recorded once. When the AI service refuses requests (for example
 **What it does.** Marien looks for the analytics rule producing the most false positives, studies the closed false-positive incidents and live data, and proposes a tuned query (usually excluding a verified benign entity). Marien also picks up tuning requests from Demitry when he overturns Dax's true positive as benign, and from Dax's proposals that Demitry confirmed as benign. When Demitry confirms an attack, no tuning request is sent, so a rule that caught a real attack is not narrowed because of it.
 
 - The false-positive evidence Marien works from includes closed false and benign positives, and open incidents whose benign close Dax and Demitry agreed on while it waits for a person. If a person denies that close, the incident no longer counts.
-- When Marien's latest proposal for a rule expired or was rejected, she proposes that rule again only after a new false or benign positive is raised for it.
+- That includes benign closes Demitry passed without a full review, since the tune they feed still goes to a person.
+- When Marien's latest proposal for a rule expired or was rejected, she proposes that rule again only after a new false or benign positive is raised for it, or a new benign verdict is given on an existing one.
 
 - A proposal that rewrites a rule's logic to close a named coverage gap is queued as a **detection change**. It gets an extra 30-day volume backtest against the rule's false-positive budget (20 alerts a month for High severity, 40 for Medium, 80 for Low).
 - A proposal whose exclusions do not match the false-positive evidence, or that changes more than exclusions without naming a gap, is held back under **Held for a person** in Marien's workspace, with a notification. Nothing is deployed.
@@ -90,7 +91,7 @@ Each failure is recorded once. When the AI service refuses requests (for example
 
 ## Renzo: detection engineering
 
-**What it does.** Renzo turns threat intelligence into draft detection rules (KQL mapped to MITRE ATT&CK), tailored to your industry, and backtests each draft against your workspace when it drafts it.
+**What it does.** Renzo turns threat intelligence into draft detection rules (KQL mapped to MITRE ATT&CK), tailored to your industry, and backtests each draft against your workspace when it drafts it. He writes each rule for the attacker's technique rather than for one sample, so it still fires when the attacker changes infrastructure, hashes or file names, and he takes into account which techniques your live rules already cover (see **Workspace coverage** in the [Detection Library](../features/detection-library.md)). A rule that matches only a report's hashes, IP addresses, domains or URLs is discarded unless an admin turns on **Renzo may write indicator-only rules** in Settings > Agent Policies. In a research cycle, a draft that repeats a live Sentinel rule is dropped before it is saved.
 
 **What starts it.**
 - On request: **Generate proposal** (from an article URL) or **Run research cycle** in Renzo's workspace, **Generate detection** on the Live Feed, or **Send to Renzo as detection** from an Orion hunt.
@@ -137,16 +138,17 @@ Hunts are read-only KQL against tables that receive data in your workspace, summ
 - **Review for deployment** (analyst or admin) runs the deployment review: Demitry checks the query, repairs it if he can and runs it against your workspace. A passed review is valid for one hour.
 - **Approve & deploy**, **Roll back** and **Recall rule** (admin) deploy, restore or delete a rule after a confirmation. Recall only works on rules Overwatch Console deployed for your tenant.
 - On the Approvals page, an admin uses the **Run the approved response** section of an approved request to carry out the response action.
-- Automatic deploys: when an admin sets **Maxwell deploys a Renzo detection** to Full auto (or Scheduled, outside staffed hours) and Renzo's switch is on, the worker runs Maxwell about every 10 minutes. He takes Renzo's undeployed drafts, those your workspace can best observe first and newest first among equals, runs the same deployment review a person would request, and deploys only drafts that pass every check, up to the daily limit the admin sets (3 unless changed). Each automatic deploy is recorded as an approval that the system approved, and in Agent Audit. A draft whose review fails is not reviewed again until its query changes, and the reviewer's reasons are kept with the draft for Renzo. A deploy that fails for another reason, or a review the reviewer could not finish, is tried again later with a fresh review, up to three times.
+- Automatic deploys: when an admin sets **Maxwell deploys a Renzo detection** to Full auto (or Scheduled, outside staffed hours) and Renzo's switch is on, the worker runs Maxwell about every 10 minutes. He takes Renzo's undeployed drafts, those your workspace can best observe first and newest first among equals, runs the same deployment review a person would request, and deploys only drafts that pass every check, up to the daily limit the admin sets (3 unless changed). Each automatic deploy is recorded as an approval that the system approved, and in Agent Audit. A draft whose review fails is not reviewed again until its query changes, and the reviewer's reasons are kept with the draft for Renzo. A deploy that fails for another reason, or a review the reviewer could not finish, is tried again later with a fresh review, up to three times. If the AI service is down, the run stops and nothing is declined.
+- Limits on automatic deploys: Maxwell stops while fewer than 50 of Sentinel's 512 rule slots are free, and keeps at most the number of rules an admin sets in **Rules Maxwell may keep** (50 unless changed). A draft that repeats a live rule is declined; one that overlaps a live rule waits for a person's approval in Approvals. When his budget is full he files a request in Approvals to retire his lowest-value rule, and deletes it only after a person approves.
 - For 48 hours after a deployment, the worker counts the new rule's alerts. More than 50 in 24 hours raises a high-risk request in Approvals to disable the rule; the rule is disabled only after a person approves.
 
 **What it produces.** Deployed, rolled-back or recalled Sentinel rules (shown in Maxwell's **Deployment queue**), and response results recorded on the approval.
 
-**Alone vs approval.** By default nothing on its own: rule deployment needs a current passed review and an admin's confirmation, and the server re-checks the review and query hash. With Full auto set for his deploys, Maxwell deploys passed Renzo drafts himself, within the daily limit. Rollback and recall always need an admin. Response actions need an approved request in Approvals, and approval, expiry, target and policy are re-checked when the response runs.
+**Alone vs approval.** By default nothing on its own: rule deployment needs a current passed review and an admin's confirmation, and the server re-checks the review and query hash. With Full auto set for his deploys, Maxwell deploys passed Renzo drafts himself, within the daily limit and his rule budget. Overlapping drafts and retiring a rule always wait for a person. Rollback and recall always need an admin. Response actions need an approved request in Approvals, and approval, expiry, target and policy are re-checked when the response runs.
 
 ## Atlas: SOC copilot
 
-**What it does.** Atlas answers questions in a chat drawer. It hands data questions to Dax, Demitry or Orion (read-only queries) and reads records owned by Renzo, Marien and Caleb, then explains the results.
+**What it does.** Atlas answers questions in a chat drawer. It hands data questions to Dax, Demitry or Orion (read-only queries) and reads records owned by Renzo, Marien and Caleb, including Renzo's map of your workspace's ATT&CK and ATLAS coverage, then explains the results.
 
 **What starts it.** Only people, by asking a question. No schedule.
 

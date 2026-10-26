@@ -1,7 +1,7 @@
 ---
 title: How to approve or deny an action
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-26
 ---
 
 # How to approve or deny an action
@@ -77,6 +77,8 @@ You can also approve or deny from the **Needs your decision** card on Overview a
 - Disabling an account stops it signing in. Existing sessions are not revoked; revoke them separately if needed. To undo it, use **Request undo** once it has run, or re-enable the account in Entra ID.
 - An undo is a new request on the same target. Requesting it does not vote or run anything. Each containment can have one undo; if an undo was denied, expired or failed, you can request it again.
 - Approving a close request from Demitry lets him close the incident with that classification on his next run. Approving Maxwell's request to disable a new rule disables it at the next scheduled check.
+- Approving Maxwell's "Deploy detection '…' although it overlaps a live rule" lets him review and deploy that draft on a later run; denying it, or letting it expire, keeps the draft out of Sentinel. Approving "Retire Maxwell's rule '…' to make room for new detections" deletes that rule from Sentinel on a later unattended run, with a full backup in the audit log; denying keeps it, and he does not propose it again.
+- A close request whose reasoning starts "Passed without a senior review" rests on Dax's verdict alone: Demitry did not review it. Read Dax's analysis with that in mind. These closes are never approved automatically.
 - Denying a close request from Demitry leaves the incident open for a person. It counts against his accuracy score as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
 - A denial reason is stored in **Decision memory**. Dax and Demitry see it on similar cases. It does not retrain any model.
 

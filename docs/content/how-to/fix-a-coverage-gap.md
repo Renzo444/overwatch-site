@@ -1,7 +1,7 @@
 ---
 title: How to fix a coverage gap
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # How to fix a coverage gap
@@ -28,7 +28,7 @@ Find the data your detections need but are not getting, connect it in Microsoft 
 
 To fix a source that has stopped sending: in the **Data connectors** list, select a connector marked **Degraded** or **Stale**, read the issue and **Connector status**, fix the connector in Sentinel, then use **Run check** in **Verify with KQL**.
 
-To fix a gap in technique coverage rather than data: open the **Detection Library**, switch to **MITRE ATT&CK**, look for columns marked **Gap · no detections**, then draft detections for those techniques from Live Feed (see [How to turn intel into a detection](turn-intel-into-a-detection.md)) or ask Orion to hunt for them.
+To fix a gap in technique coverage rather than data: open the **Detection Library** and switch to **Workspace coverage** to see which techniques your live Sentinel rules and ingested data cover (see [Workspace coverage](../features/detection-library.md#workspace-coverage)), or switch to **MITRE ATT&CK** and look for columns marked **Gap · no detections**. Then draft detections for those techniques from Live Feed (see [How to turn intel into a detection](turn-intel-into-a-detection.md)) or ask Orion to hunt for them.
 
 ## What happens next
 

@@ -1,7 +1,7 @@
 ---
 title: Audit Trail
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-26
 ---
 
 # Audit Trail
@@ -59,7 +59,7 @@ A random sample of records an agent closed as benign in the last 30 days (newest
 
 ### Configuration changes
 
-Agent configuration (including what runs on its own for each action, the daily deploy limit, the operating mode and staffed hours; operating mode and staffed hours changes are shown as for example "switched the operating mode to scheduled", other changes as "changed agent configuration"), auto mode, policy, tool permission, credential, intel feed, branding, notification and default appearance changes from the last 90 days (newest 100), each with who made it, when, and the before and after values. Secrets show only their last four characters.
+Agent configuration (including what runs on its own for each action, the daily deploy limit, the number of rules Maxwell may keep, whether Renzo may write indicator-only rules, the operating mode and staffed hours; operating mode and staffed hours changes are shown as for example "switched the operating mode to scheduled", other changes as "changed agent configuration"), auto mode, policy, tool permission, credential, intel feed, branding, notification and default appearance changes from the last 90 days (newest 100), each with who made it, when, and the before and after values. Secrets show only their last four characters.
 
 Team changes made in **Settings > Team** (invitations, accepted invitations, password resets and role changes, with the old and new role) are in the **Activity ledger**, not this tab. So are Azure credentials sent back by the setup script and secret expiry dates an admin records in the setup wizard (the dates, never the secrets).
 
