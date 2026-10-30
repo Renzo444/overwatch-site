@@ -638,7 +638,7 @@ body {
 .pricing { padding-top: 0; }
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
     gap: 1.5rem;
 }
 .pricing-price {
@@ -648,7 +648,7 @@ body {
     margin-bottom: 0.5rem;
 }
 .service-card > p.pricing-price { font-size: 1.75rem; color: var(--text-primary); margin-bottom: 0.5rem; }
-.pricing-price span { font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
+.pricing-price span { white-space: nowrap; font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
 .pricing-note {
     margin-top: 1.5rem;
     text-align: center;
@@ -656,8 +656,12 @@ body {
     color: var(--text-secondary);
 }
 .pricing-note a { color: var(--accent-lime); }
+.pricing-note strong { color: var(--text-primary); }
 .pricing .service-actions { margin-top: auto; }
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
     .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
 }
 

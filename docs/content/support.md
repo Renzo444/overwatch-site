@@ -6,7 +6,7 @@ reviewed: 2026-10-30
 
 # Support
 
-How to reach the Overwatch team, when we answer, and what happens outside support hours. Your order form names your plan; where a plan changes the answer, the table says so.
+How to reach the Overwatch team, when we answer, and what happens outside support hours. Where the Priority Support add-on changes the answer, the table says so.
 
 ## How to reach us
 
@@ -16,7 +16,7 @@ How to reach the Overwatch team, when we answer, and what happens outside suppor
 
 ## Support hours
 
-Monday to Friday, 8am to 6pm US Eastern, except US public holidays. Autonomous plans also get extended hours, as set in the order form.
+Monday to Friday, 8am to 6pm US Eastern, except US public holidays. Priority Support adds extended hours, as set in your order form.
 
 The agents work around the clock. Support hours are when people answer questions and fix problems.
 
@@ -24,12 +24,14 @@ The agents work around the clock. Support hours are when people answer questions
 
 The time to our first reply from a person, counted within support hours.
 
-| Priority | What it means | Starter | Team and Autonomous |
+| Priority | What it means | Standard | Priority Support |
 | --- | --- | --- | --- |
 | P1 Urgent | Overwatch is down for you, or an action did something you did not approve | 4 hours | 1 hour |
 | P2 High | An agent or feature is broken and blocking your team | 1 business day | 4 hours |
 | P3 Normal | Questions, a verdict you think is wrong, tuning requests | 2 business days | 1 business day |
 | P4 Low | Feature requests and feedback | 5 business days | 3 business days |
+
+Standard support comes with every subscription. Priority Support is an add-on named in your order form; it also adds extended hours and a monthly review call.
 
 ## Availability
 
@@ -39,7 +41,7 @@ We aim for 99.5% monthly availability of the console, not counting announced mai
 
 Dax keeps triaging and Demitry keeps checking. Anything that needs a decision waits in Approvals and reaches the people you chose in notifications, so nothing consequential happens without a person unless your admin turned on Full auto for that action ([Autonomy and approvals](concepts/autonomy-and-approvals.md)). Every action is in the Audit Trail.
 
-If your daily AI budget runs out, the agents pause until the next UTC day and admins are told. Ask us if you need it raised.
+If your daily AI budget runs out, the agents pause until the next UTC day and admins are told. Ask us if that happens.
 
 ## Changes and maintenance
 

@@ -18,7 +18,7 @@ Have these ready. The Overwatch team checks them with you on a short kickoff cal
 | An admin who can sign in as Global Administrator, and is Owner or User Access Administrator on the Sentinel subscription | Your Microsoft admin | Setup creates three least-privilege apps in your directory ([Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)) |
 | The people who will use the console and their roles (viewer, analyst, admin) | Your SOC lead | Admins change settings and approve; analysts run agents and approve; viewers read ([Roles and permissions](concepts/roles-and-permissions.md)) |
 | Who gets approval and alert emails, and any Slack, Teams or webhook target | Your SOC lead | Requests that wait for a person reach someone outside the console ([Configure notifications](how-to/configure-notifications.md)) |
-| Your expected incident volume a day | Your SOC lead | It sets your plan and daily AI budget |
+| Roughly how many devices and active users send data to Sentinel | Your SOC lead | Your price is set by monitored assets; the console confirms the count after you connect |
 | A security contact for breach notices | Your security lead | Named on the order form |
 
 ## Day 1: connect and turn on
@@ -46,7 +46,7 @@ Everything stays in approval mode.
 
 ## Weeks 3 and 4: decide how much runs on its own
 
-- Turn on Orion for proactive hunts if you want them ([Run a threat hunt](how-to/run-a-threat-hunt.md)).
+- If your subscription includes Threat Hunting, turn on Orion for proactive hunts ([Run a threat hunt](how-to/run-a-threat-hunt.md)).
 - Review your first weeks on **Metrics & Health** and in the **Audit Trail**.
 - On a review call with the Overwatch team, decide action by action whether anything should run in Full auto. Many teams keep everything in approval mode; that is fine. Changes are made in **Settings > Agent Policies** by an admin and are recorded in the Audit Trail ([Set agent autonomy](how-to/set-agent-autonomy.md), [Autonomy and approvals](concepts/autonomy-and-approvals.md)).
 
