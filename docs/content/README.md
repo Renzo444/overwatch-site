@@ -7,7 +7,7 @@ reviewed: 2026-10-26
 
 Overwatch Console is a security operations console for teams running Microsoft Sentinel. A team of AI agents triages incidents, checks that work, tunes noisy rules, turns threat intelligence into detections, hunts proactively and analyses suspicious files. People stay in charge: anything consequential, such as deploying a rule, changing an incident or running a response action, waits for a human approval.
 
-New here? Start with [Getting started](getting-started.md).
+New here? Start with [Getting started](getting-started.md), then follow [Your first 30 days](onboarding-plan.md). To reach us, see [Support](support.md).
 
 ## Concepts
 
@@ -42,6 +42,9 @@ Pages are listed in the order they appear in the navigation.
 - [Audit Trail](features/audit-trail.md)
 - [Settings](features/settings.md)
 
+**Help**
+- [Help](features/help.md): these guides inside the console, and how to reach support.
+
 ## How-To guides
 
 **Incidents and approvals**
@@ -67,6 +70,7 @@ Pages are listed in the order they appear in the navigation.
 **Administration**
 - [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)
 - [Invite a teammate](how-to/invite-a-teammate.md)
+- [Set up response actions](how-to/set-up-response-actions.md)
 - [Configure notifications](how-to/configure-notifications.md)
 - [Export audit evidence](how-to/export-audit-evidence.md)
 - [Set up branding](how-to/set-up-branding.md)

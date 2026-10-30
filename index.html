@@ -57,7 +57,7 @@
                         Book a Consultation
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
                     </a>
-                    <a href="#services" class="btn btn-outline">View Services & Pricing</a>
+                    <a href="#pricing" class="btn btn-outline">View Services & Pricing</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -126,7 +126,7 @@
                         <div class="agent-status"><span class="status-dot"></span><span class="agent-status-label">Analyzing</span></div>
                     </div>
                     <h3>Dax <span class="agent-codename">(Analyst Agent)</span></h3>
-                    <p>Autonomously triages and investigates incidents using live Microsoft Sentinel data, applying disposition and closing confirmed false positives.</p>
+                    <p>Triages and investigates every incident using live Microsoft Sentinel data, records its verdict and evidence, and proposes closing false positives for your approval.</p>
                 </div>
                 <div class="agent-card">
                     <div class="agent-header">
@@ -136,7 +136,7 @@
                         <div class="agent-status"><span class="status-dot"></span><span class="agent-status-label">Reviewing</span></div>
                     </div>
                     <h3>Demitry <span class="agent-codename">(Senior Analyst Agent)</span></h3>
-                    <p>QA-reviews Dax's closed incidents, audits misclassifications, and escalates true positives that require senior analysis.</p>
+                    <p>Independently checks Dax's work before anything is closed, catches misclassifications, and escalates true positives to your team.</p>
                 </div>
                 <div class="agent-card">
                     <div class="agent-header">
@@ -146,7 +146,7 @@
                         <div class="agent-status"><span class="status-dot"></span><span class="agent-status-label">Tuning</span></div>
                     </div>
                     <h3>Marien <span class="agent-codename">(Detection Engineer Agent)</span></h3>
-                    <p>Identifies false positive clusters and autonomously tunes KQL detection rules in Azure Sentinel to reduce noise without degrading coverage.</p>
+                    <p>Identifies false positive clusters and proposes KQL rule tunes, each replayed against past incidents, to reduce noise without hiding real attacks.</p>
                 </div>
                 <div class="agent-card">
                     <div class="agent-header">
@@ -176,7 +176,7 @@
                         <div class="agent-status"><span class="status-dot"></span><span class="agent-status-label">Sandboxing</span></div>
                     </div>
                     <h3>Caleb <span class="agent-codename">(Malware Analyst Agent)</span></h3>
-                    <p>Detonates and reverse-engineers suspicious payloads in an isolated sandbox to extract actionable IOCs and behavioral signatures.</p>
+                    <p>Analyzes reported phishing emails and their attachments in single-use, network-isolated containers, extracting IOCs, ATT&amp;CK techniques and a verdict.</p>
                 </div>
                 <div class="agent-card">
                     <div class="agent-header">
@@ -207,31 +207,31 @@
                         <h3 style="margin:0;">Overwatch Console</h3>
                         <span style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-lime); background:rgba(141,198,63,0.1); border:1px solid rgba(141,198,63,0.25); padding:0.2rem 0.6rem; border-radius:100px;">Product</span>
                     </div>
-                    <p>A standalone AI-agentic SOC platform your team can run directly. Deploy Overwatch Console into your own Azure environment and let the agent swarm autonomously monitor, triage, and tune your Sentinel instance.</p>
+                    <p>A standalone AI-agentic SOC platform your team runs directly. Connect your Sentinel workspace with one Microsoft admin sign-in and let the agents triage, tune and hunt, while your team approves anything consequential.</p>
                     <ul class="service-features">
-                        <li>Self-hosted in your Azure tenant</li>
-                        <li>7-agent autonomous swarm (triage, tuning, hunting, engineering)</li>
-                        <li>Live Sentinel integration &amp; agentic rule deployment</li>
+                        <li>Hosted service; your logs stay in your Sentinel workspace</li>
+                        <li>8 specialist agents (triage, QA, tuning, detections, hunting, email analysis)</li>
+                        <li>Approval mode by default; you choose what runs on its own</li>
                         <li>SOC Manager dashboard with full audit trail</li>
                     </ul>
                     <p style="font-size:0.75rem; color:rgba(255,255,255,0.35); margin-bottom:0.85rem; line-height:1.5;">Explore the console at your own pace, or book a live session to see it running against a real Sentinel workspace.</p>
                     <div class="service-actions">
-                        <a href="https://console.overwatchsecurity.tech" class="btn btn-small" target="_blank">Access Demo</a>
+                        <a href="https://console.overwatchsecurity.tech" class="btn btn-small btn-primary" target="_blank">Access Demo</a>
                         <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="btn btn-small btn-outline" target="_blank">Book Live Demo</a>
                     </div>
                 </div>
                 <div class="service-card">
                     <div class="service-accent"></div>
                     <h3>MDR / SOC-as-a-Service</h3>
-                    <p>24/7 threat detection, investigation, and rapid response, powered by AI agents and backed by human analysts. Our hybrid SOC eliminates alert fatigue and reduces mean time to respond.</p>
+                    <p>Threat detection, investigation and response delivered as a service: our AI agents work your Sentinel around the clock and our analysts review what matters. Scoped and quoted for your environment.</p>
                     <ul class="service-features">
-                        <li>24/7 monitoring & triage</li>
+                        <li>Around-the-clock AI monitoring &amp; triage</li>
                         <li>AI-powered incident investigation</li>
                         <li>Agentic detection rule tuning</li>
                         <li>Custom KQL detection engineering</li>
                     </ul>
                     <div class="service-actions">
-                        <a href="https://www.overwatchsecurity.tech/_files/ugd/e8ef19_2c825a0c284c4e7aaa44f420af8fd078.pdf" class="btn btn-small" target="_blank">Download Pricing</a>
+                        <a href="mailto:AskOverwatch@overwatchsecurity.tech?subject=MDR%20quote" class="btn btn-small btn-primary">Request a Quote</a>
                         <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="btn btn-small btn-outline" target="_blank">Book Consultation</a>
                     </div>
                 </div>
@@ -264,6 +264,66 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="services pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Overwatch Console Pricing</span>
+                <h2 class="section-title">Plans per <span class="gradient-text">Sentinel Workspace</span></h2>
+                <p class="section-desc">Flat monthly price per workspace, AI usage included up to a daily cap. Every plan starts in approval mode with a 14-day trial on your own workspace.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="service-card">
+                    <div class="service-accent"></div>
+                    <h3>Starter</h3>
+                    <p class="pricing-price">$1,500 <span>/ month</span></p>
+                    <p>For a one- or two-person security team.</p>
+                    <ul class="service-features">
+                        <li>Up to 15 incidents a day</li>
+                        <li>Dax, Demitry, Marien, Caleb and Atlas</li>
+                        <li>Approval mode</li>
+                        <li>Business-hours support</li>
+                    </ul>
+                    <div class="service-actions">
+                        <a href="https://console.overwatchsecurity.tech/trial" class="btn btn-small btn-primary" target="_blank">Start a Trial</a>
+                    </div>
+                </div>
+                <div class="service-card service-card--featured">
+                    <div class="service-accent"></div>
+                    <h3>Team</h3>
+                    <p class="pricing-price">$4,000 <span>/ month</span></p>
+                    <p>For a small SOC that wants the whole agent team.</p>
+                    <ul class="service-features">
+                        <li>Up to 50 incidents a day</li>
+                        <li>All eight agents</li>
+                        <li>Full auto per action, when you choose</li>
+                        <li>1-hour first reply on urgent issues</li>
+                    </ul>
+                    <div class="service-actions">
+                        <a href="https://console.overwatchsecurity.tech/trial" class="btn btn-small btn-primary" target="_blank">Start a Trial</a>
+                        <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="btn btn-small btn-outline" target="_blank">Book Live Demo</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-accent"></div>
+                    <h3>Autonomous</h3>
+                    <p class="pricing-price">$8,000 <span>/ month</span></p>
+                    <p>For larger or regulated SOCs.</p>
+                    <ul class="service-features">
+                        <li>Up to 150 incidents a day</li>
+                        <li>All agents plus deep malware analysis</li>
+                        <li>Full auto incl. response actions</li>
+                        <li>Extended support hours and monthly review</li>
+                    </ul>
+                    <div class="service-actions">
+                        <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="btn btn-small btn-outline" target="_blank">Talk to Us</a>
+                    </div>
+                </div>
+            </div>
+            <p class="pricing-note">Annual plans get two months free. Bring your own AI key on request. More workspaces or volume: <a href="mailto:AskOverwatch@overwatchsecurity.tech?subject=Overwatch%20Console%20quote">ask for a quote</a>. See <a href="/docs/onboarding-plan/">your first 30 days</a> and <a href="/docs/support/">support</a>.</p>
         </div>
     </section>
 
@@ -400,8 +460,8 @@
                 </div>
                 <div class="metric-divider"></div>
                 <div class="metric">
-                    <span class="metric-value gradient-text">&lt; 5 min</span>
-                    <span class="metric-label">Mean Time to Triage</span>
+                    <span class="metric-value gradient-text">94.8%</span>
+                    <span class="metric-label">Triage Verdict Accuracy (Evaluation)</span>
                 </div>
                 <div class="metric-divider"></div>
                 <div class="metric">
@@ -462,6 +522,15 @@
                     <a href="#how">How We Operate</a>
                     <a href="/blogs/">Observatory</a>
                     <a href="/docs/">Docs</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Clients</h4>
+                    <a href="#pricing">Pricing</a>
+                    <a href="/docs/onboarding-plan/">Onboarding</a>
+                    <a href="/docs/support/">Support</a>
+                    <a href="/docs/concepts/data-handling/">How Your Data Is Handled</a>
+                    <a href="https://console.overwatchsecurity.tech/terms" target="_blank">Terms of Service</a>
+                    <a href="https://console.overwatchsecurity.tech/privacy" target="_blank">Privacy Policy</a>
                 </div>
                 <div class="footer-contact">
                     <h4>Contact</h4>

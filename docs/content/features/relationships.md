@@ -56,12 +56,11 @@ A generated summary of your detection library, recent hunts and ingested article
 
 The brief has its own window, **24h** or **7d**.
 
-A collapsed **Library references and examples** section at the bottom lists exact CVE and technique mentions shared across library entries, plus clearly labelled example campaigns for layout only. Their response buttons are disabled.
+A collapsed **Library references** section at the bottom lists exact CVE and technique mentions shared across library entries.
 
 ## What you can do
 
 - **Generate brief** or **Regenerate** (analyst or admin) creates a new brief from the saved library. It needs at least one library detection and a saved, current library. Otherwise the panel says "Generation requires a saved, current library and analyst or administrator access."
-- **Send brief** opens a channel picker and **Send**. Brief delivery is Planned: nothing is sent, and the panel says so.
 - **Ask Atlas** (analyst or admin) opens Atlas with a question about the selected node.
 - **Open hunt** / **Hunt with Orion** opens Orion's workspace on the Agents page.
 - Detection, article and incident links open the full detection record, Live Feed or the incident.

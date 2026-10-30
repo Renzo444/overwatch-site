@@ -1,58 +1,62 @@
 ---
 title: How to build a playbook
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-27
 ---
 
 # How to build a playbook
 
-Draw your team's response to an incident as a playbook on the Actions page, test it against a real incident, and save and publish it.
+Build your team's response as a playbook on the Actions page, without code. You test it against a real incident, then save and enable it so it runs on its own.
 
 ## Before you start
 
-- You need the **admin** role to create, save and enable playbooks. Analysts can test and dry-run playbooks that exist; viewers can read them.
-- A playbook documents a response. In this release nothing runs playbooks automatically, and containment still goes through [Approvals](../features/approvals.md).
+- You need the **admin** role to create, save, enable and run playbooks. Analysts can test and dry-run playbooks that exist; viewers can read them.
+- Enabled playbooks run on the agent worker. In **Settings > Agent Policies**, turn on "Run agents on a schedule for this workspace".
+- Steps that isolate a host or disable an account need [response actions set up](set-up-response-actions.md).
 - To test against an incident, your tenant must be connected to Microsoft Sentinel and have incidents created in the last 30 days.
 
 ## Steps
 
 1. In the sidebar, open **Operate > Actions**.
-2. Click **New playbook**. If your tenant has no playbooks yet, you can instead click **Start from “Contain compromised endpoint”** to begin from a template.
-3. Click the **Choose a trigger** step on the canvas. In the inspector, type a step title and pick the **Event**, for example **Incident verdict recorded**. Optionally add a **Filter** such as `verdict in (True Positive, Escalated)`.
-4. In the **Add** palette, click **Condition**. In the inspector, give it a title and an **Expression** such as `severity >= High and confidence >= 85%`.
-5. Connect the trigger to the condition: click the trigger's right-side port, then click the condition's left-side input port.
-6. Click **Human approval** in the palette. Set **Approvers required**. Connect the condition's **Yes** port to it.
-7. Add the response steps you need, for example **Isolate host** or **Disable account**. Set the **Target** in the inspector. Connect the **Human approval** step's port to each of them.
-8. Add any **Notify**, **Run agent task** or **Generate report** steps and connect them. Use the condition's **No** port for what should happen when the condition is false.
+2. Click **From template** and pick the closest starting point, or click **New playbook** to start from a single trigger.
+3. Click the trigger on the canvas. In the inspector, pick the **Event**, for example **Incident verdict recorded**. To narrow it, use **Only when**: click **Add check** and pick a field, a comparison and a value, for example **Dax verdict** · **is** · **True Positive**.
+4. Under **Decide**, click **Condition**. Add checks such as **Severity** · **is at least** · **High** and **Dax confidence** · **is at least** · **85** %. Choose **All of these** or **Any of these**. The line under the checks says the condition in words.
+5. Connect the trigger to the condition: click the trigger's right-side port, then the condition's left-side input port.
+6. Under **Decide**, click **Human approval**. Set **Approvers required** and connect the condition's **Yes** port to it.
+7. Under **Respond**, add the steps the approval should release, for example **Isolate host** and **Disable account**, and connect the approval to each. For containment, choose **After approval**: **Run it straight away** or **Wait for an administrator to run it**.
+8. Add what happens otherwise, for example a **Notify** step on the condition's **No** port. In **Message**, click a value such as **Incident title** to insert it.
 9. Drag steps by their header to tidy the layout. Use **Fit** to see the whole graph.
 10. Open the **Versions** card and type the **Playbook name**.
-11. Click **Dry run** to list every step and what it would call.
-12. Pick an incident in **Incident to test on** and click **Test** to walk the playbook against that incident's real data.
-13. Fix anything the result reports, then click **Save**.
-14. Turn on the **Enabled** switch to publish the saved version.
+11. Pick an incident in **Incident to test on** and click **Test**. The result shows the branch taken and, at the approval, exactly what the request would list.
+12. Fix anything the result reports, then click **Save**.
+13. Turn on the **Enabled** switch. The playbook now runs whenever its trigger fires.
+14. To try it once for real now, click **Run now**, pick the incident and confirm.
 
 ## What happens next
 
-- **Save** records a new version with your identity, the time and a content hash, and writes it to the audit trail. The Versions card lists it.
-- **Test** reads the incident from Sentinel and Dax's recorded verdict, evaluates the trigger and conditions, follows only the branch taken and stops at the **Human approval** step. It reports, for example, "Test on #1234 · 3 steps reached · paused at approval". Nothing is executed, no approval is created and no agent is called.
-- Dry runs and tests on a saved playbook are recorded in its **Run history** with your name.
-- Enabling publishes the saved version for your team to reference. Because no runner exists in this release, the playbook does not fire on incidents and its steps are not sent. Containment still happens through Approvals: an administrator approves the request and then runs it.
-- To change a published playbook, edit it, **Save** a new version, and click **Publish** on that version in the Versions card.
+- **Save** records a new version with your identity, the time and a content hash, and writes it to the audit trail.
+- When the trigger fires, a run appears in **Run history**. Open it to see each step's outcome.
+- At the Human approval, the run waits in **Approvals**. The request says "Approving runs these steps, and only these" and lists them. When an administrator approves, the run carries on straight away. A denial or expiry stops that branch.
+- Every step a run takes is recorded in the audit trail under "Playbooks".
+- To change an enabled playbook, edit it, **Save** a new version, and click **Publish** on that version in the Versions card. Runs already started finish on the version they started with.
 
 ## If something goes wrong
 
-- **"Can't save: 1 destructive step has no Human approval upstream"**: an isolate, disable or close step has no **Human approval** before it. Connect one, then save again. The step is also marked on the canvas and in the inspector.
-- **"Can't save yet: N problems"**: the list below names each problem. Click one to select the step. Common causes: no name, no **Trigger** step, a step without a title, or connections that form a loop.
+- **"Can't save: 1 destructive step has no Human approval upstream"**: an isolate, disable or close step has no **Human approval** before it. Connect one, then save again.
+- **"Can't save yet: N problems"**: the list names each problem. Click one to select the step. Common causes: no name, no trigger, a required field left empty, an email or tag in the wrong form, or a loop.
+- **"Can't enable yet" with "Run agents on a schedule for this workspace"**: scheduled runs are off. Click **Open Agent Policies**, turn the setting on, then enable again.
+- **"Enabled playbooks are not running"**: scheduled runs were turned off after the playbook was enabled. Turn them on in **Settings > Agent Policies**.
+- **A run "Finished with problems"**: open it in Run history. Each failed step says why, for example "Not sent: Teams isn't set up in Settings → Notifications" or "Response actions are not set up".
+- **A step is "Uncertain"**: the worker stopped while the step was running. It was not repeated. Check the incident and do it by hand if needed.
+- **Run now says the filter is false**: the trigger's **Only when** filter doesn't match that incident, so nothing ran.
 - **"Not saved: this playbook changed since you opened it"**: someone saved a newer version. Click **Discard my changes and reload** to load it.
-- **"Can't enable: save the playbook first."** or **"Can't enable unsaved changes"**: enabling publishes the saved version, so save first.
-- A palette item is dimmed: **Schedule**, **Block IP / domain** and **Create ticket** are not available yet. Hover over the item to see why.
-- **"The incident could not be read from Sentinel, so nothing was evaluated."**: Sentinel was unreachable during a test. Try again, or use **Dry run**.
-- A test says the trigger did not fire or a condition "Can't evaluate": the incident does not match, a field is missing (for example no recorded verdict), or the expression mixes `and` and `or`.
+- **"The incident could not be read from Sentinel"**: Sentinel was unreachable. Try again, or use **Dry run**.
 - **New playbook** is disabled: your tenant has reached 25 playbooks. Disable and delete one first.
 
 ## Related
 
 - [Actions](../features/actions.md)
+- [How to set up response actions](set-up-response-actions.md)
 - [Approvals](../features/approvals.md)
 - [How to approve or deny an action](approve-or-deny-an-action.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)

@@ -1,12 +1,12 @@
 ---
 title: Settings
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-10-27
 ---
 
 # Settings
 
-Settings holds your organization's configuration (external notifications, branding, threat-intelligence sources, agent policies and the team) and your own preferences for how agents appear. Most of it is for admins; everyone can set their own agent appearance and read the agent policies.
+Settings holds your organization's configuration (external notifications, branding, threat-intelligence sources, agent policies, the team and response actions) and your own preferences for how agents appear. Most of it is for admins; everyone can set their own agent appearance and read the agent policies.
 
 ## Where to find it
 
@@ -27,6 +27,7 @@ Settings opens on the **Agent appearance** tab.
 | Agent Policies | View | View | View and change |
 | Agent appearance | Own profile | Own profile | Own profile and the tenant default |
 | Team | No access | No access | View and change |
+| Response actions | No access | No access | View and change |
 | Setup wizard link | Hidden | Hidden | Shown |
 
 Where you have no access, the tab says so (for example "Tenant administrators manage external notification destinations." or "Only organization administrators can manage the team.") and asks nothing of you.
@@ -35,7 +36,7 @@ Where you have no access, the tab says so (for example "Tenant administrators ma
 
 **Header.** **Refresh** re-reads every settings tab.
 
-**Tabs.** **Notifications**, **Branding**, **Threat Intel**, **Agent Policies**, **Agent appearance**, **Team**. Admins also see a **Setup wizard** link at the end of the tab row, which reopens the first-time setup wizard (see [Getting started](../getting-started.md)).
+**Tabs.** **Notifications**, **Branding**, **Threat Intel**, **Agent Policies**, **Agent appearance**, **Team**, **Response actions**. Admins also see a **Setup wizard** link at the end of the tab row, which reopens the first-time setup wizard (see [Getting started](../getting-started.md)).
 
 ### Notifications
 
@@ -72,7 +73,8 @@ Threat-intelligence providers and your own advisory feeds.
 How much the agents may do on their own, and the rules they must follow.
 
 - **Scheduled operations**: **Dax triages new incidents automatically**, **Run agents on a schedule for this workspace**, **Automatic threat-intelligence ingestion** (Renzo scores each new relevant article; articles scoring 80 or higher become Auto-ingested drafts in the Detection Library) and **Caleb scheduled hash lookups**. Each shows On or Off.
-- **What runs on its own**: one row per agent action, each set to **Approval** (a person approves every time), **Full auto** (runs on its own once its checks pass, with spot checks) or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Today only **Demitry closes a false positive** and **Maxwell deploys a Renzo detection** can be set to Full auto or Scheduled; Maxwell's row also has a **Daily limit** (1 to 20) and **Rules Maxwell may keep** (10 to 200, default 50), with the note that Sentinel allows 512 rules per workspace, Maxwell always leaves 50 free for your own rules, skips rules that repeat a live one, and asks you before deploying one that overlaps. **Marien applies a rule tune**, **Demitry overrides Dax and closes** and **Containment (isolate a host, disable an account)** always wait for a person. Rows set to Scheduled share one set of **Staffed hours**. Each row explains its checks and shows which mode is in force now. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
+- **What runs on its own**: one row per agent action, each set to **Approval** (a person approves every time), **Full auto** (runs on its own once its checks pass, with spot checks) or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. **Demitry closes a false positive**, **Maxwell deploys a Renzo detection** and the three containment rows (**Isolate a device Demitry confirmed compromised**, **Disable an account Demitry confirmed compromised** and **Revoke the sign-in sessions of an account Demitry confirmed compromised**) can be set to Full auto or Scheduled; Maxwell's row also has a **Daily limit** (1 to 20) and **Rules Maxwell may keep** (5 to 200, default 50), with the note that Sentinel allows 512 rules per workspace, Maxwell always leaves 50 free for your own rules, skips rules that repeat a live one, and asks you before deploying one that overlaps. **Marien applies a rule tune** and **Demitry overrides Dax and closes** always wait for a person. Below the rows, **Protected from automatic containment** lists the accounts and devices automatic containment never touches (one per line; **Save protected list**). See [Containment under Full auto](../concepts/autonomy-and-approvals.md#containment-under-full-auto). Rows set to Scheduled share one set of **Staffed hours**. Each row explains its checks and shows which mode is in force now. Step by step: [Set agent autonomy](../how-to/set-agent-autonomy.md).
+- **What Demitry reviews** (admin only): **By risk** (the default) gives a full senior review to Dax's benign calls on high-risk incidents, verdicts below 70% confidence or without one, incidents Dax flagged and every High or Critical incident, and passes other verdicts on with the note "Passed without a senior review". **Every verdict** reviews everything Dax records, which catches more and uses more of the daily AI allowance. The change applies from the next review run and is recorded in the Audit Trail.
 - **Detection engineering** (admin only): how Renzo writes new detections. **Renzo may write indicator-only rules** (Off by default) allows rules that match only a threat report's hashes, IP addresses, domains or URLs. While it is off, Renzo writes rules for the attacker's technique and indicator-only rules are discarded before review. A change applies to drafts written from then on.
 - **Enforced boundaries**: what the policy engine enforces today.
 - **Custom rules**: rules per agent that **Allow**, **Deny** or **Require Approval** based on severity, classification, entity count, confidence score or action type. **Add rule** opens the rule builder. Each policy can be switched on or off, expanded, and deleted with **Delete policy**.
@@ -95,9 +97,22 @@ A banner shows the admin default. Your choices apply only to you. **Use admin de
 The people in your organization.
 
 - **Invite a person**: **Email**, **Name (optional)** and **Role** (**Viewer**, **Analyst** or **Administrator**), then **Send invitation**. The person gets an email link to set their own password.
-- **People**: everyone in the organization (up to 200, newest first) with their email, role, status (**Active**, **Invited** or **Deactivated**) and last sign-in. Each person other than you has a role picker and **Deactivate** or **Reactivate**.
+- **People**: everyone in the organization (up to 200, newest first) with their email, role, status (**Active**, **Invited** or **Deactivated**) and last sign-in. Admins also show **two-step on** or **two-step not set up**. Each person other than you has a role picker and **Deactivate** or **Reactivate**, and **Reset two-step** when they have set up an authenticator (see [Getting started](../getting-started.md#two-step-sign-in-for-admins)).
 
 Step by step: [Invite a teammate](../how-to/invite-a-teammate.md).
+
+### Response actions
+
+The app that approved containment runs with, in your own Azure directory. Agents only propose a response; people approve it and an administrator runs it from [Approvals](approvals.md).
+
+- **Connect with Microsoft**: sign in as a Global Administrator of your Sentinel directory, then **Create the response app**. The console creates the app in your directory and grants its permissions, with each step shown as it runs. No script.
+- **Use a script instead** (or **Set up with Cloud Shell** when sign-in setup is not available): opens **Generate script**. The script creates the same app, "Overwatch-Responder-" plus your organization's name, and grants it only **User.EnableDisableAccount.All**, **User.Read.All** and **User.RevokeSessions.All** on Microsoft Graph, and **Machine.Isolate** and **Machine.Read.All** on Defender for Endpoint (skipped when Defender is not in your tenant). Run it in Azure Cloud Shell (Bash) as a Global Administrator or Privileged Role Administrator; it sends the app's details back and this tab checks its permissions. **Copy script** copies it. The key inside works once and expires in 24 hours.
+- One row per provider: **Microsoft Entra ID** (disable an account, re-enable it to undo, and revoke its sign-in sessions) and **Microsoft Defender for Endpoint** (isolate a device, release it to undo). Each shows **Ready**, **Not set up**, **Not checked**, **Missing permissions** or **Not available** (Sentinel not connected yet), the app ID, when permissions were last checked and when the secret expires.
+- **Enter app details**: use an app you already have. Enter the **Application (client) ID** and **New client secret**, then **Save and check**.
+- **Check permissions**, **Replace** and **Remove** on a provider that is set up. **Remove** asks you to confirm.
+- **How a response runs**: Agent proposes, People approve, Administrator runs, Overwatch verifies, Undo.
+
+A response can only run when its provider shows **Ready**. Step by step: [Set up response actions](../how-to/set-up-response-actions.md).
 
 ## What you can do
 
@@ -114,6 +129,7 @@ Step by step: [Invite a teammate](../how-to/invite-a-teammate.md).
 | Change your own agent appearance | Everyone | Immediately, for you only |
 | Change the tenant default appearance | Admin | Immediately, for everyone without their own choice |
 | Invite a person, change a role, deactivate or reactivate | Admin | On the person's next request |
+| Set up, check, replace or remove response actions | Admin | Immediately for the next response run; actions already sent are not undone |
 
 Tenant setting changes (notifications, branding, credentials, intel feeds, agent configuration including what runs on its own, policies, the tenant default appearance) are recorded in the [Audit Trail](audit-trail.md) under **Configuration changes**, with before and after values. Invitations and role changes are recorded in the Audit Trail's **Activity ledger**. None of these changes go through Approvals; they are made directly by the admin.
 
@@ -135,5 +151,6 @@ Tenant setting changes (notifications, branding, credentials, intel feeds, agent
 - [Set agent autonomy](../how-to/set-agent-autonomy.md)
 - [Add an intel feed](../how-to/add-an-intel-feed.md)
 - [Invite a teammate](../how-to/invite-a-teammate.md)
+- [Set up response actions](../how-to/set-up-response-actions.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)
 - [Roles and permissions](../concepts/roles-and-permissions.md)

@@ -1,7 +1,7 @@
 ---
 title: Incidents
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-10-27
 ---
 
 # Incidents
@@ -26,7 +26,7 @@ The Incidents page lists incidents from your Microsoft Sentinel workspace next t
 
 ## What you see
 
-The page header reads "Follow the investigation." with a **Refresh** button.
+The page header reads "Incidents" with a **Refresh** button.
 
 **Filter row.**
 - **Assessment filter** chips, each with a count: **All**, **No assessment**, **Assessed**, **Assigned to me**. "Assigned to me" matches incidents whose Sentinel owner is your account.
@@ -86,7 +86,8 @@ See [How to close an incident](../how-to/close-an-incident.md) for the close dia
 - A person's claim and a person's close are final for the agents. Demitry does not review an incident a person owns; if someone claims it while he is reviewing, he leaves his verdict as a comment and changes nothing else. No agent reopens or reclassifies an incident a person closed.
 - When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically under Settings > Agent Policies > **What runs on its own**. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 - When Dax called an incident a true positive and Demitry finds it benign, Demitry chooses whether the close should be Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). His comment on the incident says which, and the close request always waits for a person. On a high-risk incident (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact) he does not propose a close: he escalates the incident to a person and it stays open.
-- Demitry reviews by risk. Dax's benign calls on high-risk incidents, verdicts below 70% confidence, incidents Dax flagged and every High or Critical incident get a full senior review. Other verdicts are passed on without one, with a comment starting "Passed without a senior review". A benign verdict passed this way still becomes a close request that waits for a person. An attack verdict passed this way stays open for you to decide the response; Demitry files no response request for it.
+- Demitry reviews by risk unless an admin chose **Every verdict** in Settings > Agent Policies > **What Demitry reviews**. Dax's benign calls on high-risk incidents, verdicts below 70% confidence, incidents Dax flagged and every High or Critical incident get a full senior review. Other verdicts are passed on without one, with a comment starting "Passed without a senior review". A benign verdict passed this way still becomes a close request that waits for a person. An attack verdict passed this way stays open for you to decide the response; Demitry files no response request for it.
+- Before Microsoft Sentinel is connected, the list says "Microsoft Sentinel is not connected yet" instead of showing an empty queue. An administrator connects it in the setup wizard (Settings → Setup wizard). If the incident list cannot be read for another reason, it says "Incident queue unavailable" with **Retry**, and no count is shown.
 - If the AI service is unavailable while Dax investigates, the incident goes back to his queue instead of being escalated, and Dax comments on it when he investigates it again.
 - Dax, Demitry and the other agents know which log sources your workspace ingests (the same summary as the [Data connectors](data-connectors.md) page). When evidence is missing because a source is stale or not connected, they treat it as missing data, not as proof the activity did not happen.
 - When Demitry escalates an incident for human review, the console also sends a "Needs a person" notification through the channels your administrator set up. See [How to configure notifications](../how-to/configure-notifications.md).

@@ -1,7 +1,7 @@
 ---
 title: How to approve or deny an action
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-10-27
 ---
 
 # How to approve or deny an action
@@ -34,7 +34,7 @@ Decide a request an agent filed in Approvals, run an approved containment respon
 1. On the request's card, click **Deny**.
 2. Pick a **Reason**: False positive, Wrong target, Business impact too high, Needs more evidence, Already handled or Policy exception.
 3. Optionally type a note under **What should the agents know?**
-4. Leave **Apply to similar future cases** on if the agents should cite your note on similar cases, or turn it off for this request only.
+4. Leave **Apply to similar future cases** on if Dax and Demitry should see your note when they triage a similar incident, or turn it off for this request only. Requests that are not about an incident keep the note in Decision memory only.
 5. Click **Deny & store feedback**. To deny without giving a reason, click **Deny without feedback** instead.
 
 ### Select a response for a confirmed threat
@@ -80,7 +80,7 @@ You can also approve or deny from the **Needs your decision** card on Overview a
 - Approving Maxwell's "Deploy detection '…' although it overlaps a live rule" lets him review and deploy that draft on a later run; denying it, or letting it expire, keeps the draft out of Sentinel. Approving "Retire Maxwell's rule '…' to make room for new detections" deletes that rule from Sentinel on a later unattended run, with a full backup in the audit log; denying keeps it, and he does not propose it again.
 - A close request whose reasoning starts "Passed without a senior review" rests on Dax's verdict alone: Demitry did not review it. Read Dax's analysis with that in mind. These closes are never approved automatically.
 - Denying a close request from Demitry leaves the incident open for a person. It counts against his accuracy score as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
-- A denial reason is stored in **Decision memory**. Dax and Demitry see it on similar cases. It does not retrain any model.
+- A denial reason is stored in **Decision memory**. With **Apply to similar future cases** on, Dax and Demitry see it when they triage a similar incident. It never decides a verdict and does not retrain any model.
 
 ## If something goes wrong
 

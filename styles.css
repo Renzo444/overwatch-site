@@ -634,6 +634,33 @@ body {
     .services-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
 }
 
+/* Pricing plans reuse the service cards */
+.pricing { padding-top: 0; }
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.pricing-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+.service-card > p.pricing-price { font-size: 1.75rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+.pricing-price span { font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
+.pricing-note {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.pricing-note a { color: var(--accent-lime); }
+.pricing .service-actions { margin-top: auto; }
+@media (max-width: 1024px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+}
+
 .service-card--featured {
     border-left-color: var(--accent-lime);
     background: rgba(141, 198, 63, 0.03);
@@ -982,7 +1009,7 @@ body {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 3rem;
     margin-bottom: 3rem;
 }
