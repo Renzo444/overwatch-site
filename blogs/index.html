@@ -146,6 +146,12 @@
             border: 1px solid rgba(197, 76, 255, 0.25);
         }
 
+        .obs-badge--research {
+            color: var(--accent-purple);
+            background: rgba(197, 76, 255, 0.12);
+            border: 1px solid rgba(197, 76, 255, 0.3);
+        }
+
         .obs-badge--severity {
             font-size: 0.6rem;
             font-weight: 700;
@@ -426,7 +432,7 @@
             <span class="obs-hero-tag">Threat Intelligence</span>
             <h1 class="obs-hero-title">Overwatch <span class="gradient-text">Observatory</span></h1>
             <p class="obs-hero-subtitle">
-                Verified KQL detections and autonomous threat hunt reports. Every query validated against Azure Sentinel before publication.
+                Original malware analysis, verified KQL detections, and autonomous threat hunt reports from the Overwatch team.
             </p>
         </div>
     </section>
@@ -437,6 +443,7 @@
             <!-- Filters -->
             <div class="obs-filters" id="obsFilters">
                 <button class="obs-filter-btn active" data-filter="all">All</button>
+                <button class="obs-filter-btn" data-filter="malware analysis">Malware Analysis</button>
                 <button class="obs-filter-btn" data-filter="detection">Detections</button>
                 <button class="obs-filter-btn" data-filter="hunt">Hunt Reports</button>
             </div>
