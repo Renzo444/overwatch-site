@@ -75,6 +75,7 @@ function researchBody(a) {
       }).join('');
       return `<div class="obs-flow"><svg viewBox="0 0 ${w} 130" role="img" aria-label="${esc(b.caption || 'Attack flow')}"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#6e7681"/></marker></defs>${nodes}</svg></div>${b.caption ? `<p class="obs-figcap">${esc(b.caption)}</p>` : ''}`;
     }
+    if (b.type === 'subtitle') return `<h3 class="obs-subtitle">${esc(b.text)}</h3>`;
     return `<div class="obs-body-text"><p>${esc(b.text)}</p></div>`;
   }).join('\n');
 
@@ -87,7 +88,11 @@ function researchBody(a) {
   const attackTable = (a.attack || []).length ? `<section class="obs-section"><h2 class="obs-section-title">MITRE ATT&amp;CK</h2><div class="obs-table-wrap"><table class="obs-table"><thead><tr><th>Tactic</th><th>Technique</th><th>ID</th><th>Evidence</th></tr></thead><tbody>${attackRows}</tbody></table></div></section>` : '';
 
   const detBlocks = (a.detections || []).map((d, i) => `<h3 class="obs-subtitle">${esc(d.title)}</h3><div class="obs-code-container"><div class="obs-code-header"><span class="obs-code-lang">KQL</span><button class="obs-copy-btn" type="button" data-copy="kql${i}" aria-label="Copy KQL query"><span>Copy</span></button></div><div class="obs-code-body"><pre id="kql${i}">${esc(d.query)}</pre></div></div>${d.explanation ? `<div class="obs-body-text"><p>${esc(d.explanation)}</p></div>` : ''}`).join('\n');
-  const detections = (a.detections || []).length ? `<section class="obs-section"><h2 class="obs-section-title">Detection</h2>${detBlocks}<div class="obs-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg><div>These queries are starting points and have not been tested against production data. Tune them to your environment before alerting.</div></div></section>` : '';
+  const yaraBlocks = (a.yara || []).map((y, i) => `<h3 class="obs-subtitle">YARA: ${esc(y.title)}</h3><div class="obs-code-container"><div class="obs-code-header"><span class="obs-code-lang">YARA</span><button class="obs-copy-btn" type="button" data-copy="yara${i}" aria-label="Copy YARA rule"><span>Copy</span></button></div><div class="obs-code-body"><pre id="yara${i}">${esc(y.rule)}</pre></div></div>`).join('\n');
+  const yaraNote = (a.yara || []).length ? `<p class="obs-figcap">Each YARA rule matched this sample and none of our clean test files when Caleb tested it.</p>` : '';
+  const detections = ((a.detections || []).length || (a.yara || []).length) ? `<section class="obs-section"><h2 class="obs-section-title">Detection</h2>${detBlocks}${yaraBlocks}${yaraNote}<div class="obs-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg><div>These queries are starting points and have not been tested against production data. Tune them to your environment before alerting.</div></div></section>` : '';
+
+  const notCovered = (a.notCovered || []).length ? `<section class="obs-section"><h2 class="obs-section-title">What we have not covered yet</h2><div class="obs-body-text">${a.notCovered.map(v => `<p>${esc(v)}</p>`).join('')}</div></section>` : '';
 
   const takeaways = (a.takeaways || []).length ? `<section class="obs-section"><h2 class="obs-section-title">What defenders should do</h2><ol class="obs-takeaways">${a.takeaways.map(t => `<li><div><strong>${esc(t.title)}</strong>${esc(t.text)}</div></li>`).join('')}</ol></section>` : '';
 
@@ -115,6 +120,7 @@ function researchBody(a) {
         ${iocTable}
         ${attackTable}
         ${detections}
+        ${notCovered}
         ${takeaways}
         <div class="obs-cta-box">
             <h3 class="obs-cta-title">Want Research Like This Watching <span class="gradient-text">Your Environment</span>?</h3>
