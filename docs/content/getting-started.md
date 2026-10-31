@@ -1,7 +1,7 @@
 ---
 title: Getting started
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-10-27
 ---
 
 # Getting started with Overwatch Console
@@ -12,15 +12,25 @@ Overwatch Console is a security operations console for Microsoft Sentinel. A tea
 
 Today, the Overwatch team creates your organization and its first admin account, and sends that admin a one-time invitation link. The link works once and expires after 72 hours; if it expires, ask the Overwatch team for a new one. The admin sets a password on the **Join your team** page and signs in, and the setup wizard opens to connect Microsoft Sentinel (see [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)). After that, an admin invites the rest of the team from **Settings > Team**, choosing each person's role (viewer, analyst or admin). The invited person gets an email link, sets their own password and signs in. Invitations need account email to be set up for your deployment; if it is not, ask the Overwatch team to create the accounts. See [Invite a teammate](how-to/invite-a-teammate.md) and [Roles and permissions](concepts/roles-and-permissions.md).
 
-**Planned: self-service signup is not open yet.** The sign-in page links to **Start a 14-day Sentinel trial**. That page currently shows "Trial enrollment is not open yet" and offers **Sign in to an existing account** and **Check again**. When enrollment opens, you will request a verification link with your organization name and work email, set a password from the emailed link, then sign in and connect Sentinel.
+**Self-service trial.** The sign-in page links to **Start a 14-day Sentinel trial**. Enter your **Organization name** and **Work email** and select **Request verification link**. Open the emailed link, choose a password and select **Verify account**, then **Sign in and connect Sentinel**. As your organization's first admin you set up two-step sign-in (below), then reach the **Connect your environment** page; select **Connect your environment** to open your trial workspace page and connect Sentinel (see [Connected trial](#connected-trial)). The 14-day trial starts only when the first Sentinel connection succeeds. If enrollment is closed for your deployment, the page shows "Trial enrollment is not open yet" and offers **Sign in to an existing account** and **Check again**.
 
 ## Sign in
 
 1. Open your Overwatch Console address. If you are not signed in, you are sent to the sign-in page.
-2. Enter your **Username** (your email address) and **Password**.
+2. Enter your email address in **Email or username**, and your **Password**.
 3. Select **Sign In**.
 
 If the details are wrong you see "Invalid credentials".
+
+### Two-step sign-in for admins
+
+Admins sign in with their password and a six-digit code from an authenticator app (Microsoft Authenticator, Google Authenticator, 1Password or any app that supports time-based codes).
+
+- **First sign-in as an admin:** after your password, the console opens the **Two-step sign-in** page and nothing else works until you set it up. Select **Show setup code**, scan the QR code with the app (or type the key shown under it), enter the code the app shows and select **Turn on two-step sign-in**. Then select **Sign in again** and sign in with your password and a code.
+- **Every sign-in after that:** enter your username and password, select **Sign In**, then enter the **Authenticator code** and select **Sign In** again. Each code works once and changes every 30 seconds. Wrong codes count toward the same lock as wrong passwords.
+- **Lost your phone?** Another admin of your organization selects **Reset two-step** next to your name in **Settings > Team**, or Overwatch support (AskOverwatch@overwatchsecurity.tech) resets it. The code step on the sign-in page says the same. You then set it up again at your next sign-in. Resetting your password does not turn two-step sign-in off.
+
+Analysts and viewers sign in with a password only. Set up two-step sign-in right after your first sign-in as an admin, so nobody else who learns the password can set it up first.
 
 Sign-in is protected against password guessing:
 
@@ -29,7 +39,7 @@ Sign-in is protected against password guessing:
 
 **Forgot your password?** on the sign-in page lets you request a reset link by email. The link works once and expires after 1 hour. See [Invite a teammate](how-to/invite-a-teammate.md#help-someone-reset-their-password) for the steps. Password resets need account email to be set up for your deployment. If it is not, the page says "Password reset email is not available yet. Contact Overwatch support to reset your password."
 
-The sign-in page also links to the **Terms of service** and **Privacy policy**. Both pages are currently marked "Draft for review. This text is not yet in effect."
+The sign-in page also gives the support address under "Trouble signing in?" and links to the **Terms of service** and **Privacy policy**. Both pages are currently marked "Draft for review. This text is not yet in effect."
 
 Your sign-in lasts up to 8 hours. If your account or organization is deactivated, or your role changes, the change applies on your next request.
 
@@ -39,7 +49,7 @@ Your sign-in lasts up to 8 hours. If your account or organization is deactivated
 
 Explore Demo is a separate, read-only demo access window for a signed-in account. It does not need an Azure connection.
 
-- Go to `/demo` (or choose **Explore Demo** on the "Choose your workspace" page) and select **Start or resume demo**.
+- Go to `/demo` and select **Start or resume demo**. The trial start page does not offer the demo while its data source is not set up.
 - Your access lasts seven days from first entry. Signing in again, returning or using **Reset demo progress** does not extend it.
 - Demo mode cannot run agents, hunts, deployments, uploads or response actions.
 - Right now the shared demo data source is not set up, so the page shows "Demo records unavailable" and no incidents or results. Prepared playback is also disabled.
@@ -49,12 +59,12 @@ Explore Demo is a separate, read-only demo access window for a signed-in account
 
 The connected trial uses your own Sentinel workspace and isolated credentials. An organization admin sets it up on the "Your trial workspace" page (`/trial/setup`), under **Connect Microsoft Sentinel**. There are two ways:
 
-- **Start guided setup** (recommended) opens the setup wizard in the console. It gives you one script to paste into Azure Cloud Shell, which creates the Overwatch apps and permissions, sends the credentials back to the console and starts your trial on its own. See [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md).
+- **Start guided setup** (recommended) opens the setup wizard in the console. You sign in with Microsoft as an administrator and the console creates the Overwatch apps and permissions in your directory, then starts your trial on its own. Organizations that block third-party apps can use a script in Azure Cloud Shell instead. See [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md).
 - **Or connect one read-only app yourself**: enter the **Azure directory (tenant) ID**, **Subscription ID**, **Resource group**, **Log Analytics workspace name**, **Application (client) ID** and **Client secret value** of an application with read access to the workspace, then select **Verify and start trial**.
 
 With the read-only app, Overwatch Console checks the workspace identity, reads up to one incident without keeping it, and runs a zero-row SecurityAlert query. Only a successful check stores the reader credentials (encrypted) and starts the 14-day trial. Connecting does not deploy rules or create Azure resources. Viewers and analysts can read the trial status; only an admin can submit the connection.
 
-The page then shows the plan, trial start and end dates, and today's AI request usage against any daily limit. When the trial expires, new agent requests are blocked but stored evidence stays readable. Select **Open console** to go to the main console.
+The page then shows the plan, trial start and end dates, and today's AI request usage against any daily limit. Every organization also has a daily AI spend budget (US$25 by default; Overwatch can change it): administrators are told when 80% of it is used, and agents pause for the rest of the UTC day once it is spent. When the trial expires, new agent requests are blocked but stored evidence stays readable. Overwatch moves a paying organization off the trial plan, which lifts the daily request quotas; the AI budget still applies. Select **Open console** to go to the main console.
 
 ## The console at a glance
 
@@ -80,6 +90,7 @@ The left sidebar has four groups:
 - **Search incidents, detections, agents**: opens the command palette (see below).
 - **Live / Offline**: whether the console's live event stream is connected.
 - **Light/dark toggle**: switches between the light and dark theme. Remembered in your browser.
+- **Help and support** (question mark): the guide to the page you are on, all guides, **Email support** and **Keyboard shortcuts**. See [Help](features/help.md).
 - **Notifications** (bell): see below.
 - **Account** (your initials): shows your name, organization and role, plus **Setup** (admins only), **Keyboard shortcuts** and **Sign out**.
 
@@ -137,15 +148,21 @@ A thin bar under the top bar shrinks over 30 minutes without mouse, keyboard, sc
 
 When an admin signs in to an organization that is not configured yet, the setup wizard opens. Admins can reopen it from **Setup** in the account menu or **Setup wizard** in Settings. It has five steps:
 
-1. **Tenant Settings**: tenant name and Azure tenant ID.
-2. **Azure Config**: choose **I already have Sentinel** and enter the subscription, resource group and workspace name.
-3. **Service Principals**: copy the generated Cloud Shell setup script and run it in Azure. The script sends the credentials it creates, and their expiry date, straight back to the console. You can enter the credentials by hand instead.
-4. **Connection Test**: runs on its own when the script reports back (or select **Test All Connections**). It checks each of the three service principals: that it can sign in and read Sentinel rules, that it has every permission its role needs on the workspace (any missing permission is named), and, for roles that query logs, that a one-row test query succeeds. A note says when a missing optional permission means a feature will not work.
-5. **Provisioning**: final checks that Azure access is valid, that the agents' AI service is ready for your organization, and that the console now sees your organization as configured. Then select **Finish Setup**.
+1. **Organization**: select **Connect with Microsoft** and sign in as an administrator (Global Administrator, and Owner or User Access Administrator on the Sentinel subscription). Microsoft asks you once to approve Overwatch Console Setup.
+2. **Workspace**: pick your Sentinel workspace from the list of workspaces your account can see.
+3. **Access**: choose whether to also set up containment, then select **Create access**. The console creates three apps with least-privilege roles on that workspace in your own directory and saves their credentials. No script to run.
+4. **Connection test**: runs on its own when setup finishes (or select **Test All Connections**). It checks each of the three apps: that it can sign in and read Sentinel rules, that it has every permission its role needs on the workspace (any missing permission is named), and, for roles that query logs, that a one-row test query succeeds. A note says when a missing optional permission means a feature will not work.
+5. **Finish**: final checks that Azure access is valid, that the agents' AI service is ready for your organization, and that the console now sees your organization as configured. Then select **Finish setup**.
+
+### Turn on your SOC
+
+A new organization starts with every agent off, so nothing runs after setup until an admin turns agents on. While they are off, the Overview shows a **Turn on your SOC** card. Dax (triage), Demitry (QA) and Marien (tuning proposals) are preselected; Renzo (detections from threat intelligence) and Orion (threat hunts) are optional. Select **Turn on agents** to enrol the workspace with the agent worker and switch the chosen agents on. The change is recorded in the [Audit Trail](features/audit-trail.md). Nothing is closed, tuned or deployed without approval; to let an individual action run on its own, use Settings → Agent Policies (see [Set agent autonomy](how-to/set-agent-autonomy.md)). Analysts and viewers see the card but only an admin can turn agents on. Until Microsoft Sentinel is connected, the card says "Connect Sentinel first" and an admin sees **Connect Microsoft Sentinel**, which opens the setup wizard; the agent choices appear once the connection test passes.
 
 Setup does not deploy any rules to your workspace. See [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md) for the full steps and error messages.
 
-The Azure client secrets the script creates expire after one year. From 30 days before they expire, admins see a warning at the top of the console and on [Data connectors](features/data-connectors.md). Run the setup script again from the wizard to add new secrets without breaking the current ones.
+If your organization blocks third-party apps, select **My organization blocks third-party apps: set up with a script instead** in step 1: you enter the tenant ID and workspace details, run a generated script in Azure Cloud Shell, and it sends the credentials back. You can also enter credentials by hand.
+
+The Azure client secrets setup creates expire after one year. From 30 days before they expire, admins see a warning at the top of the console and on [Data connectors](features/data-connectors.md). Run setup again from the wizard to add new secrets without breaking the current ones.
 
 **Planned:** the **Deploy Sentinel for me** option in step 2 (create a new workspace) is shown but cannot complete yet. Use an existing workspace.
 

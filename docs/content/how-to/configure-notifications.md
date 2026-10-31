@@ -6,7 +6,7 @@ reviewed: 2026-10-12
 
 # How to configure notifications
 
-Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook.
+Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook. Administrators are also emailed about waiting approvals and platform notices, with no setup.
 
 ## Before you start
 
@@ -16,6 +16,10 @@ Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings
   - **Microsoft Teams**: a Teams Workflows webhook ("Post to a channel when a webhook request is received"). Messages are sent as Adaptive Cards.
   - **Webhook**: any HTTPS endpoint that accepts a JSON POST.
 - These are notifications sent outside the console. The bell in the top bar works without any setup.
+
+## Administrator email
+
+Administrators are emailed without any setup. Every active administrator of your organization gets an email when an approval is waiting (at most one every 10 minutes; a burst of requests sends one email, and the queue shows them all) and when the daily AI budget is 80% used or used up (agents pause until the next UTC day); each budget email is sent at most once a day. The email links to the approval queue (`/?tab=approvals`). This is independent of the destinations and the master switch below. To stop it, turn off **Email administrators** under **Delivery policy**. Each email attempt and outcome is recorded in Agent Audit under Notifications.
 
 ## Steps
 

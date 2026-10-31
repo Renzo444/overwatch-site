@@ -58,9 +58,24 @@ Full auto is still a ceiling: an action runs without a person only when its own 
 | **Maxwell deploys a Renzo detection** | Yes | Deploys only Renzo drafts that pass every review check (live validation, replay and an independent review), up to a **Daily limit** you choose (1 to 20, default 3), while Renzo's switch is on. Keeps at most the number of rules you set under **Rules Maxwell may keep** (default 50) and always leaves room for your own rules under Sentinel's 512-rule limit. |
 | **Marien applies a rule tune** | No, always Approval | Always waits for a person today. Planned: it needs a measured false-positive drop and a replay check first. |
 | **Demitry overrides Dax and closes** | No, always Approval | Always waits for a person today. |
-| **Containment (isolate a host, disable an account)** | No, always Approval | Always waits for an administrator today. |
+| **Isolate a device Demitry confirmed compromised** | Yes | See [Containment under Full auto](#containment-under-full-auto). |
+| **Disable an account Demitry confirmed compromised** | Yes | See [Containment under Full auto](#containment-under-full-auto). |
+| **Revoke the sign-in sessions of an account Demitry confirmed compromised** | Yes | See [Containment under Full auto](#containment-under-full-auto). Nothing to undo: the person signs in again. |
 
 Setting Demitry's closes to Full auto or Scheduled here is your administrator's decision for your organization. It does not need the accuracy bar under Agent accuracy; the bar is still shown there so you can see how often Demitry agrees with your reviewers.
+
+### Containment under Full auto
+
+Each containment row is off (Approval) until an administrator sets it, one action at a time. When a row is in Full auto (or Scheduled, outside staffed hours), Demitry's containment request for that action runs straight away, with no vote, only when every check passes:
+
+- Demitry confirmed Dax's true positive. When Demitry overrode Dax's verdict, a person decides.
+- The account or device came from Demitry's own queries on the incident.
+- Response actions are set up and show **Ready** for that provider (see [Set up response actions](../how-to/set-up-response-actions.md)).
+- The account or device, read back from Microsoft, is not on **Protected from automatic containment** (sign-in names, emails or object IDs; device names or Defender device IDs).
+- No tenant policy rule denies it or requires approval for it.
+- Fewer than 5 automatic containment actions ran for your organization that UTC day, across isolate, disable and revoke.
+
+A request that fails a check stays in Approvals with "Not run automatically: (the reason)", and people are told it is waiting. One that runs is recorded in the Audit Trail, emailed to every administrator (and sent to your notification channels), labelled **Auto-Contained** on the incident, and shown in Approvals History as "Approved automatically (Full auto)". An administrator can reverse an isolation or a disable in one click there with **Undo**. Undo does not switch the row back to Approval, because releasing a device after the investigation is normal.
 
 ### Maxwell under Full auto
 
@@ -114,7 +129,7 @@ In every mode:
 
 - Dax never closes an incident and never runs a response action. Disruptive tools are blocked and the incident is routed to senior QA and human review.
 - Demitry never closes an open incident on its own decision. It files a close request in Approvals; the close happens after a person approves it (or, when Demitry's closes may run on their own, after it is approved automatically). An incident Dax had already closed is only re-labelled as verified, never reopened.
-- Demitry reviews by risk. He gives a full senior review to Dax's benign calls on high-risk incidents, to verdicts below 70% confidence or without a verdict or confidence, to incidents Dax flagged for review and to every High or Critical incident. Other verdicts he passes on without a review, noted on the incident as "Passed without a senior review" with the reason. A benign verdict passed this way becomes a close request that always waits for a person. An attack verdict passed this way stays open for a person to decide the response; no response request is filed. There is no setting for this in the console.
+- Demitry reviews by risk. He gives a full senior review to Dax's benign calls on high-risk incidents, to verdicts below 70% confidence or without a verdict or confidence, to incidents Dax flagged for review and to every High or Critical incident. Other verdicts he passes on without a review, noted on the incident as "Passed without a senior review" with the reason. A benign verdict passed this way becomes a close request that always waits for a person. An attack verdict passed this way stays open for a person to decide the response; no response request is filed. An admin can have him review every verdict instead: Settings > Agent Policies > **What Demitry reviews** > **Every verdict**.
 - When Dax called an incident a true positive and Demitry finds it benign, Demitry files a close request with the classification he chose: Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). This kind of close always waits for a person. If the incident's tactics or techniques are high risk (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact), Demitry does not propose a close at all: he escalates the incident to a person instead.
 - On a confirmed true positive, Demitry files response requests in Approvals. Nothing runs until an admin approves and then runs the response.
 - Marien's tuning proposals always wait for an admin's **Approve & deploy** in Marien's workspace.

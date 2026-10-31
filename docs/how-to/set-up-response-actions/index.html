@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set up response actions | Overwatch Console docs</title>
+    <meta name="description" content="Let approved containment run: disabling an account or revoking its sign-in sessions in Microsoft Entra ID, isolating a device in Microsoft Defender for Endpoint">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/set-up-response-actions/">
+    <meta property="og:title" content="Set up response actions | Overwatch Console docs">
+    <meta property="og:description" content="Let approved containment run: disabling an account or revoking its sign-in sessions in Microsoft Entra ID, isolating a device in Microsoft Defender for Endpoint">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/set-up-response-actions/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/data-handling/">How your data is handled</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/help/">Help</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/add-an-intel-feed/">Add an intel feed</a><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/invite-a-teammate/">Invite a teammate</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy and what runs on its own</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/set-up-response-actions/" aria-current="page">Set up response actions</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to set up response actions</h1>
+<p>Let approved containment run: disabling an account or revoking its sign-in sessions in Microsoft Entra ID, isolating a device in Microsoft Defender for Endpoint, and undoing a disable or an isolation. Agents only propose these; people approve them and an administrator runs them from Approvals.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>admin</strong> role in Overwatch Console. Other roles see &quot;Only organization administrators can set up response actions.&quot;</li><li>Microsoft Sentinel must already be connected. Until it is, the tab shows &quot;Connect Microsoft Sentinel first&quot; and every provider shows <strong>Not available</strong>.</li><li>In Microsoft you need to be a <strong>Global Administrator</strong> of the directory your Sentinel workspace is in (with the script, <strong>Privileged Role Administrator</strong> also works). Granting these application permissions needs one of those roles.</li><li>Device isolation needs Defender for Endpoint in your tenant. Without it, setup creates account actions only.</li><li>You can also set this up during the first setup: tick <strong>Also let Overwatch run containment you approve</strong> in the wizard's <strong>Access</strong> step. See <a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a>.</li></ul>
+<h2 id="steps">Steps</h2>
+<h3 id="connect-with-microsoft-recommended">Connect with Microsoft (recommended)</h3>
+<ol><li>Go to <strong>Govern &gt; Settings</strong> and open the <strong>Response actions</strong> tab. (On the Actions page, <strong>Set up response actions</strong> on the &quot;Containment can't run yet&quot; banner opens it too.)</li><li>Select <strong>Connect with Microsoft</strong> and sign in as a Global Administrator of your Sentinel directory. Microsoft asks you once to approve <strong>Overwatch Console Setup</strong> if nobody has yet.</li><li>Back on the tab, select <strong>Create the response app</strong>. The console creates one app in your directory named &quot;Overwatch-Responder-&quot; plus your organization's name, gives it a one-year secret and grants it only:<ul><li>Microsoft Graph: <strong>User.EnableDisableAccount.All</strong>, <strong>User.Read.All</strong> and <strong>User.RevokeSessions.All</strong></li><li>Defender for Endpoint: <strong>Machine.Isolate</strong> and <strong>Machine.Read.All</strong> (skipped when Defender is not in your tenant)</li></ul></li><li>The tab shows each step: <strong>Creating the response app and its secret</strong>, <strong>Granting only the response permissions</strong> and <strong>Saving and checking response actions</strong>. When it is done, each provider should show <strong>Ready</strong>. If one shows <strong>Not checked</strong> or <strong>Missing permissions</strong>, wait a few minutes (a new grant can take that long to reach Microsoft's tokens) and select <strong>Check permissions</strong>.</li></ol>
+<p>Running it again is safe: it reuses the app, skips permissions already granted and adds a new secret.</p>
+<h3 id="set-up-with-a-script-instead">Set up with a script instead</h3>
+<p>Use this if your organization does not allow administrators to approve third-party apps.</p>
+<ol><li>On the <strong>Response actions</strong> tab, select <strong>Use a script instead</strong>, then <strong>Generate script</strong>.</li><li>Select <strong>Copy script</strong>, open Azure Cloud Shell in <strong>Bash</strong> (or a macOS or Linux terminal with the Azure CLI and jq, signed in with <code>az login</code>), paste it and run it. It creates the same app and grants it only:<ul><li>Microsoft Graph: <strong>User.EnableDisableAccount.All</strong>, <strong>User.Read.All</strong> and <strong>User.RevokeSessions.All</strong> (revoke sign-in sessions; an app set up before this was added keeps disabling accounts, and running the script again adds it)</li><li>Defender for Endpoint: <strong>Machine.Isolate</strong> and <strong>Machine.Read.All</strong></li></ul></li><li>Leave the dialog open. It says &quot;Waiting for the script to report back…&quot; and updates on its own when the script sends the app's details.</li><li>Close the dialog. Each provider should show <strong>Ready</strong>. If one shows <strong>Not checked</strong> or <strong>Missing permissions</strong>, wait a few minutes (a new grant can take that long to reach Microsoft's tokens) and select <strong>Check permissions</strong>.</li></ol>
+<p>The key inside the script works once and expires after 24 hours. Generating a new script retires the old key. Running the script again is safe: it reuses the app, skips permissions already granted and adds a new secret.</p>
+<h3 id="use-an-app-you-already-have">Use an app you already have</h3>
+<ol><li>On the provider's row, select <strong>Enter app details</strong>.</li><li>Enter the <strong>Application (client) ID</strong> and a <strong>New client secret</strong>. The app needs the permissions above as application permissions with admin consent.</li><li>Select <strong>Save and check</strong>. Overwatch saves the secret encrypted and checks the permissions straight away.</li></ol>
+<h3 id="replace-or-remove-an-app">Replace or remove an app</h3>
+<ul><li><strong>Replace</strong> saves a new client ID and secret for that provider. The old secret is no longer used.</li><li><strong>Remove</strong>, then <strong>Remove credentials</strong> to confirm. Responses through that provider are blocked until it is set up again. Actions already sent are not undone.</li></ul>
+<h2 id="what-happens-next">What happens next</h2>
+<p>When Demitry confirms a threat and his queries returned the account or device, he files a containment request in <a href="/docs/features/approvals/">Approvals</a>. If an administrator set that action to Full auto in Settings → Agent Policies, it runs straight away when every check passes (see <a href="/docs/concepts/autonomy-and-approvals/#containment-under-full-auto">Containment under Full auto</a>). Otherwise, after it is approved, an administrator opens <strong>Run the approved response</strong>, selects <strong>Review execution</strong> and then <strong>Confirm response execution</strong>. Overwatch reads the account or device back from Microsoft and records the outcome. <strong>Request undo</strong> files a re-enable or release that is approved and run the same way.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul><li><strong>&quot;Response actions for … are not ready, so this cannot run yet.&quot;</strong> on an approved response: that provider is not set up or its permissions are not verified. Select <strong>Set up response actions</strong> on the card, or open this tab. Nothing was sent, and the approval stays valid until it expires.</li><li><strong>&quot;Your account cannot create app registrations or grant app permissions in this directory.&quot;</strong> with Connect with Microsoft: sign in as a Global Administrator and select <strong>Connect with Microsoft</strong> again.</li><li><strong>&quot;You signed in to a different Microsoft directory (…) than the one this organization uses (…).&quot;</strong>: sign in with an account from the directory your Sentinel workspace is in.</li><li><strong>The script says it could not grant a permission.</strong> You are not a Global Administrator or Privileged Role Administrator. Run it again with one of those roles.</li><li><strong>The script says the console did not accept the app details.</strong> It prints them instead; enter them with <strong>Enter app details</strong>. A key that is too old or already used needs a new script.</li><li><strong>&quot;The script ran in a different Azure directory than the one this console is connected to.&quot;</strong> Run it while signed in to the directory your Sentinel workspace is in.</li><li><strong>Missing permissions after the script ran.</strong> Wait a few minutes and select <strong>Check permissions</strong> again.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a></li><li><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-27</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#troubleshooting">Troubleshooting</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

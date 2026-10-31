@@ -60,6 +60,15 @@ Admins cannot reset another person's password. The person does it themselves:
 3. They follow the link in the email "Reset your Overwatch Console password", enter a **New password** and **Confirm password**, and select **Change password**.
 4. They see "Your password is changed." and sign in with the new password.
 
+### Reset someone's two-step sign-in
+
+Admins sign in with an authenticator code. If an admin loses the phone with their authenticator app:
+
+1. On the **Team** tab, find them under **People**.
+2. Select **Reset two-step**.
+
+Their authenticator is removed and they set up a new one at their next sign-in. You cannot reset your own; ask another admin, or Overwatch support if you are the only admin. Each reset is recorded in the [Audit Trail](../features/audit-trail.md).
+
 ## What happens next
 
 - An invitation link works once and expires after 72 hours. A password reset link works once and expires after 1 hour.

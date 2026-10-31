@@ -17,7 +17,7 @@ Agents start in one of two ways:
 
 A switch being on does not prove the worker is running. Check **SLA & health** on the Agents page for the worker heartbeat, and Agent Audit for what was actually recorded.
 
-What an agent may do without a person is set action by action under **What runs on its own** in Settings > Agent Policies: **Approval**, **Full auto** or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Only an admin can change these, and every change is recorded in the Audit Trail. Two actions can run on their own today: Demitry closing a false positive, and Maxwell deploying a Renzo detection. Marien's tunes, Demitry's overrides of Dax and containment always wait for a person. See [Autonomy and approvals](autonomy-and-approvals.md).
+What an agent may do without a person is set action by action under **What runs on its own** in Settings > Agent Policies: **Approval**, **Full auto** or **Scheduled** (approval during your staffed hours, full auto outside them). Everything starts in Approval. Only an admin can change these, and every change is recorded in the Audit Trail. Actions that can run on their own: Demitry closing a false positive, Maxwell deploying a Renzo detection, and containment (isolate, disable, revoke sessions) after Demitry confirms a threat, each set separately. Marien's tunes and Demitry's overrides of Dax always wait for a person. See [Autonomy and approvals](autonomy-and-approvals.md).
 
 Every agent action is recorded and visible in [Agent Audit](../features/agent-audit.md) and in the agent's **Outputs** tab on the [Agents](../features/agents.md) page.
 

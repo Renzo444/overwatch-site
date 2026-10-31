@@ -1,7 +1,7 @@
 ---
 title: Overview
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-10-27
 ---
 
 # Overview
@@ -24,7 +24,7 @@ Overview is the console's home page. It puts the decisions waiting for you first
 
 ## What you see
 
-The page header reads "Know what needs you." Every count on the page shows where it came from and the window it covers, in a small line under the panel title. When a source cannot be read, the panel says "Unavailable" or shows an error. It never shows a zero in place of missing data.
+The page header reads "Overview". Every count on the page shows where it came from and the window it covers, in a small line under the panel title. When a source cannot be read, the panel says "Unavailable" or shows an error. It never shows a zero in place of missing data.
 
 **Overview layout.** A toggle with two options, **Analyst** and **SOC lead**.
 - **Analyst** (the default): "Your decisions and queue first." The strategic brief sits near the bottom as a collapsed row.
