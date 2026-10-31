@@ -41,6 +41,7 @@ Pages are listed in the order they appear in the navigation.
 - [Metrics & Health](features/metrics-and-health.md)
 - [Audit Trail](features/audit-trail.md)
 - [Settings](features/settings.md)
+- [Billing and plans](features/billing.md): prices, packs, how your size is measured, subscribing and cancelling.
 
 **Help**
 - [Help](features/help.md): these guides inside the console, and how to reach support.
@@ -71,6 +72,7 @@ Pages are listed in the order they appear in the navigation.
 - [Connect Microsoft Sentinel](how-to/connect-microsoft-sentinel.md)
 - [Invite a teammate](how-to/invite-a-teammate.md)
 - [Set up response actions](how-to/set-up-response-actions.md)
+- [Offboard your organization](how-to/offboard-your-organization.md)
 - [Configure notifications](how-to/configure-notifications.md)
 - [Export audit evidence](how-to/export-audit-evidence.md)
 - [Set up branding](how-to/set-up-branding.md)

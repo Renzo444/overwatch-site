@@ -28,6 +28,7 @@ Settings opens on the **Agent appearance** tab.
 | Agent appearance | Own profile | Own profile | Own profile and the tenant default |
 | Team | No access | No access | View and change |
 | Response actions | No access | No access | View and change |
+| Offboard | No access | No access | View and change |
 | Setup wizard link | Hidden | Hidden | Shown |
 
 Where you have no access, the tab says so (for example "Tenant administrators manage external notification destinations." or "Only organization administrators can manage the team.") and asks nothing of you.
@@ -36,7 +37,7 @@ Where you have no access, the tab says so (for example "Tenant administrators ma
 
 **Header.** **Refresh** re-reads every settings tab.
 
-**Tabs.** **Notifications**, **Branding**, **Threat Intel**, **Agent Policies**, **Agent appearance**, **Team**, **Response actions**. Admins also see a **Setup wizard** link at the end of the tab row, which reopens the first-time setup wizard (see [Getting started](../getting-started.md)).
+**Tabs.** **Notifications**, **Branding**, **Threat Intel**, **Agent Policies**, **Agent appearance**, **Team**, **Response actions**, **Offboard**. Admins also see a **Setup wizard** link at the end of the tab row, which reopens the first-time setup wizard (see [Getting started](../getting-started.md)).
 
 ### Notifications
 
@@ -114,6 +115,10 @@ The app that approved containment runs with, in your own Azure directory. Agents
 
 A response can only run when its provider shows **Ready**. Step by step: [Set up response actions](../how-to/set-up-response-actions.md).
 
+### Offboard
+
+Leave Overwatch and remove everything your organization connected. The tab lists what is connected, then walks you through **Start offboarding** (agents stop at once; the rules Overwatch deployed are always removed), **Download export**, **Sign in with Microsoft** and **Remove now** (or **Download the removal script**) and **Finish offboarding**, and ends with an **Exit report** you can print. Step by step: [Offboard your organization](../how-to/offboard-your-organization.md).
+
 ## What you can do
 
 | Action | Who | Takes effect |
@@ -130,6 +135,7 @@ A response can only run when its provider shows **Ready**. Step by step: [Set up
 | Change the tenant default appearance | Admin | Immediately, for everyone without their own choice |
 | Invite a person, change a role, deactivate or reactivate | Admin | On the person's next request |
 | Set up, check, replace or remove response actions | Admin | Immediately for the next response run; actions already sent are not undone |
+| Start, cancel or finish offboarding | Admin | Agents stop immediately; removal in Microsoft and on Overwatch's side happens at each step |
 
 Tenant setting changes (notifications, branding, credentials, intel feeds, agent configuration including what runs on its own, policies, the tenant default appearance) are recorded in the [Audit Trail](audit-trail.md) under **Configuration changes**, with before and after values. Invitations and role changes are recorded in the Audit Trail's **Activity ledger**. None of these changes go through Approvals; they are made directly by the admin.
 
@@ -152,5 +158,6 @@ Tenant setting changes (notifications, branding, credentials, intel feeds, agent
 - [Add an intel feed](../how-to/add-an-intel-feed.md)
 - [Invite a teammate](../how-to/invite-a-teammate.md)
 - [Set up response actions](../how-to/set-up-response-actions.md)
+- [Offboard your organization](../how-to/offboard-your-organization.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)
 - [Roles and permissions](../concepts/roles-and-permissions.md)
