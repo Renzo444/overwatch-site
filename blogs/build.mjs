@@ -45,10 +45,9 @@ function severityText(score) {
 
 const RESEARCH_CATEGORY = 'Malware Analysis';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const SEVERITY_WORD = { high: 'High', medium: 'Medium', low: 'Low' };
+// Research posts carry only the Malware Analysis tag, no severity badge (Lorenzo, Oct 31).
 
 function researchBody(a) {
-  const sev = ['high', 'medium', 'low'].includes(a.severity) ? a.severity : 'medium';
   const date = a.timestamp ? formatDate(a.timestamp) : '';
   const purpose = a.purpose || {};
   const verdict = [
@@ -107,7 +106,6 @@ function researchBody(a) {
             <div class="obs-article-meta">
                 <span class="obs-article-date">${esc(date)}</span>
                 <span class="obs-kind-badge">${RESEARCH_CATEGORY}</span>
-                <span class="obs-severity-badge obs-severity-badge--${sev}"><span class="obs-severity-dot"></span>${SEVERITY_WORD[sev]}</span>
             </div>
             <h1 class="obs-article-title">${esc(a.title)}</h1>
             ${a.dek ? `<p class="obs-article-dek">${esc(a.dek)}</p>` : ''}
@@ -348,14 +346,12 @@ function rewriteIndexFile(articles) {
   const staticGridHtml = articles.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0)).map(item => {
     if (item.isResearch) {
       const date = item.timestamp ? formatDate(item.timestamp) : '';
-      const sev = ['high', 'medium', 'low'].includes(item.severity) ? item.severity : 'medium';
       const cats = (item.purpose?.categories || []).slice(0, 3).map(c => `<span class="obs-tactic-tag">${esc(c[0].toUpperCase() + c.slice(1))}</span>`).join('');
       const desc = esc(item.dek ? (item.dek.length > 180 ? item.dek.slice(0, 180) + '...' : item.dek) : '');
       return `
       <a href="${item.url}" class="obs-card" data-category="malware analysis">
           <div class="obs-card-header">
               <span class="obs-badge obs-badge--research">${RESEARCH_CATEGORY}</span>
-              <span class="obs-badge ${sev === 'high' ? 'high' : sev === 'medium' ? 'medium' : 'low'}">${SEVERITY_WORD[sev]}</span>
           </div>
           <h3 class="obs-card-title">${esc(item.title)}</h3>
           <p class="obs-card-desc">${desc}</p>
