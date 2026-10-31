@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing and plans | Overwatch Console docs</title>
+    <meta name="description" content="The **Billing** page shows what your workspace pays, the prices of every plan and pack, and how big your estate measures. Administrators subscribe, change the c">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/features/billing/">
+    <meta property="og:title" content="Billing and plans | Overwatch Console docs">
+    <meta property="og:description" content="The **Billing** page shows what your workspace pays, the prices of every plan and pack, and how big your estate measures. Administrators subscribe, change the c">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/features/billing/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/data-handling/">How your data is handled</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/billing/" aria-current="page">Billing and plans</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/help/">Help</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/add-an-intel-feed/">Add an intel feed</a><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/invite-a-teammate/">Invite a teammate</a><a href="/docs/how-to/offboard-your-organization/">Offboard your organization</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy and what runs on its own</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/set-up-response-actions/">Set up response actions</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>Billing and plans</h1>
+<p>The <strong>Billing</strong> page shows what your workspace pays, the prices of every plan and pack, and how big your estate measures. Administrators subscribe, change the card or bank account, download invoices and cancel from here. There are no incident counts and no usage meters.</p>
+<h2 id="where-to-find-it">Where to find it</h2>
+<ul><li>The account menu (your initials, top right): <strong>Plan and billing</strong>.</li><li>Command palette: &quot;Go to Plan and billing&quot;.</li><li>The trial card on <strong>Overview</strong>: <strong>See plans and prices</strong> (or <strong>Choose a plan to continue</strong> once the trial has ended).</li><li>Directly at <code>/billing</code>.</li></ul>
+<h2 id="who-can-use-it">Who can use it</h2>
+<div class="docs-table"><table><thead><tr><th></th><th>Viewer</th><th>Analyst</th><th>Admin</th></tr></thead><tbody><tr><td>See the plan, prices and measured size</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td>Subscribe</td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>Manage billing (card, invoices, cancellation)</td><td>No</td><td>No</td><td>Yes</td></tr></tbody></table></div>
+<h2 id="what-you-pay">What you pay</h2>
+<p><strong>Core SOC</strong> is priced by the size of your estate, in monitored assets:</p>
+<div class="docs-table"><table><thead><tr><th>Monitored assets</th><th>Core SOC a month</th></tr></thead><tbody><tr><td>Up to 50</td><td>$850</td></tr><tr><td>Up to 100</td><td>$1,250</td></tr><tr><td>Up to 300</td><td>$2,500</td></tr><tr><td>Up to 600</td><td>$4,000</td></tr><tr><td>More than 600</td><td>A quote at $6 an asset</td></tr></tbody></table></div>
+<p>Core includes Dax's triage, Demitry's review, detection engineering by Renzo, Maxwell and Marien, Atlas, and Full auto with response actions. You choose how much the agents may do alone in <a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a>.</p>
+<p><strong>Packs</strong> add to Core at any size, priced as a share of your Core price:</p>
+<div class="docs-table"><table><thead><tr><th>Pack</th><th>Adds</th><th>Price</th></tr></thead><tbody><tr><td>Email &amp; Malware</td><td>Caleb: reported-phish triage, sandbox and deep malware analysis</td><td>Core +40%</td></tr><tr><td>Threat Hunting</td><td>Orion: proactive hunts from threat intelligence</td><td>Core +35%</td></tr><tr><td>Priority Support</td><td>P1 first reply in 1 hour, extended hours, a monthly review call</td><td>Core +15%</td></tr><tr><td>Complete</td><td>All three packs</td><td>Core +75% instead of the sum</td></tr></tbody></table></div>
+<p>Tax is added where it applies. The free trial includes every pack.</p>
+<h2 id="terms">Terms</h2>
+<div class="docs-table"><table><thead><tr><th>Term</th><th>Price</th><th>Commitment</th></tr></thead><tbody><tr><td>12-month term, billed monthly (the default)</td><td>The prices above</td><td>12 months</td></tr><tr><td>12-month term, paid up front</td><td>10% off, invoiced once a year</td><td>12 months</td></tr><tr><td>Month to month</td><td>20% more</td><td>None: cancel at the end of any month</td></tr></tbody></table></div>
+<p>A 12-month term renews for another 12 months unless you cancel at least 30 days before it ends. If we miss the response times or the availability target in our <a href="/docs/support/">Support</a> policy, you may end a 12-month term early with 60 days' notice. Design-partner discount codes apply to the 12-month term billed monthly.</p>
+<h2 id="how-your-size-is-measured">How your size is measured</h2>
+<p>We install nothing in your environment, so the size is read from Microsoft Sentinel over the last 30 days: the devices sending endpoint or server logs, and the member accounts with a successful sign-in. Your monitored assets are the higher of the two, so a workspace with only identity data is still sized and no one is counted twice. The first count runs within hours of connecting Sentinel and again every 30 days. Billing shows the latest count and suggests the size that fits it.</p>
+<h2 id="when-your-size-changes">When your size changes</h2>
+<ul><li><strong>One count over your size:</strong> you get an email and a notice on Billing. Nothing changes.</li><li><strong>Two monthly counts over your size:</strong> your plan moves to the size that fits the smaller of the two counts, from your next invoice. Nothing is charged for the past month, and you get an email saying so. If you paid the year up front, the difference for the rest of your paid year is invoiced when the plan moves.</li><li><strong>Above 600 assets:</strong> your plan does not change; we contact you with a quote.</li></ul>
+<p>Your plan never moves down by itself. If your estate shrinks, email support and we move you down from the next invoice.</p>
+<h2 id="subscribe">Subscribe</h2>
+<ol><li>Open <strong>Billing</strong> as an administrator.</li><li>Under <strong>Choose your plan</strong>, pick your size, any packs and your term. The total updates as you choose.</li><li>Click <strong>Subscribe</strong> and pay in Stripe's checkout, by card or US bank account.</li></ol>
+<p>You can subscribe during the trial or after it ends; an ended trial's agents switch back on as soon as the first payment goes through. A workspace that cannot use checkout can email support to be invoiced instead.</p>
+<h2 id="manage-billing-or-cancel">Manage billing or cancel</h2>
+<p>Billing shows what you pay each month, your term and when its commitment ends, and when the plan renews. Click <strong>Manage billing</strong> to open Stripe's billing portal. There you change the card or bank account, see and download invoices, and cancel your subscription. A month-to-month plan can be cancelled there at any time. A 12-month term runs to its end date: to stop it renewing, email support at least 30 days before it ends (or give 60 days' notice after a missed target, as above). A cancellation takes effect at the end of the period you paid for: Billing shows the date, the agents keep running until then, and you can renew in the portal before it. To add or remove a pack, email support and we change it from the next invoice.</p>
+<p>If your plan does not include a pack, the agents in it do not run, and Overwatch Console tells you which pack adds them.</p>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a></li><li><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a></li><li><a href="/docs/features/help/">Help</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-31</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#where-to-find-it">Where to find it</a><a href="#who-can-use-it">Who can use it</a><a href="#what-you-pay">What you pay</a><a href="#terms">Terms</a><a href="#how-your-size-is-measured">How your size is measured</a><a href="#when-your-size-changes">When your size changes</a><a href="#subscribe">Subscribe</a><a href="#manage-billing-or-cancel">Manage billing or cancel</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 ---
 title: How your data is handled
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-10-30
 ---
 
 # How your data is handled
@@ -65,9 +65,7 @@ Investigation records follow the agent log window. Entity history is kept for at
 
 ## Removing your data
 
-When you stop using Overwatch, ask us to delete your tenant's data and we will confirm when it is done. Deleting data in Overwatch never touches your Sentinel workspace.
-
-**Planned:** offboarding that deletes all of a tenant's data and produces a deletion record.
+When you stop using Overwatch, an administrator offboards your organization from **Settings > Offboard** ([Offboard your organization](../how-to/offboard-your-organization.md)). Agents stop at once, you can download an export, and the console removes the apps, roles and consent it created in your Microsoft directory and every rule it deployed. The export holds your records but not Overwatch's detection logic. Connection secrets, webhooks and keys are deleted when you finish. Your data is then kept for 30 days, or deleted at once if you choose, and after that every record of your organization is deleted and we keep only a deletion record (when, who started it, and how many records were deleted). Until automatic deletion is switched on for all clients, we run the deletion ourselves at the end of the window and confirm when it is done. Deleting data in Overwatch never touches your Sentinel logs.
 
 ## Companies that process your data
 

@@ -1,7 +1,7 @@
 ---
 title: How to ask Atlas
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-10-27
 ---
 
 # How to ask Atlas
@@ -20,7 +20,7 @@ Ask Atlas, the copilot, a question about what you are looking at or about your t
 3. Check the **In view** chips. Remove any record you do not want Atlas to consider by clicking its ×.
 4. Type your question in "Ask about what's on screen…" and press **Enter**, or click a suggested question.
 5. Watch the lines above the answer to see which agent took the request and how many rows came back.
-6. Read the answer and the KQL Atlas shows at the end.
+6. Read the answer. Open **Details** under it for IDs, timestamps and the KQL Atlas ran. For a long answer, **Widen Atlas** in the header.
 7. Optional: click **Execute** on a KQL block to run it yourself (up to 20 rows; the last day, or longer when the query itself looks back further, up to 30 days), or **Copy** it.
 8. Optional: click **Pin to #N notes** to save the answer to the incident's case notes.
 

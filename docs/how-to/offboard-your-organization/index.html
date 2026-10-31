@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offboard your organization | Overwatch Console docs</title>
+    <meta name="description" content="Leave Overwatch Console and remove everything your organization connected: the apps, roles and consent in your Microsoft directory, every rule Overwatch's agent">
+    <link rel="canonical" href="https://www.overwatchsecurity.tech/docs/how-to/offboard-your-organization/">
+    <meta property="og:title" content="Offboard your organization | Overwatch Console docs">
+    <meta property="og:description" content="Leave Overwatch Console and remove everything your organization connected: the apps, roles and consent in your Microsoft directory, every rule Overwatch's agent">
+    <meta property="og:url" content="https://www.overwatchsecurity.tech/docs/how-to/offboard-your-organization/">
+    <meta property="og:site_name" content="Overwatch Security">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/docs/docs.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="docs-body">
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo"><img src="/logo.png" alt="Overwatch Security" /></a>
+            <div class="nav-links">
+                <a href="/#home" class="nav-link">Home</a>
+                <a href="/#platform" class="nav-link">Platform</a>
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/blogs/" class="nav-link">Observatory</a>
+                <a href="/docs/" class="nav-link active">Docs</a>
+                <a href="https://outlook.office.com/book/InitialCall@overwatchsecurity.tech/?ismsaljsauthenabled" class="nav-cta" target="_blank">Book a Consultation</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="docs-shell">
+        <details class="docs-sidebar" open>
+            <summary>Documentation menu</summary>
+            <nav aria-label="Documentation"><div class="docs-nav-group"><a href="/docs/">Documentation home</a><a href="/docs/getting-started/">Getting started</a></div><div class="docs-nav-group"><h4>Concepts</h4><a href="/docs/concepts/autonomy-and-approvals/">Autonomy and approvals</a><a href="/docs/concepts/data-handling/">How your data is handled</a><a href="/docs/concepts/roles-and-permissions/">Roles and permissions</a><a href="/docs/concepts/the-agents/">The agents</a></div><div class="docs-nav-group"><h4>Features</h4><a href="/docs/features/actions/">Actions</a><a href="/docs/features/agent-audit/">Agent Audit</a><a href="/docs/features/agents/">Agents</a><a href="/docs/features/approvals/">Approvals</a><a href="/docs/features/atlas-copilot/">Atlas copilot</a><a href="/docs/features/audit-trail/">Audit Trail</a><a href="/docs/features/billing/">Billing and plans</a><a href="/docs/features/data-connectors/">Data connectors</a><a href="/docs/features/detection-library/">Detection Library</a><a href="/docs/features/help/">Help</a><a href="/docs/features/incidents/">Incidents</a><a href="/docs/features/live-feed/">Live Feed</a><a href="/docs/features/metrics-and-health/">Metrics &amp; Health</a><a href="/docs/features/overview/">Overview</a><a href="/docs/features/relationships/">Relationships</a><a href="/docs/features/settings/">Settings</a></div><div class="docs-nav-group"><h4>How-To guides</h4><a href="/docs/how-to/add-an-intel-feed/">Add an intel feed</a><a href="/docs/how-to/approve-or-deny-an-action/">Approve or deny an action</a><a href="/docs/how-to/ask-atlas/">Ask Atlas</a><a href="/docs/how-to/build-a-playbook/">Build a playbook</a><a href="/docs/how-to/close-an-incident/">Close an incident</a><a href="/docs/how-to/configure-notifications/">Configure notifications</a><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a><a href="/docs/how-to/deploy-or-recall-a-rule/">Deploy or recall a rule</a><a href="/docs/how-to/export-audit-evidence/">Export audit evidence</a><a href="/docs/how-to/fix-a-coverage-gap/">Fix a coverage gap</a><a href="/docs/how-to/invite-a-teammate/">Invite a teammate</a><a href="/docs/how-to/offboard-your-organization/" aria-current="page">Offboard your organization</a><a href="/docs/how-to/review-agent-decisions/">Review agent decisions</a><a href="/docs/how-to/run-a-threat-hunt/">Run a threat hunt</a><a href="/docs/how-to/run-an-agent/">Run an agent</a><a href="/docs/how-to/set-agent-autonomy/">Set agent autonomy and what runs on its own</a><a href="/docs/how-to/set-up-branding/">Set up branding</a><a href="/docs/how-to/set-up-response-actions/">Set up response actions</a><a href="/docs/how-to/triage-an-incident/">Triage an incident</a><a href="/docs/how-to/tune-a-noisy-rule/">Tune a noisy rule</a><a href="/docs/how-to/turn-intel-into-a-detection/">Turn intel into a detection</a></div></nav>
+        </details>
+        <main class="docs-main"><article class="docs-article"><h1>How to offboard your organization</h1>
+<p>Leave Overwatch Console and remove everything your organization connected: the apps, roles and consent in your Microsoft directory, every rule Overwatch's agents deployed, and every key and connection Overwatch holds. You keep an exit report that lists each item and what happened to it. Your Sentinel logs are never touched.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul><li>You need the <strong>admin</strong> role in Overwatch Console. Other roles see &quot;Only organization administrators can offboard.&quot;</li><li>In Microsoft you need to be a <strong>Global Administrator</strong> of the directory your Sentinel workspace is in, and <strong>Owner</strong> or <strong>User Access Administrator</strong> on the workspace's subscription. Removing apps, role assignments and custom roles needs both.</li><li>The rules Overwatch deployed are Overwatch's detection content, so they are always removed. Your own rules are never touched.</li></ul>
+<h2 id="steps">Steps</h2>
+<ol><li>Go to <strong>Govern &gt; Settings</strong> and open the <strong>Offboard</strong> tab. It lists what your organization has connected: Sentinel workspaces, agent apps, the response actions app, rules Overwatch deployed, webhooks, integration and intel keys, members and the subscription.</li><li>Choose <strong>Delete my data after 30 days</strong> or <strong>Delete my data as soon as offboarding finishes</strong>.</li><li>Select <strong>Start offboarding</strong>, type your organization's name and select <strong>Stop agents and start</strong>. Every agent and schedule stops at once and members who are not administrators lose access. Nothing is removed yet; until the Microsoft step you can select <strong>Cancel offboarding</strong>.</li><li>Select <strong>Download export</strong>. You get one file with your investigations, verdicts, audit trail, reports and the names of the detections Overwatch ran for you (without their detection logic).</li><li>Select <strong>Sign in with Microsoft</strong>, sign in as the administrator described above and approve <strong>Overwatch Console Setup</strong> if Microsoft asks. Back on the tab, select <strong>Remove now</strong>. The console removes, for each connected workspace, every rule Overwatch deployed, the agent apps' access and the three custom roles, then the three agent apps and their secrets, the response app with its Graph and Defender permissions, and last the consent to Overwatch Console Setup. It checks each one is gone and lists it as <strong>removed</strong>, <strong>not present</strong> or <strong>failed</strong>.<ul><li>If your organization blocks third-party apps, select <strong>Download the removal script</strong>, run it in Azure Cloud Shell (Bash) as the same administrator, then select <strong>tell us you ran it</strong>.</li></ul></li><li>Select <strong>Finish offboarding</strong>. Overwatch deletes your connection secrets, webhooks, integration and intel keys and account links, and cancels the subscription at the end of the period you paid for. If you chose <strong>Delete my data as soon as offboarding finishes</strong>, download the export first.</li><li>Keep the <strong>Exit report</strong>: <strong>Print or save as PDF</strong> saves a copy.</li></ol>
+<h2 id="what-happens-next">What happens next</h2>
+<p>Your data is kept for 30 days (or not at all, if you chose that), during which administrators can still sign in and download the export. Then every record of your organization is deleted and Overwatch keeps only a deletion record: when it happened, who started it and how many records were deleted. Stripe keeps your invoices for accounting.</p>
+<h2 id="if-something-was-not-removed">If something was not removed</h2>
+<p>When the exit report shows <strong>failed</strong>, or you used the script, check these in the Microsoft portals:</p>
+<ul><li>Microsoft Entra admin center &gt; <strong>App registrations</strong> &gt; <strong>All applications</strong>: search &quot;Overwatch-&quot; and delete each app. Then <strong>Deleted applications</strong> &gt; delete permanently.</li><li>Entra admin center &gt; <strong>Enterprise applications</strong>: open <strong>Overwatch Console Setup</strong> &gt; <strong>Properties</strong> &gt; <strong>Delete</strong>.</li><li>Azure portal &gt; your Sentinel workspace &gt; <strong>Access control (IAM)</strong>: remove role assignments to Overwatch apps, then delete the custom roles &quot;Overwatch Analyst&quot;, &quot;Overwatch Engineer&quot; and &quot;Overwatch Deployer&quot;.</li><li>Microsoft Sentinel &gt; <strong>Analytics</strong>: delete any rule Overwatch deployed that is still there. Their names are in your export.</li></ul>
+<h2 id="related">Related</h2>
+<ul><li><a href="/docs/concepts/data-handling/">How your data is handled</a></li><li><a href="/docs/features/settings/">Settings</a></li><li><a href="/docs/how-to/connect-microsoft-sentinel/">Connect Microsoft Sentinel</a></li></ul><p class="docs-reviewed">Last reviewed 2026-10-30</p></article></main>
+        <nav class="docs-toc" aria-label="On this page"><h4>On this page</h4><a href="#before-you-start">Before you start</a><a href="#steps">Steps</a><a href="#what-happens-next">What happens next</a><a href="#if-something-was-not-removed">If something was not removed</a><a href="#related">Related</a></nav>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>© 2026 Overwatch Security LLC. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+        if (window.matchMedia('(max-width: 900px)').matches) document.querySelector('.docs-sidebar')?.removeAttribute('open');
+    </script>
+</body>
+</html>
