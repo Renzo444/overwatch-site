@@ -109,7 +109,7 @@ function researchBody(a) {
             </div>
             <h1 class="obs-article-title">${esc(a.title)}</h1>
             ${a.dek ? `<p class="obs-article-dek">${esc(a.dek)}</p>` : ''}
-            <p class="obs-article-byline">By <strong>${esc(a.byline || 'Overwatch Labs')}</strong>${a.analyst ? ` &middot; Malware analysis by ${esc(a.analyst)}` : ''}</p>
+            <p class="obs-article-byline">By <strong>Overwatch Labs</strong></p>
         </header>
         ${a.methods ? `<div class="obs-methods"><div class="obs-methods-label">How this analysis was produced</div><p>${esc(a.methods)}</p></div>` : ''}
         ${verdict ? `<div class="obs-verdict">${verdict}</div>` : ''}
