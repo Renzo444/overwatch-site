@@ -255,6 +255,9 @@ function layout({ title, description, canonical, sidebar, main, toc }) {
     <link rel="stylesheet" href="/docs/docs.css">
     <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Vercel Web Analytics: cookieless page views, same origin (allowed by the CSP). -->
+    <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="docs-body">
     <nav class="nav scrolled" id="nav">
