@@ -1,0 +1,51 @@
+name: Deploy site to Vercel
+
+# Builds the Observatory pages from the console's public feed and deploys the site to Vercel
+# production. Runs on every push to main and by hand. Needs three repository secrets:
+# VERCEL_TOKEN, VERCEL_ORG_ID (the team id) and VERCEL_PROJECT_ID.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Check required secrets
+        run: |
+          [ -n "${{ secrets.VERCEL_TOKEN }}" ] || { echo "::error::VERCEL_TOKEN repository secret is not set"; exit 1; }
+          [ -n "$VERCEL_ORG_ID" ] || { echo "::error::VERCEL_ORG_ID repository secret is not set"; exit 1; }
+          [ -n "$VERCEL_PROJECT_ID" ] || { echo "::error::VERCEL_PROJECT_ID repository secret is not set"; exit 1; }
+
+      # Observatory pages are generated from the console's public feed (approved posts only).
+      - name: Build Observatory pages
+        run: npm run build
+
+      - name: Deploy to Vercel production
+        run: |
+          npx --yes vercel@latest pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
+          npx --yes vercel@latest deploy --prod --yes --token="${{ secrets.VERCEL_TOKEN }}" > deploy-url.txt
+          echo "Deployed: $(cat deploy-url.txt)"
+
+      - name: Smoke-check the Observatory
+        run: |
+          STATUS=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "https://www.overwatchsecurity.tech/blogs/?v=$GITHUB_RUN_ID")
+          echo "Observatory: $STATUS"
+          [ "$STATUS" = "200" ] || { echo "::error::Observatory returned $STATUS"; exit 1; }

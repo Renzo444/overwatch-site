@@ -111,6 +111,9 @@
             transition: all 0.2s ease; margin-left: 0.5rem;
         }
 
+        .nav-link, .nav-cta { white-space: nowrap; }
+        @media (max-width: 1200px) and (min-width: 1025px) { .nav-links { gap: 0.25rem; } .nav-link { padding: 0.5rem 0.5rem; font-size: 0.8rem; } .nav-cta { padding: 0.5rem 0.9rem; } }
+
         .nav-cta:hover {
             background: rgba(141, 198, 63, 0.2);
             box-shadow: 0 0 15px rgba(141, 198, 63, 0.15);
@@ -125,7 +128,7 @@
             width: 24px; height: 2px; background: var(--text-primary); transition: all 0.3s;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .nav-mobile-toggle { display: flex; }
             .nav-links {
                 display: none; position: absolute; top: 100%; left: 0; right: 0;
@@ -637,7 +640,7 @@
                 </span>
             </div>
             <h1 class="obs-article-title">{{TITLE}}</h1>
-            <p class="obs-article-byline">By <strong>Overwatch Observatory</strong> &mdash; Automated Detection Engineering</p>
+            <p class="obs-article-byline">By <strong>Overwatch Labs</strong></p>
         </header>
 
         <!-- Threat Overview -->
