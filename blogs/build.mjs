@@ -146,6 +146,15 @@ async function buildSite() {
     }
   }
 
+  // blogs/hidden.json: ids of approved posts to keep off the site (a quick takedown of one post while it is
+  // rewritten in the console); every other post still builds.
+  const hiddenFile = path.join(__dirname, 'hidden.json');
+  const hidden = new Set(fs.existsSync(hiddenFile) ? JSON.parse(fs.readFileSync(hiddenFile, 'utf8')) : []);
+  if (hidden.size) {
+    articles = articles.filter((a) => !hidden.has(a?.id));
+    console.log(`Hiding ${hidden.size} post(s): ${[...hidden].join(', ')}`);
+  }
+
   console.log(`Found ${articles.length} articles.`);
 
   const researchArticles = articles.filter((a) => a?.kind === 'research');
