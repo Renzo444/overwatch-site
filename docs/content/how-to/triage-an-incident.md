@@ -1,7 +1,7 @@
 ---
 title: How to triage an incident
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to triage an incident
@@ -21,7 +21,7 @@ Work one incident from the queue to a decision: read what Dax and Demitry record
 4. Click the incident's row to open the incident panel.
 5. Read the **Dax verdict** and **Demitry QA** tiles at the top of the panel.
 6. If the panel says "No investigation chain recorded yet", click **Ask Dax to analyze**. To run a fresh analysis on an incident that already has one, click **Re-analyze**.
-7. Read **Similar past cases** to see how closed incidents with the same rule, entities or techniques were classified. Click **Open historical case** for the details of one.
+7. Read **Similar past cases** to see how closed incidents with the same rule, entities or techniques were classified, and any reviewer feedback stored for them. Click **Open historical case** for the details of one.
 8. Read the **Investigation chain**. Each query step says why the agent ran it, what came back (the **Result** line) and the KQL. Demitry's verdict step shows whether he agrees with Dax (**Versus Dax**) and why. Expand **Recorded assessment and full trail** for Dax's full reasoning and the queries he ran.
 9. Check **Entities** for the accounts, hosts and addresses involved.
 10. Click **Assign to me** to take ownership, or **Assign to…** and enter a colleague's email, then click **Assign**.
@@ -39,6 +39,7 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 - When Demitry confirms a true positive, he files a response request (for example isolating a host or disabling an account) in Approvals. Nothing is contained until an administrator approves it and then runs it.
 - When Demitry confirms a false or benign positive, he files a close request in Approvals. The incident closes on his next run after an administrator approves it, or automatically if an administrator set Demitry's closes to Full auto in Settings. Your policy rules can send it to a person instead.
 - When Demitry disagrees with Dax's true positive and finds the incident benign, his close request carries the classification he chose (Benign Positive or False Positive) and always waits for a person. On a high-risk incident (for example credential access, privilege escalation, persistence or exfiltration) he escalates it to a person instead, and the incident stays open.
+- A benign call that rests only on the data looking staged or synthetic, or on the activity looking like someone's security test, is never closed by the agents. Dax sends it to Demitry and a person; Demitry escalates it to a person and the incident stays open. Only a person can confirm a test was sanctioned.
 - When Demitry escalates an incident for human review, the console sends a "Needs a person" notification through the channels your administrator set up.
 - Assigning an incident to a person takes it out of Dax's automatic queue until it is unassigned. Demitry also leaves a person-owned incident alone, and no agent reopens an incident a person closed.
 - **Helpful** and **Needs review** are recorded in Agent Audit as your opinion. They do not change the verdict or retrain anything.
@@ -46,6 +47,7 @@ To ask Dax to analyze every unassessed open incident in view at once, click **An
 
 ## If something goes wrong
 
+- **Dax's steps stop and the incident is back in the queue**: the AI service or Microsoft Azure could not be reached. Nothing is decided; the incident is picked up again on a later run, and Agent Audit records the pause.
 - **"Incident queue unavailable"**: the console could not read Sentinel. Click **Retry**. If a list was already loaded, the page keeps it and marks it as possibly stale.
 - **"Select an incident status to load the queue."**: every status checkbox is cleared. Tick at least one.
 - **"No incidents match these filters"**: up to 50 incidents were read and none match. Widen the time range, severity or status.

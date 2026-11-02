@@ -1,7 +1,7 @@
 ---
 title: How your data is handled
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-11-02
 ---
 
 # How your data is handled
@@ -37,7 +37,7 @@ To investigate an incident, an agent sends the evidence it needs (incident detai
 | Model provider | Used by |
 | --- | --- |
 | Anthropic (Claude), hosted on Google Vertex AI or Amazon Bedrock | Dax, Marien (tuning), Renzo (rule authoring), Caleb, Maxwell |
-| Google (Gemini) | Demitry, Orion, Atlas, Marien (investigation), Renzo (research) |
+| Google (Gemini) | Demitry, Orion, Atlas, Marien (investigation), Renzo (research), and Caleb when the first model declines an analysis |
 | OpenAI, hosted on Microsoft Azure | Embeddings for incident memory |
 
 Every request asks OpenRouter for zero data retention: it may only go to a host that does not keep prompts or responses and does not collect them. If a model has no such host, the request is refused rather than sent elsewhere.
@@ -65,9 +65,7 @@ Investigation records follow the agent log window. Entity history is kept for at
 
 ## Removing your data
 
-When you stop using Overwatch, ask us to delete your tenant's data and we will confirm when it is done. Deleting data in Overwatch never touches your Sentinel workspace.
-
-**Planned:** offboarding that deletes all of a tenant's data and produces a deletion record.
+When you stop using Overwatch, an administrator offboards your organization from **Settings > Offboard** ([Offboard your organization](../how-to/offboard-your-organization.md)). Agents stop at once, you can download an export, and the console removes the apps, roles and consent it created in your Microsoft directory and every rule it deployed. The export holds your records but not Overwatch's detection logic. Connection secrets, webhooks and keys are deleted when you finish. Your data is then kept for 30 days, or deleted at once if you choose, and after that every record of your organization is deleted and we keep only a deletion record (when, who started it, and how many records were deleted). Until automatic deletion is switched on for all clients, we run the deletion ourselves at the end of the window and confirm when it is done. Deleting data in Overwatch never touches your Sentinel logs.
 
 ## Companies that process your data
 
@@ -80,3 +78,6 @@ When you stop using Overwatch, ask us to delete your tenant's data and we will c
 | Google | AI models (Gemini, and Claude on Vertex AI) | Global, as routed |
 | OpenAI, through Microsoft Azure | Embeddings for incident memory | Global, as routed |
 | Microsoft | Your Sentinel workspace and app registrations | Your Azure region |
+| Microsoft Azure, in Overwatch's own subscription | Caleb's analysis of reported emails and their attachments, each in a short-lived isolated container | The analysis region set for your organization |
+| Stripe | Subscriptions, payments and invoices, for workspaces that subscribe on the Billing page | United States |
+| Resend | Sending account emails (invitations, password resets) and emails to your administrators | United States |

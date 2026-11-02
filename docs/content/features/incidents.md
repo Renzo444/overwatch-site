@@ -1,7 +1,7 @@
 ---
 title: Incidents
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # Incidents
@@ -26,14 +26,14 @@ The Incidents page lists incidents from your Microsoft Sentinel workspace next t
 
 ## What you see
 
-The page header reads "Follow the investigation." with a **Refresh** button.
+The page header reads "Incidents" with a **Refresh** button.
 
 **Filter row.**
 - **Assessment filter** chips, each with a count: **All**, **No assessment**, **Assessed**, **Assigned to me**. "Assigned to me" matches incidents whose Sentinel owner is your account.
 - **Incident time range**: **Last 7 days** (default), **Last 14 days**, **Last 30 days**, **Last 60 days**. Incidents are matched by when they were created.
 - **Incident severity**: **All severities**, **High**, **Medium**, **Low**, **Informational**.
 - **Incident status** picker: checkboxes for **Active**, **New**, **Closed** and **All incidents**. The default is Active, which includes incidents Sentinel marks New or Active.
-- **Search incidents**: a search button that opens a box for title, number, owner, ID or severity.
+- **Search incidents**: a search button that opens a box for title, number, owner, ID, severity or Sentinel workspace name.
 - **Export CSV** and **Analyze unassessed** at the right.
 
 A line under the filters says when the list was read from Sentinel and reminds you that the list holds up to 50 matching incidents. It is not a count of all open incidents. If the cap was reached it says "sample cap reached".
@@ -81,13 +81,16 @@ See [How to close an incident](../how-to/close-an-incident.md) for the close dia
 - The table holds up to 50 incidents per read, filtered in Sentinel by status, severity and time range before the cap. Narrow the filters if you hit the cap.
 - If you clear every status checkbox, nothing loads and the page says "Select an incident status to load the queue."
 - Verdicts and QA reviews come from what the agents recorded. "No assessment recorded" only means Dax has not written evidence for that incident; it does not mean nobody looked at it.
+- If your organization monitors more than one Sentinel workspace, the list merges incidents from all of them, newest first, and holds up to 50 matching incidents per workspace. Each incident shows the name of the workspace it came from, in the table and in the panel. A workspace that cannot be read is left out of that read while the others still load.
 - If the list cannot be refreshed, the page keeps the last list it read and says it may be stale, with a **Retry** link.
 - Dax only picks up incidents that are unassigned or owned by Dax. Assigning an incident to a person takes it out of his automatic queue.
 - A person's claim and a person's close are final for the agents. Demitry does not review an incident a person owns; if someone claims it while he is reviewing, he leaves his verdict as a comment and changes nothing else. No agent reopens or reclassifies an incident a person closed.
 - When Demitry confirms a false or benign positive on an open incident, he does not close it himself. He files a close request in [Approvals](approvals.md), and the incident is closed on his next run after an administrator approves it. Your tenant's policy rules can also send the incident to a person instead. An administrator can let some of these closes be approved automatically under Settings > Agent Policies > **What runs on its own**. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 - When Dax called an incident a true positive and Demitry finds it benign, Demitry chooses whether the close should be Benign Positive (the rule fired correctly on real but expected or authorised activity) or False Positive (the rule's logic or data was wrong). His comment on the incident says which, and the close request always waits for a person. On a high-risk incident (for example credential access, privilege escalation, defense evasion, persistence, collection, exfiltration or impact) he does not propose a close: he escalates the incident to a person and it stays open.
-- Demitry reviews by risk. Dax's benign calls on high-risk incidents, verdicts below 70% confidence, incidents Dax flagged and every High or Critical incident get a full senior review. Other verdicts are passed on without one, with a comment starting "Passed without a senior review". A benign verdict passed this way still becomes a close request that waits for a person. An attack verdict passed this way stays open for you to decide the response; Demitry files no response request for it.
-- If the AI service is unavailable while Dax investigates, the incident goes back to his queue instead of being escalated, and Dax comments on it when he investigates it again.
+- Demitry reviews by risk unless an admin chose **Every verdict** in Settings > Agent Policies > **What Demitry reviews**. Dax's benign calls on high-risk incidents, verdicts below 70% confidence, incidents Dax flagged and every High or Critical incident get a full senior review. Other verdicts are passed on without one, with a comment starting "Passed without a senior review". A benign verdict passed this way still becomes a close request that waits for a person. An attack verdict passed this way stays open for you to decide the response; Demitry files no response request for it.
+- Before Microsoft Sentinel is connected, the list says "Microsoft Sentinel is not connected yet" instead of showing an empty queue. An administrator connects it in the setup wizard (Settings → Setup wizard). If the incident list cannot be read for another reason, it says "Incident queue unavailable" with **Retry**, and no count is shown.
+- If the AI service is unavailable while Dax investigates, the incident goes back to his queue instead of being escalated, and Dax comments on it when he investigates it again. If Microsoft Azure cannot be reached, Dax and Demitry pause in the same way: the incident goes back to the queue and is picked up on a later run, and Agent Audit records the pause.
+- Data that looks staged, synthetic or replayed, or activity that looks like someone's security test (a red team, pen test or attack simulation), is never enough for a benign verdict. If Dax's benign call rests on that, he sends the incident to Demitry and a person. If Demitry's would, he escalates the incident to a person instead of proposing a close, and it stays open.
 - Dax, Demitry and the other agents know which log sources your workspace ingests (the same summary as the [Data connectors](data-connectors.md) page). When evidence is missing because a source is stale or not connected, they treat it as missing data, not as proof the activity did not happen.
 - When Demitry escalates an incident for human review, the console also sends a "Needs a person" notification through the channels your administrator set up. See [How to configure notifications](../how-to/configure-notifications.md).
 - **Not similar?** on a similar case marks it in your current view only. It is not saved.

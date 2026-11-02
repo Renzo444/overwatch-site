@@ -1,7 +1,7 @@
 ---
 title: Data connectors
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-11-02
 ---
 
 # Data connectors
@@ -17,17 +17,18 @@ Data connectors shows what data is flowing into your Microsoft Sentinel workspac
 
 | Role | What you can do here |
 |------|----------------------|
-| Viewer | See everything on the page, copy verification KQL, **Refresh**. |
+| Viewer | See everything on the page, choose which workspace it shows, copy verification KQL, **Refresh**. |
 | Analyst | Everything a viewer can, plus **Run check**, **Already covered elsewhere** (dismiss a suggestion) and **Undo**. |
-| Admin | Same as analyst. |
+| Admin | Everything an analyst can, plus **Add workspace** and **Remove** under **Monitored workspaces**. |
 
-Connectors themselves are set up in Microsoft Sentinel, not here. Nothing on this page changes your workspace.
+Connectors themselves are set up in Microsoft Sentinel, not here. Apart from adding or removing a monitored workspace, nothing on this page changes your workspace.
 
 ## What you see
 
 - **Summary tiles.** **Connected** (sources sending data), **Daily volume** (last 24 hours), **Healthy** (receiving data), **Needs attention** (degraded or stale) and **Open suggestions** (with the number dismissed). When the workspace cannot be read, tiles say **Unavailable**, never 0.
+- **Monitored workspaces.** Every Microsoft Sentinel workspace your organization monitors, the first one marked **First workspace**, with its resource group, subscription and, for a workspace in another Microsoft directory, that directory. The header shows how many you have of the limit ("2 of 10 · every agent works each one"). With more than one workspace, each row has **Show below** (the one on screen says **Showing below**): the rest of the page shows one workspace at a time, the first one unless you pick another. See [Monitored workspaces](#monitored-workspaces) below.
 - **Connector health note.** What Microsoft's own health monitoring reports: how many connectors report and how many fail. If health monitoring is off in your workspace, the note tells you where to turn it on in Microsoft Sentinel (**Settings → Auditing and health monitoring**).
-- **Azure secret expiry (admins only).** When the Azure client secrets Overwatch Console uses will expire. Within 30 days of the date, after it, or when no date is recorded, the note is a warning with **Open setup**, which opens the setup wizard so you can run the setup script again. See [Connect Microsoft Sentinel](../how-to/connect-microsoft-sentinel.md#keep-the-secrets-from-expiring).
+- **Azure secret expiry (admins only).** When the Azure client secrets Overwatch Console uses will expire. Within 30 days of the date, after it, or when no date is recorded, the note is a warning with **Open setup**, which opens the setup wizard so you can run setup again with Connect with Microsoft. See [Connect Microsoft Sentinel](../how-to/connect-microsoft-sentinel.md#keep-the-secrets-from-expiring).
 - **Data flow.** A diagram of your top 10 connectors by volume feeding Microsoft Sentinel, and what uses the data: Orion's hunts and library detections are counted; use by Dax, Demitry, Caleb and the strategic brief is shown as "not tracked".
 - **Data connectors list.** Category buttons (**All**, **Endpoint**, **Identity**, **Network**, **Email**, **SaaS**, **Cloud**) and one row per connector with its tables, volume and status.
 - **Connector detail** for the selected connector:
@@ -46,6 +47,21 @@ Connectors themselves are set up in Microsoft Sentinel, not here. Nothing on thi
 
   A separate list names tables your detections read that no catalog connector writes, such as custom log tables.
 
+### Monitored workspaces
+
+An organization can monitor up to 10 Microsoft Sentinel workspaces, in the same Microsoft directory or in others. Dax, Demitry, Marien and Orion each work every monitored workspace. The connector list, health figures, gaps and checks on this page are read for the workspace you chose with **Show below**.
+
+**Add a workspace (admin).**
+
+1. Click **Add workspace**. It is available once your first workspace is connected and while you are under the limit.
+2. Sign in with Microsoft, with an account that can see the workspace's subscription. It can be in the directory you already use or in another one.
+3. Back on Data connectors, pick the workspace from the list. Each entry shows the workspace name (with "· Microsoft Sentinel" when Sentinel is on), the subscription, resource group and region, or "Sentinel is not on for this workspace".
+4. Click **Add …** (with the workspace name) and wait for the setup steps to finish. A workspace in the directory you already use reuses your agent apps; one in another directory gets its own. If a step fails, the reason is shown with **Run setup again**. **Close** leaves without adding.
+
+**Remove a workspace (admin).** Click **Remove** on an added workspace and confirm ("Stop monitoring …? Agents stop working there. Rules already deployed in it stay in place."). The first workspace cannot be removed here; it is changed in the setup wizard.
+
+If the list cannot be read, the card says "Unavailable · The workspace list could not be read."
+
 ### How status is decided
 
 | Status | Rule |
@@ -61,7 +77,7 @@ Volumes are billed bytes from the workspace's usage records over a 7-day window.
 - **Refresh** re-reads workspace health, the table list, checks and dismissals. The page also re-reads health every 10 minutes while open. If a refresh fails, the figures shown are from the last successful read.
 - **Show setup and check** on a gap card shows the connector facts, numbered setup steps for Microsoft Sentinel and the verification panel.
 - **Copy KQL** copies the verification query so you can run it in Microsoft Sentinel → Logs.
-- **Run check** (analyst or admin) runs the verification query now and saves the result with who ran it and when. Results read **Receiving data**, **No data in the last 24 hours**, **No data in the last 7 days**, **Tables not in the workspace** or **Check failed**, with per-table event counts.
+- **Run check** (analyst or admin) runs the verification query now, against the workspace shown, and saves the result with who ran it and when. Results read **Receiving data**, **No data in the last 24 hours**, **No data in the last 7 days**, **Tables not in the workspace** or **Check failed**, with per-table event counts.
 - **Already covered elsewhere** (analyst or admin) dismisses a suggestion. Pick where the data lives (**Another SIEM**, **Separate console**, **Different workspace / tenant**, **We don't use this**), add an optional note and click **Dismiss suggestion**. The dismissal is saved with your name and time, and the reason is also kept in Decision memory.
 - **Undo** (analyst or admin) reopens a dismissed suggestion.
 - The **library detections read these tables** link opens the Detection Library.
@@ -72,8 +88,9 @@ Volumes are billed bytes from the workspace's usage records over a 7-day window.
 - **Gaps depend on your library.** They compare the tables your library detections read against what the workspace receives. With no saved KQL in the library you see "No library detection has saved KQL to check".
 - **Partial checks.** If workspace health cannot be read but the table list can, only tables proven absent are listed; tables that stopped sending are not checked until health is readable.
 - **The agents read the same summary.** Dax, Demitry, Marien, Renzo, Orion and Atlas see which tables your workspace ingests, their status, and the suggestions you dismissed as **Already covered elsewhere**. A stale or missing source tells them that an empty query result may be a visibility gap, not proof that nothing happened.
+- **Several workspaces.** Check results and dismissals are kept once per connector for your organization, not per workspace: a connector's latest check is the one last run, in whichever workspace was shown, and a dismissed suggestion is dismissed for every workspace.
 - **Health monitoring coverage.** Microsoft reports health only for some connectors. For the rest, the KQL check is the proof that data arrives.
-- **Not connected.** If Microsoft Sentinel is not connected for your organization yet, the page shows "Not connected · Microsoft Sentinel setup is incomplete" and says which details are missing (the Azure app registration or the workspace details). Admins get an **Open setup wizard** button; others are asked to have an administrator complete the setup wizard (Settings > Setup wizard).
+- **Not connected.** If Microsoft Sentinel is not connected for your organization yet, the page shows "Not connected · Microsoft Sentinel setup is incomplete" and says which details are missing (the Azure app registration or the workspace details). Admins get an **Open setup wizard** button; others are asked to have an administrator complete the setup wizard (Settings > Setup wizard). The connector list and details panels say they fill in once Sentinel is connected.
 - **Unavailable states.** "Unavailable · connector health could not be read", "No table ingested data in the last 7 days", "Dismissals unavailable" (dismissed suggestions may show as open) and "Unavailable · coverage gaps cannot be computed". Error messages never show internal IDs.
 
 ## Related

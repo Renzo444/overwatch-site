@@ -1,12 +1,12 @@
 ---
 title: Configure notifications
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-11-02
 ---
 
 # How to configure notifications
 
-Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook.
+Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings and playbook notification steps to Slack, Microsoft Teams or a webhook. Administrators are also emailed about waiting approvals and platform notices, with no setup.
 
 ## Before you start
 
@@ -16,6 +16,19 @@ Send incident verdicts, waiting approvals, agent failures, Orion's hunt findings
   - **Microsoft Teams**: a Teams Workflows webhook ("Post to a channel when a webhook request is received"). Messages are sent as Adaptive Cards.
   - **Webhook**: any HTTPS endpoint that accepts a JSON POST.
 - These are notifications sent outside the console. The bell in the top bar works without any setup.
+
+## Administrator email
+
+Administrators are emailed without any setup. Every active administrator of your organization gets an email:
+
+- when an approval is waiting (at most one every 10 minutes; a burst of requests sends one email, and the queue shows them all). The email links to Approvals;
+- when containment ran on its own because an admin set that action to Full auto, with how to undo it;
+- when the daily AI budget is 80% used or used up (agents pause until the next UTC day); each budget email is sent at most once a day;
+- on a trial, when the trial starts, after the first week, three days before it ends and when it ends;
+- about your plan size, when a monthly count of monitored assets is above your plan ([Billing and plans](../features/billing.md));
+- when a playbook's Notify step is set to email administrators ([Build a playbook](build-a-playbook.md)).
+
+This is independent of the destinations and the master switch below. To stop these emails, turn off **Email administrators** under **Delivery policy**. Each email attempt and outcome is recorded in Agent Audit under Notifications.
 
 ## Steps
 
@@ -62,7 +75,8 @@ To change a destination later, paste a new URL and select **Save** (leave the fi
 - **"Settings changed elsewhere. Reload before saving."** Another admin saved changes after you opened the tab. Select **Refresh** at the top of Settings and make your change again.
 - **"Notification settings unavailable"** with **Retry**: the settings could not be read. Retry, or reload the page.
 - **The URL is not shown after saving.** This is expected. URLs are write-only and stored encrypted.
-- **IOC matches** shows **Not available**. Nothing sends this event yet. Email, daily digests and SLA alerts are not available either.
+- **IOC matches** shows **Not available**. Nothing sends this event yet. Daily digests and SLA alerts are not available either, and email goes only to your administrators.
+- **A destination shows Off until tested** and its field and buttons are disabled: that destination has not yet passed a live test in production, so nothing is delivered to it. You can still switch off or remove one that was already on.
 - **"Tenant administrators manage external notification destinations."** You are not an admin. Ask one to make the change.
 
 ## Related
