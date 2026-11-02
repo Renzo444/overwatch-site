@@ -1,7 +1,7 @@
 ---
 title: How to approve or deny an action
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to approve or deny an action
@@ -11,7 +11,7 @@ Decide a request an agent filed in Approvals, run an approved containment respon
 ## Before you start
 
 - You need the **admin** role to approve, deny, select a response, run one or request its undo. Analysts can read requests and add comments; viewers can read them.
-- To run an approved containment response, your tenant needs response provider credentials for Microsoft Entra ID (disable account) or Microsoft Defender for Endpoint (isolate host). An administrator sets them under **Reconciliation > Response provider configuration** on the Approvals page.
+- To run an approved containment response, response actions must be set up for Microsoft Entra ID (disable account, revoke sessions) or Microsoft Defender for Endpoint (isolate host). An administrator sets them up in **Settings > Response actions**; **Response actions setup** under **Reconciliation** on the Approvals page opens it. See [How to set up response actions](set-up-response-actions.md).
 - Requests expire 24 hours after they are created. Decide, and run an approved response, within that window.
 
 ## Steps
@@ -26,7 +26,7 @@ Decide a request an agent filed in Approvals, run an approved containment respon
 6. In the dialog, check the **Scope**, **What happens**, **Rollback** and **Quorum**.
 7. Optionally type a **Rationale**. It is stored with your vote and shown on the request.
 8. If the request is a close from Demitry and the verdict is right but his report is thin, turn on **Right verdict, thin report**. It counts against his accuracy score; the close is still approved.
-9. Click **Approve**, or the button that names the response: **Approve isolation**, **Approve account disable**, **Approve isolation release** or **Approve account re-enable**.
+9. Click **Approve**, or the button that names the response: **Approve isolation**, **Approve account disable**, **Approve session revocation**, **Approve isolation release** or **Approve account re-enable**.
 10. Within 10 seconds, click **Undo** if you changed your mind. Otherwise your vote is recorded.
 
 ### Deny a request
@@ -34,14 +34,14 @@ Decide a request an agent filed in Approvals, run an approved containment respon
 1. On the request's card, click **Deny**.
 2. Pick a **Reason**: False positive, Wrong target, Business impact too high, Needs more evidence, Already handled or Policy exception.
 3. Optionally type a note under **What should the agents know?**
-4. Leave **Apply to similar future cases** on if the agents should cite your note on similar cases, or turn it off for this request only.
+4. Leave **Apply to similar future cases** on if Dax and Demitry should see your note when they triage a similar incident, or turn it off for this request only. Requests that are not about an incident keep the note in Decision memory only.
 5. Click **Deny & store feedback**. To deny without giving a reason, click **Deny without feedback** instead.
 
 ### Select a response for a confirmed threat
 
 Some requests read "Select a response for confirmed threat". Demitry confirmed the threat but did not name a target his queries returned. A note on the card says why.
 
-1. On that card, choose the **Proposed response**: **Disable account (no session revocation)** or **Isolate endpoint (Full)**.
+1. On that card, choose the **Proposed response**: **Disable account (no session revocation)**, **Revoke sign-in sessions** or **Isolate endpoint (Full)**.
 2. Enter the **Entra user object ID** or **Defender machine ID** from your investigation.
 3. Write the **Evidence and response justification**.
 4. Click **Create response approval**. A new request appears in the queue. Approve it with the steps above.
@@ -56,7 +56,9 @@ Some requests read "Select a response for confirmed threat". Demitry confirmed t
 
 ### Undo a containment
 
-Use this when an account disable or an endpoint isolation ran and should be reversed, for example after a false positive.
+Use this when an account disable or an endpoint isolation ran and should be reversed, for example after a false positive. Revoking sign-in sessions has no undo.
+
+If the containment ran on its own under Full auto (the card says "Ran automatically (Full auto)"), click **Undo: re-enable the account** or **Undo: release the device** instead. One click files the undo, records your approval and runs it. Otherwise:
 
 1. Open the **History** tab and find the approved request.
 2. Under **Run the approved response**, click **Request undo**. The button appears once the response has run and did not fail.
@@ -80,7 +82,7 @@ You can also approve or deny from the **Needs your decision** card on Overview a
 - Approving Maxwell's "Deploy detection '…' although it overlaps a live rule" lets him review and deploy that draft on a later run; denying it, or letting it expire, keeps the draft out of Sentinel. Approving "Retire Maxwell's rule '…' to make room for new detections" deletes that rule from Sentinel on a later unattended run, with a full backup in the audit log; denying keeps it, and he does not propose it again.
 - A close request whose reasoning starts "Passed without a senior review" rests on Dax's verdict alone: Demitry did not review it. Read Dax's analysis with that in mind. These closes are never approved automatically.
 - Denying a close request from Demitry leaves the incident open for a person. It counts against his accuracy score as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
-- A denial reason is stored in **Decision memory**. Dax and Demitry see it on similar cases. It does not retrain any model.
+- A denial reason is stored in **Decision memory**. With **Apply to similar future cases** on, Dax and Demitry see it when they triage a similar incident. It never decides a verdict and does not retrain any model.
 
 ## If something goes wrong
 
@@ -93,12 +95,16 @@ You can also approve or deny from the **Needs your decision** card on Overview a
 - **"Response outcome is unknown. Refresh or verify; do not resubmit containment."**: the console did not get a clear answer. Click **Refresh response** or **Verify provider state**.
 - **"This response has not run, so there is nothing to undo"** or **"The provider reported this response failed, so there is nothing to undo"**: there is no containment to reverse.
 - **"This response was already undone; see its undo approval"**: an undo already ran. Find it on the **History** tab.
+- **"Microsoft still shows the account disabled, so it is not re-enabled yet."** after a one-click Undo: click the Undo button again. If the account stays disabled, enable it in Microsoft Entra.
+- **"Response actions for … are not ready, so this cannot run yet."**: response actions are not set up for that provider, or their permissions are not verified. Click **Set up response actions** on the card. Nothing was sent, and the approval stays valid until it expires.
+- **"Choosing a response target here is turned off until it passes a live test."**: selecting a target is not available yet. Contain the account or device in Microsoft Entra or Defender if needed, and record it on the incident.
 - **"The tenant directory changed since this response; undo it in the provider"**: release the device in Defender or re-enable the account in Entra ID directly.
 - **"Approvals unavailable"**: the queue could not be read. This does not mean the queue is empty. Click **Retry**.
 
 ## Related
 
 - [Approvals](../features/approvals.md)
+- [How to set up response actions](set-up-response-actions.md)
 - [Autonomy and approvals](../concepts/autonomy-and-approvals.md)
 - [How to triage an incident](triage-an-incident.md)
 - [Overview](../features/overview.md)

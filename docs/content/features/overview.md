@@ -1,7 +1,7 @@
 ---
 title: Overview
 status: current
-reviewed: 2026-10-12
+reviewed: 2026-11-02
 ---
 
 # Overview
@@ -24,7 +24,11 @@ Overview is the console's home page. It puts the decisions waiting for you first
 
 ## What you see
 
-The page header reads "Know what needs you." Every count on the page shows where it came from and the window it covers, in a small line under the panel title. When a source cannot be read, the panel says "Unavailable" or shows an error. It never shows a zero in place of missing data.
+The page header reads "Overview". Every count on the page shows where it came from and the window it covers, in a small line under the panel title. When a source cannot be read, the panel says "Unavailable" or shows an error. It never shows a zero in place of missing data.
+
+**Your trial** (trial workspaces only). Shows the days left and when the trial ends, with what the agents did so far: **Incidents triaged** (Dax), **Incidents checked** (Demitry), **Detections deployed** and an estimate of **Analyst time saved**. Once the trial ends the card reads "Your trial has ended" and keeps the same report. **See plans and prices** (or **Choose a plan to continue**) opens Plan and billing; **Talk to us** starts an email to support. The card is hidden for paid workspaces. See [Plan and billing](billing.md).
+
+**Turn on your SOC.** New workspaces start with every agent off, and this card stays at the top until an administrator turns at least one on. It lists **Dax triages new incidents**, **Demitry checks Dax's work** and **Marien proposes tuning for noisy rules** (switched on by default), plus **Renzo drafts detections from threat intelligence** and **Orion runs proactive threat hunts** (off by default). An administrator picks the agents and clicks **Turn on agents**; other roles see "An administrator turns agents on for this workspace." **Agent Policies** opens Settings > Agent Policies. Nothing the agents propose is closed, tuned or deployed without approval. Before Microsoft Sentinel is connected, the card says "Connect Sentinel first" and administrators get **Connect Microsoft Sentinel**, which opens the setup wizard.
 
 **Overview layout.** A toggle with two options, **Analyst** and **SOC lead**.
 - **Analyst** (the default): "Your decisions and queue first." The strategic brief sits near the bottom as a collapsed row.
@@ -63,7 +67,7 @@ The page header reads "Know what needs you." Every count on the page shows where
 - **Overview layout**: switch between **Analyst** and **SOC lead**. Any role. The choice is saved in this browser only.
 - **Article window**: **24h**, **7d**, **14d** or **30d**. Sets the window for Adversary operations, Techniques in reporting, Actor watch and the SOC lead tally. Any role.
 - **Previous article** / **Next article** arrows and the dots under the carousel: move through the articles. Clicking an article title opens it on the Live Feed page. **Live Feed** opens the Live Feed page.
-- **Approve** on the decision card (admin only). Opens the approval dialog described in [Approvals](approvals.md). The button names the response when there is one: **Approve isolation** or **Approve account disable** for a containment, and **Approve isolation release** or **Approve account re-enable** for the undo of one. Your vote is held for 10 seconds with an **Undo** button before it is recorded. Approving never runs a response by itself.
+- **Approve** on the decision card (admin only). Opens the approval dialog described in [Approvals](approvals.md). The button names the response when there is one: **Approve isolation**, **Approve account disable** or **Approve session revocation** for a containment, and **Approve isolation release** or **Approve account re-enable** for the undo of one. Your vote is held for 10 seconds with an **Undo** button before it is recorded. Approving never runs a response by itself.
 - **Choose a response** (shown instead of Approve when Demitry confirmed a threat but did not name a target): opens the Approvals page, where an admin selects the response.
 - **Deny** on the decision card (admin only). Opens the deny dialog, where you pick a reason and can add a note for the agents.
 - **Review evidence**: opens the full investigation workspace for the linked incident. Any role.
@@ -75,7 +79,7 @@ The page header reads "Know what needs you." Every count on the page shows where
 - Every count is bounded: up to 50 incidents, up to 100 approvals and the latest 200 agent events per read. A count at the cap is shown with a "+".
 - "Open incidents returned" is not a count of all open incidents in Sentinel. It covers incidents created in the last 7 days, up to 50.
 - The decision card shows one request. If more are waiting, it says how many more are in Approvals.
-- If your tenant is not connected yet, panels say so ("Connect a tenant to see approvals.") instead of showing empty data.
+- If your tenant is not connected yet, panels say so ("Connect a tenant to see approvals.") instead of showing empty data. Before Microsoft Sentinel is connected, the stat strip shows "Not connected", panels that read Sentinel say "Microsoft Sentinel is not connected yet", and Sign-in geography says "Sign-in telemetry will show here once Microsoft Sentinel is connected."
 - The strategic brief is generated on request from the Relationships page. Opening Overview never generates one.
 - The Overview layout choice is stored in your browser, so it does not follow you to another device.
 

@@ -1,7 +1,7 @@
 ---
 title: How to fix a coverage gap
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to fix a coverage gap
@@ -17,14 +17,15 @@ Find the data your detections need but are not getting, connect it in Microsoft 
 ## Steps
 
 1. Open **Intelligence > Data connectors**.
-2. Click **Refresh** to read the latest workspace health.
-3. Scroll to **Coverage gaps & suggestions**. Start with **High** cards (a deployed rule needs the data), then **Medium**, then **Recommended** (free data Microsoft recommends for every workspace).
-4. Read why the card is there: which detections need which tables, and whether those tables are missing from the workspace or have stopped receiving events.
-5. Click **Show setup and check** to see the Sentinel connector, its content hub solution, how it collects data, licence and cost, a Microsoft Learn link and numbered setup steps.
-6. Follow the setup steps in Microsoft Sentinel.
-7. Back on the card, click **Run check**. Or click **Copy KQL** and run it in Microsoft Sentinel → Logs.
-8. Read the result: **Receiving data** means it worked. **No data in the last 24 hours**, **No data in the last 7 days** or **Tables not in the workspace** mean data is not arriving yet.
-9. If you already collect this data somewhere else, click **Already covered elsewhere** instead, choose **Another SIEM**, **Separate console**, **Different workspace / tenant** or **We don't use this**, add a note if useful, and click **Dismiss suggestion**.
+2. If your organization monitors several Sentinel workspaces, click **Show below** on the workspace to check under **Monitored workspaces**. The rest of the page, including gaps and checks, then reads that workspace.
+3. Click **Refresh** to read the latest workspace health.
+4. Scroll to **Coverage gaps & suggestions**. Start with **High** cards (a deployed rule needs the data), then **Medium**, then **Recommended** (free data Microsoft recommends for every workspace).
+5. Read why the card is there: which detections need which tables, and whether those tables are missing from the workspace or have stopped receiving events.
+6. Click **Show setup and check** to see the Sentinel connector, its content hub solution, how it collects data, licence and cost, a Microsoft Learn link and numbered setup steps.
+7. Follow the setup steps in Microsoft Sentinel.
+8. Back on the card, click **Run check**. Or click **Copy KQL** and run it in Microsoft Sentinel → Logs.
+9. Read the result: **Receiving data** means it worked. **No data in the last 24 hours**, **No data in the last 7 days** or **Tables not in the workspace** mean data is not arriving yet.
+10. If you already collect this data somewhere else, click **Already covered elsewhere** instead, choose **Another SIEM**, **Separate console**, **Different workspace / tenant** or **We don't use this**, add a note if useful, and click **Dismiss suggestion**.
 
 To fix a source that has stopped sending: in the **Data connectors** list, select a connector marked **Degraded** or **Stale**, read the issue and **Connector status**, fix the connector in Sentinel, then use **Run check** in **Verify with KQL**.
 
@@ -34,7 +35,7 @@ To fix a gap in technique coverage rather than data: open the **Detection Librar
 
 - Once the tables receive data, the gap card disappears on the next read. Health is re-read every 10 minutes while the page is open, or when you click **Refresh**.
 - A check result is saved with who ran it and when, so others see it too.
-- A dismissed suggestion stays on the page, marked **Dismissed** with the reason, who dismissed it and when. The reason is also saved in Decision memory. **Undo** reopens it.
+- A dismissed suggestion stays on the page, marked **Dismissed** with the reason, who dismissed it and when. The reason is also saved in Decision memory. **Undo** reopens it. A dismissal applies to every monitored workspace, and each connector keeps only its latest check, whichever workspace it ran in.
 - Nothing on this page needs approval, because nothing here changes your workspace.
 
 ## If something goes wrong

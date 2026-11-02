@@ -1,7 +1,7 @@
 ---
 title: How to run an agent
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to run an agent
@@ -11,7 +11,8 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 ## Before you start
 
 - You need the **Analyst** or **Admin** role. Viewers see the buttons disabled.
-- Caleb's detonation lab needs the **Admin** role.
+- Caleb's email and file analysis and his detonation lab need the **Admin** role.
+- On a paid subscription, Caleb needs the Email & Malware pack and Orion the Threat Hunting pack.
 - Dax and Demitry read your Sentinel incidents, so your tenant's Sentinel connection must be set up.
 - Dax and Demitry skip incidents a person owns. To have an agent look at one, unassign it first.
 
@@ -26,7 +27,7 @@ Start an agent on request from its workspace on the Agents page, instead of wait
    - **Orion**: click **Run proactive hunt**. To run a saved proposal or a failed hunt, select it in **Recorded threat hunts** and click **Execute hunt** or **Retry hunt**. To save a proposal from an article, paste the URL and click **Ingest intel**.
    - **Renzo**: paste an article URL and click **Generate proposal**, or click **Run research cycle**.
    - **Maxwell**: click **Review deployments**, select a pending rule and click **Review for deployment**.
-   - **Caleb** (admin): click **Select a sample**, choose **Analysis mode** and **VM image**, then click **Launch sandbox**.
+   - **Caleb** (admin): click **Analyse an email** and choose a reported email (.eml), or **Analyse a file** and choose a program, archive or document. To let Caleb run up to three original Windows programs from it, tick the Windows execution box first (shown only when Windows execution is available). The result appears under **Saved investigations & sessions**: a quick verdict within a few minutes, then the full report.
    - **Atlas**: click **Open copilot** and type your question. See [How to ask Atlas](ask-atlas.md).
 4. Wait for the toast message. While a run is in progress the button shows "Analyzing…", "Reviewing…", "Refreshing…", "Hunting…" or "Researching…".
 5. Open the **Outputs** tab, or the workspace list, to see the result once the agent records it.
@@ -40,6 +41,7 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 - Orion records the hunt and its verdict on the results. A malicious or suspicious finding opens a new Sentinel incident for Dax to triage. If your workspace has no data in any table that would record the behaviour, the hunt is recorded as "Not run · log source missing" and names the source to connect.
 - Marien and Renzo produce proposals and drafts. Nothing is deployed by these runs. Renzo may finish a research cycle without a new conclusion; then nothing is saved.
 - Renzo writes rules for the attacker's technique; a rule matching only a report's indicators is discarded unless an admin allows them in Settings > Agent Policies.
+- Caleb's email or file job starts at once, or waits in the queue ("It is number N in the queue and starts automatically."). The investigation shows a quick verdict, then the full report, which can change the verdict. If your organization already sent the same file in the last 30 days, its earlier analysis is shown instead.
 - Maxwell's review records whether the rule may be deployed. Deploying is a separate admin step: **Approve & deploy**, within an hour of the passed review. If an admin has set Maxwell's deploys to Full auto, Maxwell also reviews and deploys Renzo's drafts on his schedule. See [How to deploy or recall a rule](deploy-or-recall-a-rule.md).
 
 ## If something goes wrong
@@ -55,6 +57,12 @@ Start an agent on request from its workspace on the Agents page, instead of wait
 - **Renzo refuses a research cycle**: the daily allowance shown under the panel is used up for today (UTC).
 - **"Investigation paused for a server restart; the incident goes back to the queue."** (Dax, in Agent Audit): the service restarted during the run. Dax releases the incident and picks it up again on a later run, or you can start it again.
 - **"Investigation … paused: the AI provider was unavailable, so the incident goes back to the queue."** (Dax, in Agent Audit): the AI service failed, not the investigation. Dax picks the incident up again on a later run. A failure notification goes to your notification destinations at most once an hour.
+- **"… is not on this workspace's plan. An administrator can add it on the Billing page."** (Caleb, Orion): your subscription does not include that agent's pack.
+- **"Email not accepted: …"** or **"File not accepted: …"** (Caleb): the reason follows, for example the email is over 10 MB, the month's analysis minutes are used up, or the queue is full.
+- **Analyse an email** or **Analyse a file** is disabled: hover it for the reason, for example "This month's analysis minutes are used up.", "Caleb's analysis runner is not set up yet." or "File analysis is turned off until it passes a live test."
+- **"The detonation VM is switched off on this server until its network lockdown ships."** (Caleb, **Launch sandbox**): use **Analyse a file** or **Analyse an email** instead.
+- **"Investigation of incident … paused: Microsoft Azure could not be reached, so the incident goes back to the queue."** (Dax, in Agent Audit), or **"QA of incident … paused: …"** (Demitry): Azure could not be reached. The agent tries the incident again on a later run.
+- **"This organization's daily AI budget is used up, so agents pause until 00:00 UTC."**: agents start again the next UTC day.
 - **"Latest run reported a problem."** on the workspace: open **Outputs** or Agent Audit to read the failure. If the AI service is refusing requests, the run stops and the refusal is recorded at most once an hour; retry once your provider access is restored.
 
 ## Related

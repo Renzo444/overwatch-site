@@ -1,7 +1,7 @@
 ---
 title: Invite a teammate
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-11-02
 ---
 
 # How to invite a teammate
@@ -35,7 +35,7 @@ You see "Invitation sent to <email>. The link works once and expires in 72 hours
 
 Until they do this, the account cannot sign in. Nobody else ever sees or sets their password.
 
-Your organization's first admin follows the same steps, but gets the link from the Overwatch team directly rather than by email. After signing in, the setup wizard opens: see [Connect Microsoft Sentinel](connect-microsoft-sentinel.md).
+Your organization's first admin follows the same steps, but gets the link from the Overwatch team directly rather than from a teammate. (On a self-service trial, the person who signs up is the first admin; see [Getting started](../getting-started.md).) After signing in, the setup wizard opens: see [Connect Microsoft Sentinel](connect-microsoft-sentinel.md).
 
 ### Change a teammate's role
 
@@ -59,6 +59,15 @@ Admins cannot reset another person's password. The person does it themselves:
 2. They enter their **Email address** and select **Send reset link**.
 3. They follow the link in the email "Reset your Overwatch Console password", enter a **New password** and **Confirm password**, and select **Change password**.
 4. They see "Your password is changed." and sign in with the new password.
+
+### Reset someone's two-step sign-in
+
+Admins sign in with an authenticator code. If an admin loses the phone with their authenticator app:
+
+1. On the **Team** tab, find them under **People**.
+2. Select **Reset two-step**.
+
+Their authenticator is removed and they set up a new one at their next sign-in. You cannot reset your own; ask another admin, or Overwatch support if you are the only admin. Each reset is recorded in the [Audit Trail](../features/audit-trail.md).
 
 ## What happens next
 

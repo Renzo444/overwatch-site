@@ -1,7 +1,7 @@
 ---
 title: How to tune a noisy rule
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to tune a noisy rule
@@ -33,6 +33,10 @@ Proposals Marien held back are listed under **Held for a person**, with the reas
 
 ## What happens next
 
+- **Checks before a proposal reaches you.** Marien keys an exclusion on what stays the same about the noise, and leaves the rule alone when the noise has nothing stable in common. Before a proposal is listed for review, two checks run:
+  - The exclusion must match the noise. When the incidents it is based on were closed without notes (as agreed Dax and Demitry closes are), the rule is replayed as it is and as tuned over the most recent noise incidents, and the proposal goes on only if the tune removes their rows.
+  - The exclusion must not hide an attack. If a value it excludes also appears on one of the rule's incidents that was called a true positive, is still unjudged, or does not look like the noise, the rule is replayed as it is and as tuned over that incident's time window. The proposal goes to review only if the tuned rule still returns every row there; otherwise, or if the check cannot run, it is held for a person under **Held for a person** with the reason.
+
 - **Approve & deploy** writes the proposed query to the existing Sentinel rule, records your approval, and removes the proposal from the list. The server checks the backtest evidence again and runs an independent QA review of the new query before writing it; the rule must not have changed in Sentinel since the backtest. For a detection change, the server also checks the volume backtest or your written reason.
 - Passing a backtest is not approval. Approval is the separate admin click and confirmation.
 - Every tuned rule needs a person's approval. The **tuning auto-approve** line on the Approvals page can only be turned off, and **Marien applies a rule tune** under Settings > Agent Policies can only be set to Approval.
@@ -42,6 +46,7 @@ Proposals Marien held back are listed under **Held for a person**, with the reas
 - Marien's false-positive evidence includes closed false and benign positives, and open incidents whose benign close waits for a person, whether Demitry confirmed Dax's benign call or passed it on without a full review. Denying that close removes the incident from her evidence. When Demitry confirms an attack, no tuning request is sent for the rule that caught it.
 - Rules that fail tuning repeatedly appear under **Blocked**. Marien stops retrying them until an admin clicks **Clear circuit breaker**. Clearing does not change the rule.
 - Tuning deployments that ended in an uncertain state are listed on the Approvals page under **Uncertain tuning deployments** and **Uncertain tuning rollbacks**.
+- If your organization monitors several Sentinel workspaces, Marien tunes the rules of each workspace, and an approved change is written to the workspace the rule lives in.
 - All of this is recorded in Agent Audit under Marien. The full replay tool is also available in Agent Audit.
 
 ## If something goes wrong

@@ -1,7 +1,7 @@
 ---
 title: How to review agent decisions
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to review agent decisions
@@ -12,7 +12,7 @@ Check what an agent decided and why, and record whether you found it helpful or 
 
 - Any role can read agent decisions.
 - Recording **Helpful** or **Needs review** needs the **Analyst** or **Admin** role.
-- Your feedback is an opinion. It is stored with the record and does not change the agent's verdict, close or reopen anything, or retrain an agent.
+- Your **Helpful** or **Needs review** feedback is an opinion. It is stored with the record and does not change the agent's verdict, close or reopen anything, or retrain an agent.
 - Your decisions in Approvals are different: approving or denying Demitry's close requests is what the **Agent accuracy** scorecard counts. See [Autonomy and approvals](../concepts/autonomy-and-approvals.md).
 
 ## Steps
@@ -45,7 +45,7 @@ Check what an agent decided and why, and record whether you found it helpful or 
 1. Open **Approvals**. A close request reads "Close incident #N … as …".
 2. Read the evidence and Demitry's reasoning on the card.
 3. To approve, click **Approve**. If the verdict is right but the report is thin, switch on **Right verdict, thin report** before confirming; it counts against Demitry's accuracy score.
-4. To deny, click **Deny** and pick a reason. A denial counts as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high.
+4. To deny, click **Deny** and pick a reason. A denial counts as a dangerous miss unless the reason is Already handled, Needs more evidence, Policy exception or Business impact too high. Optionally write what the agents should know under "What should the agents know?". With **Apply to similar future cases** on (the default), Dax and Demitry see your note when they triage a similar incident.
 
 See [How to approve or deny an action](approve-or-deny-an-action.md) for the full steps.
 
@@ -61,7 +61,8 @@ See [How to approve or deny an action](approve-or-deny-an-action.md) for the ful
 - Read state on the Outputs tab is yours only. Reading approves nothing.
 - An approved close is carried out at the start of Demitry's next run. Your decision is counted on the **Agent accuracy** card on the Approvals page.
 - If a decision is wrong, act on the incident yourself from the Incidents page, for example re-analyze or close it. See [How to close an incident](close-an-incident.md). Reopening an incident that auto mode closed counts as a reversal and turns auto mode off.
-- Response actions that Demitry requested wait in [Approvals](../features/approvals.md) for an admin.
+- A deny note marked **Apply to similar future cases** reaches Dax and Demitry as context when a later incident is similar. They treat it as a reviewer's reason about another case, never as evidence or as the verdict. Nothing retrains a model.
+- Response actions that Demitry requested wait in [Approvals](../features/approvals.md) for an admin, unless an admin set that containment action to Full auto.
 - Not every verdict gets a senior review. Where Demitry passed Dax's verdict on without one, the incident's **Demitry QA** reads "passed without review" and the close request's reasoning starts "Passed without a senior review" with the reason. Those closes rest on Dax's work alone, so check it before you approve.
 
 ## If something goes wrong

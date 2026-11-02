@@ -1,7 +1,7 @@
 ---
 title: Metrics & Health
 status: current
-reviewed: 2026-10-19
+reviewed: 2026-11-02
 ---
 
 # Metrics & Health
@@ -71,6 +71,7 @@ The page is read-only for everyone. Nothing on it changes an incident, rule or a
 
 - **SLA targets.** SLA compliance needs a target. If none is set, the tile says "no SLA target set". There is no screen in the console to set SLA targets; ask the Overwatch team.
 - **Metrics come from Sentinel and the agent audit record.** If Sentinel cannot be reached, the panels show the error instead of a number.
+- **Several workspaces.** If your organization monitors more than one Sentinel workspace, the measures read from Sentinel (incidents and deployed rules) combine all of them. If one workspace cannot be read, the section that depends on it shows the error rather than a partial figure.
 - **Planned: scheduled reports.** **Schedule this report** only opens the Actions page. Scheduled or emailed metrics reports are not available.
 - The panels and tiles cannot be rearranged or customized.
 - MTTA and Escalation rate depend on agent records. If the agent audit record is unavailable, they show as unavailable.

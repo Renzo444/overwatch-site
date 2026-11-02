@@ -1,7 +1,7 @@
 ---
 title: How to close an incident
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to close an incident

@@ -1,7 +1,7 @@
 ---
 title: How to ask Atlas
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to ask Atlas
@@ -20,7 +20,7 @@ Ask Atlas, the copilot, a question about what you are looking at or about your t
 3. Check the **In view** chips. Remove any record you do not want Atlas to consider by clicking its ×.
 4. Type your question in "Ask about what's on screen…" and press **Enter**, or click a suggested question.
 5. Watch the lines above the answer to see which agent took the request and how many rows came back.
-6. Read the answer and the KQL Atlas shows at the end.
+6. Read the answer. Open **Details** under it for IDs, timestamps and the KQL Atlas ran. For a long answer, **Widen Atlas** in the header.
 7. Optional: click **Execute** on a KQL block to run it yourself (up to 20 rows; the last day, or longer when the query itself looks back further, up to 30 days), or **Copy** it.
 8. Optional: click **Pin to #N notes** to save the answer to the incident's case notes.
 
@@ -31,11 +31,14 @@ Good questions:
 - "What have the agents been doing today?"
 - "What does this page do?"
 - "Which log sources do we have?" or "Why can't Orion see firewall traffic?"
+- "Is this file hash malicious?" with an incident in view, or with the hash itself.
+- "How do I invite a teammate?" or "What plan are we on?" (answered from the Help guides and your plan).
+- With several monitored workspaces, name one ("…in the London workspace") to search only that workspace.
 - "What is our ATT&CK coverage?", "Where are our gaps in Credential Access?", "Are we covered for T1003?" or "What should we connect?"
 
 ## What happens next
 
-- Atlas hands data questions to Dax, Demitry or Orion, who run a read-only query (up to 50 rows, over a window that covers the query's own lookback up to 30 days). It reads library, hunt, tuning and sandbox records, and Renzo's coverage map, from the agent that owns them.
+- Atlas hands data questions to Dax, Demitry or Orion, who run a read-only query (up to 50 rows, over a window that covers the query's own lookback up to 30 days). It reads library, hunt, tuning and sandbox records, and Renzo's coverage map, from the agent that owns them, and asks Caleb for a file hash's reputation. With several monitored workspaces it searches them all unless you named one, and says which workspace each result came from.
 - If more rows or incidents matched than came back, Atlas is instructed to say the result is partial rather than give its length as a total. Ask for a count if you need one.
 - Each question is recorded under Atlas in [Agent Audit](../features/agent-audit.md).
 - A pinned answer is stored in case notes as generated text. The incident itself is not changed.
@@ -50,6 +53,7 @@ Good questions:
 - **Atlas says no agent can take the request**: the query tool is revoked for Dax, Demitry or Orion. An admin can restore it in the agent tool permissions (Agents page > Permissions > **Edit tool permissions**).
 - **"Only read-only queries within this tenant workspace are supported"** when you click **Execute**: the query uses a command that is not allowed. Use a single read-only query.
 - **"Only an administrator can file approval requests … Nothing was filed."**: ask an admin, or use the Approvals page.
+- **Atlas says it cannot check a hash**: your plan does not include the Email & Malware pack, or no VirusTotal key is set under Settings > Threat Intel.
 - **A results heading says "first 20 rows …; more may match"** after **Execute**: the row limit cut the result short. Add a `summarize` or `count` to the query for totals.
 
 ## Related

@@ -1,7 +1,7 @@
 ---
 title: How to turn intel into a detection
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to turn intel into a detection

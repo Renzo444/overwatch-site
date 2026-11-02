@@ -1,7 +1,7 @@
 ---
 title: How to set agent autonomy and what runs on its own
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to set agent autonomy and what runs on its own
@@ -36,11 +36,12 @@ Dax's switch, **Automatic threat-intelligence ingestion** and **Caleb scheduled 
 ### Choose what runs on its own
 
 1. Open **Settings** > **Agent Policies** and find **What runs on its own**.
-2. On the row for the action, click **Approval**, **Full auto** or **Scheduled**. Only **Demitry closes a false positive** and **Maxwell deploys a Renzo detection** can leave Approval today; on the other rows those buttons are disabled.
+2. On the row for the action, click **Approval**, **Full auto** or **Scheduled**. **Demitry closes a false positive**, **Maxwell deploys a Renzo detection** and the three containment rows (isolate a device, disable an account, revoke an account's sign-in sessions) can leave Approval; on **Marien applies a rule tune** and **Demitry overrides Dax and closes** those buttons are disabled. They are also disabled on a row whose Full auto is "Turned off until it passes a live test".
 3. For **Full auto** or **Scheduled**, a dialog titled with the action and mode (for example "Demitry closes a false positive: Full auto?") repeats the action's checks. Click **Switch mode**, or **Cancel**.
 4. For **Scheduled**, set the **Time zone**, **Shift starts**, **Shift ends** and the staffed days (Sun to Sat) under **Staffed hours** before you click **Switch mode**. Staffed hours run in Approval; outside them, Full auto. All Scheduled rows share these hours.
-5. For **Maxwell deploys a Renzo detection**, pick the **Daily limit** (1 to 20) and **Rules Maxwell may keep** (10 to 200, default 50) that appear once the row is not in Approval. Each saves as soon as you change it.
-6. Check the "Now:" line under the row. It says whether the action is in Approval or Full auto right now and, on a schedule, when it next switches.
+5. For **Maxwell deploys a Renzo detection**, pick the **Daily limit** (1 to 20) and **Rules Maxwell may keep** (5 to 200, default 50) that appear once the row is not in Approval. Each saves as soon as you change it.
+6. Before you set a containment row to Full auto, list the accounts and devices it must never touch (break-glass and service accounts, executives, domain controllers) under **Protected from automatic containment**, one per line, and click **Save protected list**.
+7. Check the "Now:" line under the row. It says whether the action is in Approval or Full auto right now and, on a schedule, when it next switches.
 
 To change staffed hours later, edit them and click **Save staffed hours**. Choosing **Approval** on a row saves at once.
 
@@ -51,6 +52,10 @@ Maxwell's Full auto also needs Renzo's switch and **Run agents on a schedule for
 ### Allow indicator-only detections (optional)
 
 By default Renzo writes rules for the attacker's technique and discards rules that match only a report's hashes, IP addresses, domains or URLs. To allow those rules, open **Settings** > **Agent Policies** and, under **Detection engineering**, switch on **Renzo may write indicator-only rules**. It applies to drafts written from then on.
+
+### Choose what Demitry reviews (optional)
+
+By default Demitry reviews by risk and passes lower-risk verdicts on without a full senior review. To have him review every verdict Dax records, open **Settings** > **Agent Policies** and, under **What Demitry reviews**, click **Every verdict**. It saves at once and applies from his next review run. It catches more mistakes and uses more of the daily AI allowance. Click **By risk** to go back.
 
 ### Earned auto mode (older organization-wide mode only)
 
@@ -77,8 +82,9 @@ To apply a ready-made set, open **More policy controls** and click **Conservativ
 - Every setting is saved for the whole tenant and recorded in the audit trail. Changes under **What runs on its own** show in the Audit Trail with the old and new values; turning auto mode on records your name, the time and the disclaimer version.
 - The agent worker reads the configuration before each scheduled run, so a change applies to the next run. Work already in progress is not cancelled.
 - The workspace and Settings show the saved value only after the server confirms it.
-- Under Full auto, eligible Demitry closes are approved automatically; about 1 in 10 still goes to a person as a spot check. High and Critical incidents, escalated incidents, closes where Demitry overrode Dax, closes Demitry passed on without a senior review and closes a policy rule holds always go to a person. Containment and response actions always need an admin's approval in [Approvals](../features/approvals.md).
+- Under Full auto, eligible Demitry closes are approved automatically; about 1 in 10 still goes to a person as a spot check. High and Critical incidents, escalated incidents, closes where Demitry overrode Dax, closes Demitry passed on without a senior review and closes a policy rule holds always go to a person. Containment needs an admin's approval in [Approvals](../features/approvals.md) unless its own row is in Full auto.
 - Under Full auto, Maxwell deploys Renzo drafts that passed every review check, up to the daily limit and within **Rules Maxwell may keep**. Each deploy appears in Approvals History as approved automatically. Requests to deploy an overlapping draft or to retire one of his rules wait in Pending for a person.
+- Under Full auto, a containment row runs Demitry's request for that action on its own when every check passes, never for an account or device on **Protected from automatic containment**, and at most 5 a day. Administrators get an email each time, and **Undo** in Approvals History reverses an isolation or a disable in one click. See [Containment under Full auto](../concepts/autonomy-and-approvals.md#containment-under-full-auto).
 - If a person reopens an automatic close, Demitry's row switches back to Approval (and earned auto mode turns off). Earned auto mode also turns itself off when accuracy drops below the bar. The Audit Trail and the card show why.
 - To follow what the agents do after the change, use [Agent Audit](../features/agent-audit.md) or the agent's **Outputs** tab.
 

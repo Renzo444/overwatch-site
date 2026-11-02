@@ -1,7 +1,7 @@
 ---
 title: Agent Audit
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # Agent Audit
@@ -79,6 +79,8 @@ Nothing on this page needs approval, and nothing here runs an agent.
 - If no events match, you see "No agent activity matches these filters." Widen the time window or clear the search.
 - Requests that Atlas hands to another agent are recorded under that agent. In **Record as written**, the agent name ends with "(via Atlas)".
 - Each agent failure is recorded once. When the AI service refuses requests, the refusal is recorded at most once an hour rather than on every run.
+- When Microsoft Azure cannot be reached, Dax and Demitry record a pause instead of a failure, for example "Investigation of incident … paused: Microsoft Azure could not be reached, so the incident goes back to the queue." The incident is tried again on a later run.
+- A failed Atlas answer is recorded under Atlas with how it failed (for example an empty answer); the provider's own error text is not stored.
 - Automatic closes made under earned auto mode are recorded under Demitry as closed "by auto mode". Closes a person approved are recorded as closed "after human approval".
 - The incident blade on the Incidents page shows the same chain in reading form, with why each query ran. See [How to review agent decisions](../how-to/review-agent-decisions.md).
 - For the tenant-wide tamper-evident ledger, exports and configuration changes, use [Audit Trail](audit-trail.md).

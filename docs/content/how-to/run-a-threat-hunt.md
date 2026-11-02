@@ -1,7 +1,7 @@
 ---
 title: How to run a threat hunt
 status: current
-reviewed: 2026-10-26
+reviewed: 2026-11-02
 ---
 
 # How to run a threat hunt
@@ -12,6 +12,7 @@ Have Orion search your Microsoft Sentinel data for signs of a reported threat, t
 
 - **Analyst** or **admin** to run, retry, ingest or discard hunts, and to send a hunt to Renzo. Viewers can read recorded hunts.
 - Your Microsoft Sentinel workspace must be connected. Hunt queries are read-only. The one thing a hunt can write is a new Sentinel incident when Orion judges the results malicious or suspicious (see "What happens next").
+- Orion is part of the Threat Hunting pack. If your organization subscribes through the Billing page and its plan does not include that pack, hunts are refused (scheduled hunts are skipped). Trials and organizations invoiced directly keep Orion.
 - Orion runs at most 20 manual hunts and 10 automated hunts per day (UTC). Failed hunts, and hunts recorded as a missing log source, count toward the limit. After that, a manual request is refused with "Orion has reached today's limit of 20 manual hunts. Try again tomorrow."
 
 ## Steps
@@ -44,18 +45,20 @@ Have Orion search your Microsoft Sentinel data for signs of a reported threat, t
 ## What happens next
 
 - **Second look.** When the first query returns nothing from tables that do hold data, or returns as many rows as the limit allows, Orion runs one follow-up query: broader in the first case, rarest results first in the second. It replaces the first result only when it returns rows, and the hunt then shows the follow-up query. Both are in Agent Audit.
-- **Triage.** When a query returns rows, Orion judges each entity in them (account, host, IP address, process) against the hunt's hypothesis and gives the verdict for the most concerning one: malicious, suspicious, benign or inconclusive, with a confidence, the rows that support it, the entity behind it and next steps. One suspicious entity among many ordinary ones still makes the hunt suspicious. Rows on their own are not findings.
+- **Triage.** When a query returns rows, Orion judges each entity in them (account, host, IP address, process) against the hunt's hypothesis and gives the verdict for the most concerning one: malicious, suspicious, benign or inconclusive, with a confidence, the rows that support it, the entity behind it and next steps. One suspicious entity among many ordinary ones still makes the hunt suspicious. Rows on their own are not findings, and neither are attempts that failed and went no further (such as password guessing that never signed in) or the same activity repeating on a schedule from a management or backup account, unless something more stands out.
 - **Findings open an incident automatically.** A malicious or suspicious verdict opens a new Sentinel incident for Dax to triage, and the hunt shows **Incident** with its number. This needs no approval: it only creates an incident and never changes or closes one. If Orion finds the same pattern again within a week while that incident is still open, it adds a comment to it instead of opening another. If the incident could not be opened, the hunt shows **Incident: Could not be opened** and the finding is still recorded.
 - **Benign or inconclusive** results are recorded as reviewed and open nothing. Investigate them in Sentinel or Agent Audit if you disagree. The devices behind the hits are not shown with the hunt; open Agent Audit for the recorded query results.
+- **Partial data.** When some of the richer sources for a behaviour (such as Sysmon, Defender device tables or Linux syslog) have no data in your workspace, Orion names them and still hunts with the tables that do.
 - **Not run · log source missing** means none of the tables that would record the behaviour has data in your workspace, so Orion did not run the query. The hunt names the missing source; connect it (see [Data connectors](../features/data-connectors.md)) to make the behaviour huntable.
 - **Verified zero hits** means the query ran successfully and returned nothing in the window. That is a result, not missing data. **No rows · not a verified zero** means the query returned nothing but Orion could not confirm the tables it read receive data.
 - Hunt results feed the Detection Library's hunt status, the Relationships graph and campaigns, and the strategic brief.
 - **Send to Renzo as detection** on a completed hunt asks Renzo to draft a detection from it (analyst or admin). Hunts with findings show it as **Send to Renzo as detection (recommended)**. The draft is added to the library and needs QA and an admin's deployment. If the hunt does not support a specific attacker behavior, Renzo says so and adds nothing.
-- **Automatic hunting.** When an admin turns on Orion's autonomy (the **Autonomy** switch in Orion's workspace header), the agent worker runs a scheduled hunt at most every 6 hours, hunting up to 3 advisories one after another within the daily limit. Hunts do not go through Approvals.
+- **Automatic hunting.** When an admin turns on Orion's autonomy (the **Autonomy** switch in Orion's workspace header), the agent worker runs a scheduled hunt at most every 6 hours, hunting up to 3 advisories one after another within the daily limit. If your organization monitors several Sentinel workspaces, each workspace is hunted on its own schedule with its own daily limit; new hunts you start from the console run in your first workspace, and a retried or proposed hunt runs in the workspace it came from. Hunts do not go through Approvals.
 
 ## If something goes wrong
 
 - **"Hunt request rejected: …"** or **"Hunt not submitted: …"** The server refused the request; the message gives the reason, for example the daily limit.
+- **"Threat Hunting is not on this workspace's plan. An administrator can add it on the Billing page."** Your plan does not include Orion. An admin can add the Threat Hunting pack on the Billing page.
 - **"Hunt request outcome is unknown. Check Agent Audit before submitting again; the server may have accepted it."** Check Agent Audit before you retry, to avoid a duplicate run.
 - **A hunt under Failed.** Read the error. Click **Retry hunt**, or **Review provider access** if the failure is about a threat-intel provider (provider keys live in Settings > Threat Intel). Failed hunts leave the retry queue after 24 hours or when a retry succeeds.
 - **"No source-supported attacker behavior was found; no hunt proposal was created."** or **"No hunt proposed"** The article did not have enough technical evidence.
